@@ -14,7 +14,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import kotlin.math.min
 
-
 class QROverlayView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
@@ -22,8 +21,8 @@ class QROverlayView @JvmOverloads constructor(
   defStyleRes: Int = 0
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-  private val cornerColor = ContextCompat.getColor(context, R.color.qr_stroke_color)
-  private val highlightedCornerColor = ContextCompat.getColor(context, R.color.qr_highlighted_stroke_color)
+  private val strokeColor = ContextCompat.getColor(context, R.color.qr_stroke_color)
+  private val highlightedStrokeColor = ContextCompat.getColor(context, R.color.qr_highlighted_stroke_color)
   private val backgroundColor = ContextCompat.getColor(context, R.color.qr_background_color)
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -54,7 +53,7 @@ class QROverlayView @JvmOverloads constructor(
   }
 
   override fun onDraw(canvas: Canvas) {
-    strokePaint.color = if (isHighlighted) highlightedCornerColor else cornerColor
+    strokePaint.color = if (isHighlighted) highlightedStrokeColor else strokeColor
     maskCanvas!!.drawColor(backgroundColor)
     maskCanvas!!.drawRoundRect(outerFrame, radius, radius, strokePaint)
     maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, transparentPaint)
@@ -65,12 +64,12 @@ class QROverlayView @JvmOverloads constructor(
   private fun calculateFramePos() {
     val centralX = width / 2
     val centralY = height / 2
-    val cornerLineLength = min(centralX, centralY) -
+    val strokeLength = min(centralX, centralY) -
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, FRAME_MARGINS, resources.displayMetrics)
     val strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, STROKE_WIDTH, resources.displayMetrics)
     outerFrame.set(
-      centralX - cornerLineLength, centralY - cornerLineLength,
-      centralX + cornerLineLength, centralY + cornerLineLength
+      centralX - strokeLength, centralY - strokeLength,
+      centralX + strokeLength, centralY + strokeLength
     )
     innerFrame.set(
       outerFrame.left + strokeWidth, outerFrame.top + strokeWidth,
