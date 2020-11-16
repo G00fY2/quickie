@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- QR code scanner colors -->
+  <color name="qr_stroke_color">#dadce0</color>
+  <color name="qr_highlighted_stroke_color">#1a73e8</color>
+  <color name="qr_background_color">#b3000000</color> <!-- 70% black transparency -->
+  <color name="transparent">#00000000</color>
+</resources>

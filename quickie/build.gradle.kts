@@ -43,6 +43,7 @@ val bundledMLImplementation by configurations
 val unbundledMLImplementation by configurations
 dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0-alpha02")
+    implementation("androidx.core:core:1.5.0-alpha05")
 
     implementation("androidx.camera:camera-camera2:1.0.0-beta12")
     implementation("androidx.camera:camera-lifecycle:1.0.0-beta12")

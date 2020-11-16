@@ -8,7 +8,7 @@ android {
   buildToolsVersion = "30.0.2"
   defaultConfig {
     applicationId = "com.g00fy2.quickiesample"
-    minSdkVersion(23)
+    minSdkVersion(21)
     targetSdkVersion(30)
     versionCode = 1
     versionName = "1.0"

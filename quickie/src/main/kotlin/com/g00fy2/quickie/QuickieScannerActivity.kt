@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -15,6 +16,9 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.g00fy2.quickie.databinding.ActivityScannerBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -29,6 +33,8 @@ class QuickieScannerActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityScannerBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
+    setupEdgeToEdgeUI()
 
     cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -51,8 +57,8 @@ class QuickieScannerActivity : AppCompatActivity() {
     val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
     cameraProviderFuture.addListener(
-        { setupUseCases(cameraProviderFuture.get()) },
-        ContextCompat.getMainExecutor(this)
+      { setupUseCases(cameraProviderFuture.get()) },
+      ContextCompat.getMainExecutor(this)
     )
   }
 
@@ -68,12 +74,14 @@ class QuickieScannerActivity : AppCompatActivity() {
     try {
       cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview)
       preview.setSurfaceProvider(binding.previewView.surfaceProvider)
+      binding.decorationView.visibility = View.VISIBLE
     } catch (e: Exception) {
       onFailure(e)
     }
   }
 
   private fun onSuccess(result: String) {
+    binding.decorationView.isHighlighted = true
     setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_DATA, result))
     finish()
   }
@@ -82,6 +90,14 @@ class QuickieScannerActivity : AppCompatActivity() {
     setResult(RESULT_CANCELED, null)
     Log.e(localClassName, exception.message, exception)
     finish()
+  }
+
+  private fun setupEdgeToEdgeUI() {
+    WindowCompat.setDecorFitsSystemWindows(window, false)
+    ViewCompat.setOnApplyWindowInsetsListener(binding.descriptionTextview) { v, insets ->
+      v.setPadding(0, 0, 0, insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom)
+      insets
+    }
   }
 
   private fun AppCompatActivity.requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
