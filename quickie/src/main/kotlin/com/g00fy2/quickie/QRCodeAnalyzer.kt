@@ -12,19 +12,19 @@ import com.google.mlkit.vision.common.InputImage
 @ExperimentalGetImage
 class QRCodeAnalyzer(val onSuccess: ((String) -> Unit), val onFailure: ((Exception) -> Unit)) : ImageAnalysis.Analyzer {
 
-    private var pendingTask: Task<List<Barcode>>? = null
-    private val barcodeScanner by lazy {
-        BarcodeScanning.getClient(BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build())
-    }
+  private var pendingTask: Task<List<Barcode>>? = null
+  private val barcodeScanner by lazy {
+    BarcodeScanning.getClient(BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build())
+  }
 
-    override fun analyze(imageProxy: ImageProxy) {
-        if (pendingTask?.isComplete == false || imageProxy.image == null) return
+  override fun analyze(imageProxy: ImageProxy) {
+    if (pendingTask?.isComplete == false || imageProxy.image == null) return
 
-        pendingTask = barcodeScanner.process(imageProxy.toInputImage())
-                .addOnSuccessListener { codes -> codes.mapNotNull { it.rawValue }.firstOrNull()?.let { onSuccess(it) } }
-                .addOnFailureListener { onFailure(it) }
-                .addOnCompleteListener { imageProxy.close() }
-    }
+    pendingTask = barcodeScanner.process(imageProxy.toInputImage())
+      .addOnSuccessListener { codes -> codes.mapNotNull { it.rawValue }.firstOrNull()?.let { onSuccess(it) } }
+      .addOnFailureListener { onFailure(it) }
+      .addOnCompleteListener { imageProxy.close() }
+  }
 
-    private fun ImageProxy.toInputImage() = InputImage.fromMediaImage(image!!, imageInfo.rotationDegrees)
+  private fun ImageProxy.toInputImage() = InputImage.fromMediaImage(image!!, imageInfo.rotationDegrees)
 }

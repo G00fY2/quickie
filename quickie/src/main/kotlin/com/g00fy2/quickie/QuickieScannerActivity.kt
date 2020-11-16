@@ -22,77 +22,79 @@ import java.util.concurrent.Executors
 @ExperimentalGetImage
 class QuickieScannerActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityScannerBinding
-    private lateinit var cameraExecutor: ExecutorService
+  private lateinit var binding: ActivityScannerBinding
+  private lateinit var cameraExecutor: ExecutorService
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityScannerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = ActivityScannerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-        cameraExecutor = Executors.newSingleThreadExecutor()
+    cameraExecutor = Executors.newSingleThreadExecutor()
 
-        requestCameraPermissionIfMissing { granted ->
-            if (granted) {
-                startCamera()
-            } else {
-                setResult(RESULT_CANCELED, null)
-                finish()
-            }
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
-    }
-
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-
-        cameraProviderFuture.addListener(
-                { setupUseCases(cameraProviderFuture.get()) },
-                ContextCompat.getMainExecutor(this)
-        )
-    }
-
-    private fun setupUseCases(cameraProvider: ProcessCameraProvider) {
-        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-        val imageAnalysis = ImageAnalysis.Builder()
-                .setTargetResolution(Size(1280, 720))
-                .build()
-                .apply { setAnalyzer(cameraExecutor, QRCodeAnalyzer({ onSuccess(it) }, { onFailure(it) })) }
-        val preview = Preview.Builder().build()
-
-        cameraProvider.unbindAll()
-        try {
-            cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview)
-            preview.setSurfaceProvider(binding.previewView.surfaceProvider)
-        } catch (e: Exception) {
-            onFailure(e)
-        }
-    }
-
-    private fun onSuccess(result: String) {
-        setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_DATA, result))
-        finish()
-    }
-
-    private fun onFailure(exception: Exception) {
+    requestCameraPermissionIfMissing { granted ->
+      if (granted) {
+        startCamera()
+      } else {
         setResult(RESULT_CANCELED, null)
-        Log.e(localClassName, exception.message, exception)
         finish()
+      }
     }
+  }
 
-    private fun AppCompatActivity.requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            onResult(true)
-        } else {
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { onResult(it) }.launch(Manifest.permission.CAMERA)
-        }
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    cameraExecutor.shutdown()
+  }
 
-    companion object {
-        const val EXTRA_DATA = "quickie-data"
+  private fun startCamera() {
+    val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+
+    cameraProviderFuture.addListener(
+        { setupUseCases(cameraProviderFuture.get()) },
+        ContextCompat.getMainExecutor(this)
+    )
+  }
+
+  private fun setupUseCases(cameraProvider: ProcessCameraProvider) {
+    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    val imageAnalysis = ImageAnalysis.Builder()
+      .setTargetResolution(Size(1280, 720))
+      .build()
+      .apply { setAnalyzer(cameraExecutor, QRCodeAnalyzer({ onSuccess(it) }, { onFailure(it) })) }
+    val preview = Preview.Builder().build()
+
+    cameraProvider.unbindAll()
+    try {
+      cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview)
+      preview.setSurfaceProvider(binding.previewView.surfaceProvider)
+    } catch (e: Exception) {
+      onFailure(e)
     }
+  }
+
+  private fun onSuccess(result: String) {
+    setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_DATA, result))
+    finish()
+  }
+
+  private fun onFailure(exception: Exception) {
+    setResult(RESULT_CANCELED, null)
+    Log.e(localClassName, exception.message, exception)
+    finish()
+  }
+
+  private fun AppCompatActivity.requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+      onResult(true)
+    } else {
+      registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        onResult(it)
+      }.launch(Manifest.permission.CAMERA)
+    }
+  }
+
+  companion object {
+    const val EXTRA_DATA = "quickie-data"
+  }
 }
