@@ -1,3 +1,3 @@
 tasks.register<Delete>("clean") {
-    delete(buildDir)
+  delete(buildDir)
 }

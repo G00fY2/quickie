@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.g00fy2.quickie">
 
-    <uses-feature android:name="android.hardware.camera" />
+  <uses-feature android:name="android.hardware.camera"/>
 
-    <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.CAMERA"/>
 
-    <application>
+  <application>
 
-        <activity
-            android:name=".QuickieScannerActivity"
-            android:theme="@style/Theme.Quickie" />
-    </application>
+    <activity
+        android:name=".QuickieScannerActivity"
+        android:theme="@style/Theme.Quickie"/>
+  </application>
 </manifest>
