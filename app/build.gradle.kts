@@ -20,6 +20,11 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    flavorDimensions("bundleMode")
+    productFlavors {
+        create("bundledML").dimension("bundleMode")
+        create("unbundledML").dimension("bundleMode")
+    }
     buildFeatures {
         viewBinding = true
         aidl = false

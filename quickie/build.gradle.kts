@@ -22,6 +22,11 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    flavorDimensions("bundleMode")
+    productFlavors {
+        create("bundledML").dimension("bundleMode")
+        create("unbundledML").dimension("bundleMode")
+    }
 }
 
 repositories {
@@ -34,6 +39,8 @@ repositories {
     }
 }
 
+val bundledMLImplementation by configurations
+val unbundledMLImplementation by configurations
 dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0-alpha02")
 
@@ -41,5 +48,6 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.0.0-beta12")
     implementation("androidx.camera:camera-view:1.0.0-alpha19")
 
-    implementation("com.google.android.gms:play-services-mlkit-barcode-scanning:16.1.2")
+    bundledMLImplementation("com.google.mlkit:barcode-scanning:16.0.3")
+    unbundledMLImplementation("com.google.android.gms:play-services-mlkit-barcode-scanning:16.1.2")
 }
