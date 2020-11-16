@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.Quickie" parent="Theme.AppCompat.DayNight.NoActionBar"/>
+</resources>
