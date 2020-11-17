@@ -17,16 +17,6 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:visibility="invisible"
-      />
-
-  <TextView
-      android:id="@+id/description_textview"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom|center_horizontal"
-      android:layout_marginBottom="16dp"
-      android:text="@string/scan_qr_code"
-      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-      android:textColor="@color/white"
+      tools:visibility="visible"
       />
 </FrameLayout>

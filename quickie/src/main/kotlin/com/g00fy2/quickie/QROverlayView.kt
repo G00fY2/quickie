@@ -10,16 +10,20 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
+import androidx.annotation.Px
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 class QROverlayView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
-  defStyleAttr: Int = 0,
-  defStyleRes: Int = 0
-) : View(context, attrs, defStyleAttr, defStyleRes) {
+  defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
 
   private val strokeColor = ContextCompat.getColor(context, R.color.qr_stroke_color)
   private val highlightedStrokeColor = ContextCompat.getColor(context, R.color.qr_highlighted_stroke_color)
@@ -32,6 +36,7 @@ class QROverlayView @JvmOverloads constructor(
   private val backgroundPaint = Paint().apply { color = backgroundColor }
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
   private val innerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, IN_RADIUS, resources.displayMetrics)
+  private val titleTextView: AppCompatTextView
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
   private var outerFrame = RectF()
@@ -42,6 +47,12 @@ class QROverlayView @JvmOverloads constructor(
       invalidate()
     }
 
+  init {
+    setWillNotDraw(false)
+    LayoutInflater.from(context).inflate(R.layout.qr_textview, this)
+    titleTextView = findViewById(R.id.title_textview)
+  }
+
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
     super.onLayout(changed, left, top, right, bottom)
     if (maskBitmap == null) {
@@ -49,7 +60,7 @@ class QROverlayView @JvmOverloads constructor(
         maskCanvas = Canvas(this)
       }
     }
-    calculateFramePos()
+    calculateFrameAndTitlePos()
   }
 
   override fun onDraw(canvas: Canvas) {
@@ -61,7 +72,7 @@ class QROverlayView @JvmOverloads constructor(
     super.onDraw(canvas)
   }
 
-  private fun calculateFramePos() {
+  private fun calculateFrameAndTitlePos() {
     val centralX = width / 2
     val centralY = height / 2
     val strokeLength = min(centralX, centralY) -
@@ -75,12 +86,22 @@ class QROverlayView @JvmOverloads constructor(
       outerFrame.left + strokeWidth, outerFrame.top + strokeWidth,
       outerFrame.right - strokeWidth, outerFrame.bottom - strokeWidth
     )
+
+    val topInsetsToOuterFrame = (-paddingTop + centralY - strokeLength).roundToInt()
+    val titleCenter = (topInsetsToOuterFrame - titleTextView.height) / 2
+    titleTextView.updateMargin(titleCenter)
+  }
+
+  private fun View.updateMargin(@Px top: Int) {
+    val params = layoutParams as MarginLayoutParams
+    params.topMargin = top
+    layoutParams = params
   }
 
   companion object {
     private const val STROKE_WIDTH = 4f
     private const val OUT_RADIUS = 16f
     private const val IN_RADIUS = OUT_RADIUS - STROKE_WIDTH
-    private const val FRAME_MARGINS = 24f
+    private const val FRAME_MARGINS = 32f
   }
 }
