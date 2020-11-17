@@ -5,4 +5,5 @@
   <color name="qr_highlighted_stroke_color">#1a73e8</color>
   <color name="qr_background_color">#b3000000</color> <!-- 70% black transparency -->
   <color name="transparent">#00000000</color>
+  <color name="white">#ffffff</color>
 </resources>

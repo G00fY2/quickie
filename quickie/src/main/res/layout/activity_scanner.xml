@@ -25,7 +25,8 @@
       android:layout_height="wrap_content"
       android:layout_gravity="bottom|center_horizontal"
       android:layout_marginBottom="16dp"
-      android:text="@string/scan_prompt"
-      android:textColor="#FFFFFF"
+      android:text="@string/scan_qr_code"
+      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+      android:textColor="@color/white"
       />
 </FrameLayout>
