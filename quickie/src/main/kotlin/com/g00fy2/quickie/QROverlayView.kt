@@ -35,7 +35,8 @@ class QROverlayView @JvmOverloads constructor(
   }
   private val backgroundPaint = Paint().apply { color = backgroundColor }
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
-  private val innerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, IN_RADIUS, resources.displayMetrics)
+  private val innerRadius =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS - STROKE_WIDTH, resources.displayMetrics)
   private val titleTextView: AppCompatTextView
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
@@ -75,8 +76,8 @@ class QROverlayView @JvmOverloads constructor(
   private fun calculateFrameAndTitlePos() {
     val centralX = width / 2
     val centralY = height / 2
-    val strokeLength = min(centralX, centralY) -
-        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, FRAME_MARGINS, resources.displayMetrics)
+    val minLength = min(centralX, centralY)
+    val strokeLength = minLength - (minLength * FRAME_MARGIN_RATIO)
     val strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, STROKE_WIDTH, resources.displayMetrics)
     outerFrame.set(
       centralX - strokeLength, centralY - strokeLength,
@@ -89,10 +90,12 @@ class QROverlayView @JvmOverloads constructor(
 
     val topInsetsToOuterFrame = (-paddingTop + centralY - strokeLength).roundToInt()
     val titleCenter = (topInsetsToOuterFrame - titleTextView.height) / 2
-    titleTextView.updateMargin(titleCenter)
+    titleTextView.updateTopMargin(titleCenter)
+    // hide title text if not enough vertical space
+    titleTextView.visibility = if (topInsetsToOuterFrame < titleTextView.height) View.INVISIBLE else View.VISIBLE
   }
 
-  private fun View.updateMargin(@Px top: Int) {
+  private fun View.updateTopMargin(@Px top: Int) {
     val params = layoutParams as MarginLayoutParams
     params.topMargin = top
     layoutParams = params
@@ -101,7 +104,6 @@ class QROverlayView @JvmOverloads constructor(
   companion object {
     private const val STROKE_WIDTH = 4f
     private const val OUT_RADIUS = 16f
-    private const val IN_RADIUS = OUT_RADIUS - STROKE_WIDTH
-    private const val FRAME_MARGINS = 32f
+    private const val FRAME_MARGIN_RATIO = 1f / 4
   }
 }

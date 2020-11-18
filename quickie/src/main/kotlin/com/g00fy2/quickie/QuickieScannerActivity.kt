@@ -95,12 +95,9 @@ class QuickieScannerActivity : AppCompatActivity() {
   private fun setupEdgeToEdgeUI() {
     WindowCompat.setDecorFitsSystemWindows(window, false)
     ViewCompat.setOnApplyWindowInsetsListener(binding.decorationView) { v, insets ->
-      v.setPadding(
-        0,
-        insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
-        0,
-        insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
-      )
+      insets.getInsets(WindowInsetsCompat.Type.systemBars()).let {
+        v.setPadding(it.left, it.top, it.right, it.bottom)
+      }
       insets
     }
   }
