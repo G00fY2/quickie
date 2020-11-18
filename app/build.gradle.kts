@@ -22,8 +22,12 @@ android {
   }
   flavorDimensions("bundleMode")
   productFlavors {
-    create("bundledML").dimension("bundleMode")
-    create("unbundledML").dimension("bundleMode")
+    create("bundledML") {
+      dimension("bundleMode")
+    }
+    create("unbundledML") {
+      dimension("bundleMode")
+    }
   }
   buildFeatures {
     viewBinding = true
@@ -58,7 +62,5 @@ dependencies {
   implementation(project(":quickie"))
 
   implementation("androidx.appcompat:appcompat:1.3.0-alpha02")
-
   implementation("com.google.android.material:material:1.2.1")
-  implementation("androidx.constraintlayout:constraintlayout:2.0.4")
 }
