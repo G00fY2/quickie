@@ -12,5 +12,6 @@
     <!-- Status bar color. -->
     <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     <!-- Customize your theme here. -->
+    <item name="maxActionInlineWidth">@dimen/design_snackbar_action_inline_max_width</item>
   </style>
 </resources>

@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">Quickie Sample</string>
+  <string name="copy_to_clipboard">copy to clipboard</string>
 </resources>
