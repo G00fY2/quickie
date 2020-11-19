@@ -41,7 +41,7 @@ class QuickieScannerActivity : ComponentActivity() {
       if (granted) {
         startCamera()
       } else {
-        setResult(RESULT_CANCELED, null)
+        setResult(RESULT_MISSING_PERMISSION, null)
         finish()
       }
     }
@@ -81,12 +81,12 @@ class QuickieScannerActivity : ComponentActivity() {
 
   private fun onSuccess(result: String) {
     binding.decorationView.isHighlighted = true
-    setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_DATA, result))
+    setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_RESULT_DATA, result))
     finish()
   }
 
   private fun onFailure(exception: Exception) {
-    setResult(RESULT_CANCELED, null)
+    setResult(RESULT_ERROR, Intent().putExtra(EXTRA_RESULT_EXCEPTION, exception))
     Log.e(localClassName, exception.message, exception)
     finish()
   }
@@ -125,6 +125,9 @@ class QuickieScannerActivity : ComponentActivity() {
   }
 
   companion object {
-    const val EXTRA_DATA = "quickie-data"
+    const val EXTRA_RESULT_DATA = "quickie-data"
+    const val EXTRA_RESULT_EXCEPTION = "quickie-exception"
+    const val RESULT_MISSING_PERMISSION = RESULT_FIRST_USER + 1
+    const val RESULT_ERROR = RESULT_FIRST_USER + 2
   }
 }

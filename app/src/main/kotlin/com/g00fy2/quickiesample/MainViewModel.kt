@@ -4,14 +4,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.g00fy2.quickie.QuickieResult
 import com.g00fy2.quickie.QuickieScan
 import com.g00fy2.quickiesample.livedata.SingleLiveEvent
 
 class MainViewModel : ViewModel() {
 
   private lateinit var getQrCode: ActivityResultLauncher<Nothing?>
-  private val _qrCodeState = SingleLiveEvent<String?>()
-  val qrCodeState: LiveData<String?> = _qrCodeState
+  private val _qrCodeState = SingleLiveEvent<QuickieResult>()
+  val qrCodeState: LiveData<QuickieResult> = _qrCodeState
 
   // TODO consider injecting the registry
   fun registerQrScanLauncher(registry: ActivityResultRegistry) {
