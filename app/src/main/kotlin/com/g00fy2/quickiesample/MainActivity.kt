@@ -3,11 +3,11 @@ package com.g00fy2.quickiesample
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.g00fy2.quickie.QuickieResult
-import com.g00fy2.quickie.QuickieResult.QuickieError
-import com.g00fy2.quickie.QuickieResult.QuickieMissingPermission
-import com.g00fy2.quickie.QuickieResult.QuickieSuccess
-import com.g00fy2.quickie.QuickieResult.QuickieUserCancel
+import com.g00fy2.quickie.QRResult
+import com.g00fy2.quickie.QRResult.QRError
+import com.g00fy2.quickie.QRResult.QRMissingPermission
+import com.g00fy2.quickie.QRResult.QRSuccess
+import com.g00fy2.quickie.QRResult.QRUserCanceled
 import com.g00fy2.quickiesample.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -29,18 +29,18 @@ class MainActivity : AppCompatActivity() {
 
     binding.buttonQrScanner.setOnClickListener {
       snackbar?.dismiss()
-      viewModel.getQrCode()
+      viewModel.scanQRCode()
     }
 
     viewModel.qrCodeState.observe(this) { showSnackbar(it) }
   }
 
-  private fun showSnackbar(result: QuickieResult) {
+  private fun showSnackbar(result: QRResult) {
     val text = when (result) {
-      is QuickieSuccess -> result.content
-      QuickieUserCancel -> "User canceled"
-      QuickieMissingPermission -> "Missing permission"
-      is QuickieError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
+      is QRSuccess -> result.content
+      QRUserCanceled -> "User canceled"
+      QRMissingPermission -> "Missing permission"
+      is QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
     }
 
     snackbar = Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {

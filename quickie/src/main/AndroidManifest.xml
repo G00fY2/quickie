@@ -9,7 +9,7 @@
   <application>
 
     <activity
-        android:name=".QuickieScannerActivity"
+        android:name=".QRScannerActivity"
         android:theme="@style/Theme.Quickie"/>
   </application>
 </manifest>
