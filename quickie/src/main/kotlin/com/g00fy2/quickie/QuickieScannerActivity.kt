@@ -114,7 +114,7 @@ class QuickieScannerActivity : ComponentActivity() {
     }
   }
 
-  private fun ComponentActivity.requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
+  private fun requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
       onResult(true)
     } else {
