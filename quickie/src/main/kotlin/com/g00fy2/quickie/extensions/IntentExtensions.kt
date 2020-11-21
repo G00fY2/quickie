@@ -15,10 +15,13 @@ import com.g00fy2.quickie.content.QRContent.CalendarEvent
 import com.g00fy2.quickie.content.QRContent.CalendarEvent.CalendarDateTime
 import com.g00fy2.quickie.content.QRContent.ContactInfo
 import com.g00fy2.quickie.content.QRContent.ContactInfo.Address
+import com.g00fy2.quickie.content.QRContent.ContactInfo.Address.AddressType
 import com.g00fy2.quickie.content.QRContent.ContactInfo.PersonName
 import com.g00fy2.quickie.content.QRContent.Email
+import com.g00fy2.quickie.content.QRContent.Email.EmailType
 import com.g00fy2.quickie.content.QRContent.GeoPoint
 import com.g00fy2.quickie.content.QRContent.Phone
+import com.g00fy2.quickie.content.QRContent.Phone.PhoneType
 import com.g00fy2.quickie.content.QRContent.Plain
 import com.g00fy2.quickie.content.QRContent.Sms
 import com.g00fy2.quickie.content.QRContent.Url
@@ -49,12 +52,18 @@ fun Intent?.toQuickieContentType(): QRContent {
     }
     Barcode.TYPE_EMAIL -> {
       getParcelableExtra<EmailParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
-        Email(rawValue = rawValue, address = address, body = body, subject = subject, type = type)
+        Email(
+          rawValue = rawValue,
+          address = address,
+          body = body,
+          subject = subject,
+          type = EmailType.values().getOrElse(type) { EmailType.UNKNOWN }
+        )
       }
     }
     Barcode.TYPE_PHONE -> {
       getParcelableExtra<PhoneParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
-        Phone(rawValue = rawValue, number = number, type = type)
+        Phone(rawValue = rawValue, number = number, type = PhoneType.values().getOrElse(type) { PhoneType.UNKNOWN })
       }
     }
     Barcode.TYPE_SMS -> {
@@ -96,12 +105,20 @@ fun Intent?.toQuickieContentType(): QRContent {
   return resultContent ?: Plain(rawValue)
 }
 
-private fun PhoneParcelable.toPhone(rawValue: String) = Phone(rawValue = rawValue, number = number, type = type)
+private fun PhoneParcelable.toPhone(rawValue: String) =
+  Phone(rawValue = rawValue, number = number, type = PhoneType.values().getOrElse(type) { PhoneType.UNKNOWN })
 
 private fun EmailParcelable.toEmail(rawValue: String) =
-  Email(rawValue = rawValue, address = address, body = body, subject = subject, type = type)
+  Email(
+    rawValue = rawValue,
+    address = address,
+    body = body,
+    subject = subject,
+    EmailType.values().getOrElse(type) { EmailType.UNKNOWN }
+  )
 
-private fun AddressParcelable.toAddress() = Address(addressLines = addressLines, type = type)
+private fun AddressParcelable.toAddress() =
+  Address(addressLines = addressLines, type = AddressType.values().getOrElse(type) { AddressType.UNKNOWN })
 
 private fun PersonNameParcelable.toPersonName() =
   PersonName(

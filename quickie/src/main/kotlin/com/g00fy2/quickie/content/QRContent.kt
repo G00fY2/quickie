@@ -20,11 +20,19 @@ sealed class QRContent(val rawValue: String) {
   class GeoPoint(rawValue: String, val lat: Double, val lng: Double) : QRContent(rawValue)
 
   // An email message from a 'MAILTO:' or similar QR Code type
-  class Email(rawValue: String, val address: String, val body: String, val subject: String, val type: Int) :
-    QRContent(rawValue)
+  class Email(rawValue: String, val address: String, val body: String, val subject: String, val type: EmailType) :
+    QRContent(rawValue) {
+    enum class EmailType {
+      UNKNOWN, WORK, HOME
+    }
+  }
 
   // A phone number from a 'TEL:' or similar QR Code type
-  class Phone(rawValue: String, val number: String, val type: Int) : QRContent(rawValue)
+  class Phone(rawValue: String, val number: String, val type: PhoneType) : QRContent(rawValue) {
+    enum class PhoneType {
+      UNKNOWN, WORK, HOME, FAX, MOBILE
+    }
+  }
 
   // A person's or organization's business card
   class ContactInfo(
@@ -38,7 +46,11 @@ sealed class QRContent(val rawValue: String) {
     val urls: List<String>
   ) : QRContent(rawValue) {
 
-    data class Address(val addressLines: List<String>, val type: Int)
+    data class Address(val addressLines: List<String>, val type: AddressType) {
+      enum class AddressType {
+        UNKNOWN, WORK, HOME
+      }
+    }
 
     data class PersonName(
       val first: String,
