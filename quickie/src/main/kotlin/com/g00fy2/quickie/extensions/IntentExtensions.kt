@@ -105,6 +105,14 @@ fun Intent?.toQuickieContentType(): QRContent {
   return resultContent ?: Plain(rawValue)
 }
 
+fun Intent?.getRootException(): Exception {
+  return try {
+    this?.getSerializableExtra(QRScannerActivity.EXTRA_RESULT_EXCEPTION) as Exception
+  } catch (e: Exception) {
+    IllegalStateException("Could retrieve root exception")
+  }
+}
+
 private fun PhoneParcelable.toPhone(rawValue: String) =
   Phone(rawValue = rawValue, number = number, type = PhoneType.values().getOrElse(type) { PhoneType.UNKNOWN })
 

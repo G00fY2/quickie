@@ -9,9 +9,9 @@ import com.g00fy2.quickie.QRResult.QRError
 import com.g00fy2.quickie.QRResult.QRMissingPermission
 import com.g00fy2.quickie.QRResult.QRSuccess
 import com.g00fy2.quickie.QRResult.QRUserCanceled
-import com.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_EXCEPTION
 import com.g00fy2.quickie.QRScannerActivity.Companion.RESULT_ERROR
 import com.g00fy2.quickie.QRScannerActivity.Companion.RESULT_MISSING_PERMISSION
+import com.g00fy2.quickie.extensions.getRootException
 import com.g00fy2.quickie.extensions.toQuickieContentType
 
 class ScanQRCode : ActivityResultContract<Nothing?, QRResult>() {
@@ -24,14 +24,8 @@ class ScanQRCode : ActivityResultContract<Nothing?, QRResult>() {
       RESULT_OK -> QRSuccess(intent.toQuickieContentType())
       RESULT_CANCELED -> QRUserCanceled
       RESULT_MISSING_PERMISSION -> QRMissingPermission
-      RESULT_ERROR -> {
-        try {
-          intent?.getSerializableExtra(EXTRA_RESULT_EXCEPTION) as Exception
-        } catch (e: Exception) {
-          IllegalStateException("Could retrieve root exception")
-        }.let { QRError(it) }
-      }
-      else -> QRError(IllegalStateException("Unknown result code $resultCode"))
+      RESULT_ERROR -> QRError(intent.getRootException())
+      else -> QRError(IllegalStateException("Unknown activity result code $resultCode"))
     }
   }
 }

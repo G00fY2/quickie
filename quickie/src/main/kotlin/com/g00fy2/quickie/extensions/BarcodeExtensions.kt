@@ -58,8 +58,7 @@ fun Barcode.toParcelableContentType(): Parcelable {
         summary = calendarEvent?.summary ?: ""
       )
     }
-    else -> EmptyParcelable
-    // TYPE_TEXT, TYPE_ISBN, TYPE_PRODUCT, TYPE_DRIVER_LICENSE currently unused
+    else -> EmptyParcelable // TYPE_TEXT, TYPE_ISBN, TYPE_PRODUCT, TYPE_DRIVER_LICENSE, TYPE_UNKNOWN
   }
 }
 
