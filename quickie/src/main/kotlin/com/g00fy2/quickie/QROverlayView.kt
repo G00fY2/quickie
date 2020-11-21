@@ -80,12 +80,16 @@ class QROverlayView @JvmOverloads constructor(
     val strokeLength = minLength - (minLength * FRAME_MARGIN_RATIO)
     val strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, STROKE_WIDTH, resources.displayMetrics)
     outerFrame.set(
-      centralX - strokeLength, centralY - strokeLength,
-      centralX + strokeLength, centralY + strokeLength
+      centralX - strokeLength,
+      centralY - strokeLength,
+      centralX + strokeLength,
+      centralY + strokeLength
     )
     innerFrame.set(
-      outerFrame.left + strokeWidth, outerFrame.top + strokeWidth,
-      outerFrame.right - strokeWidth, outerFrame.bottom - strokeWidth
+      outerFrame.left + strokeWidth,
+      outerFrame.top + strokeWidth,
+      outerFrame.right - strokeWidth,
+      outerFrame.bottom - strokeWidth
     )
 
     val topInsetsToOuterFrame = (-paddingTop + centralY - strokeLength).roundToInt()

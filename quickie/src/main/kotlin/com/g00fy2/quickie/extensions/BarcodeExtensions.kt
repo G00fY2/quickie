@@ -100,4 +100,3 @@ private fun Barcode.CalendarDateTime?.toParcelableCalendarEvent() =
     year = this?.year ?: -1,
     utc = this?.isUtc ?: false
   )
-

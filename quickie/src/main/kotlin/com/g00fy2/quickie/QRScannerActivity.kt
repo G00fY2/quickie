@@ -83,11 +83,14 @@ class QRScannerActivity : ComponentActivity() {
 
   private fun onSuccess(result: Barcode) {
     binding.decorationView.isHighlighted = true
-    setResult(Activity.RESULT_OK, Intent().apply {
-      putExtra(EXTRA_RESULT_VALUE, result.rawValue)
-      putExtra(EXTRA_RESULT_TYPE, result.valueType)
-      putExtra(EXTRA_RESULT_PARCELABLE, result.toParcelableContentType())
-    })
+    setResult(
+      Activity.RESULT_OK,
+      Intent().apply {
+        putExtra(EXTRA_RESULT_VALUE, result.rawValue)
+        putExtra(EXTRA_RESULT_TYPE, result.valueType)
+        putExtra(EXTRA_RESULT_PARCELABLE, result.toParcelableContentType())
+      }
+    )
     finish()
   }
 
@@ -105,10 +108,12 @@ class QRScannerActivity : ComponentActivity() {
       window.decorView.let {
         @Suppress("DEPRECATION")
         it.systemUiVisibility.let { flags ->
-          it.systemUiVisibility = (flags
+          it.systemUiVisibility = (
+            flags
               or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
               or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-              or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+              or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            )
         }
       }
     }
