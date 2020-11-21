@@ -1,21 +1,13 @@
-include(":app", ":quickie")
+include(":sample", ":quickie")
 
 pluginManagement {
-  val kotlinVersion: String by settings
-  val androidGradlePluginVersion: String by settings
-  val ktlintPluginVersion: String by settings
   repositories {
     google()
     gradlePluginPortal()
   }
   resolutionStrategy {
     eachPlugin {
-      when (requested.id.namespace) {
-        "com.android" -> useModule("com.android.tools.build:gradle:$androidGradlePluginVersion")
-        "org.jetbrains.kotlin" -> useVersion(kotlinVersion)
-        "org.jetbrains.kotlin.plugin" -> useVersion(kotlinVersion)
-        "org.jlleitschuh.gradle" -> useVersion(ktlintPluginVersion)
-      }
+      if (requested.id.namespace == "com.android") useModule("com.android.tools.build:gradle:${requested.version}")
     }
   }
 }

@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-  compileSdkVersion(30)
-  buildToolsVersion = "30.0.2"
+  compileSdkVersion(Config.androidCompileSdkVersion)
+  buildToolsVersion = Config.buildToolsVersion
   defaultConfig {
-    applicationId = "com.g00fy2.quickiesample"
-    minSdkVersion(21)
-    targetSdkVersion(30)
+    applicationId = Config.applicationId
+    minSdkVersion(Config.androidMinSdkVersion)
+    targetSdkVersion(Config.androidTargetSdkVersion)
     versionCode = 1
     versionName = "1.0"
   }
@@ -59,6 +59,6 @@ repositories {
 dependencies {
   implementation(project(":quickie"))
 
-  implementation("androidx.appcompat:appcompat:1.2.0")
-  implementation("com.google.android.material:material:1.2.1")
+  implementation(Deps.AndroidX.appcompat)
+  implementation(Deps.Mdc.materialDesign)
 }

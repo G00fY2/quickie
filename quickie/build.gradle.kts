@@ -1,13 +1,13 @@
 plugins {
-  id("com.android.library")
-  kotlin("android")
-  kotlin("plugin.parcelize")
+  id(Plugins.Android.library)
+  kotlin(Plugins.Kotlin.android)
+  kotlin(Plugins.Kotlin.parcelize)
 }
 
 android {
-  compileSdkVersion(30)
+  compileSdkVersion(Config.androidCompileSdkVersion)
   defaultConfig {
-    minSdkVersion(21)
+    minSdkVersion(Config.androidMinSdkVersion)
   }
   buildFeatures {
     viewBinding = true
@@ -48,15 +48,15 @@ repositories {
 val bundledMLImplementation by configurations
 val unbundledMLImplementation by configurations
 dependencies {
-  implementation("androidx.activity:activity:1.2.0-beta01")
-  implementation("androidx.fragment:fragment:1.3.0-beta01")
-  implementation("androidx.appcompat:appcompat:1.2.0")
-  implementation("androidx.core:core:1.3.2")
+  implementation(Deps.AndroidX.activity)
+  implementation(Deps.AndroidX.fragment)
+  implementation(Deps.AndroidX.appcompat)
+  implementation(Deps.AndroidX.core)
 
-  implementation("androidx.camera:camera-camera2:1.0.0-beta12")
-  implementation("androidx.camera:camera-lifecycle:1.0.0-beta12")
-  implementation("androidx.camera:camera-view:1.0.0-alpha19")
+  implementation(Deps.AndroidX.camera)
+  implementation(Deps.AndroidX.cameraLifecycle)
+  implementation(Deps.AndroidX.cameraPreview)
 
-  bundledMLImplementation("com.google.mlkit:barcode-scanning:16.0.3")
-  unbundledMLImplementation("com.google.android.gms:play-services-mlkit-barcode-scanning:16.1.2")
+  bundledMLImplementation(Deps.MLKit.barcodeScanning)
+  unbundledMLImplementation(Deps.MLKit.barcodeScanningGms)
 }

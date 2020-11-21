@@ -1,16 +1,35 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
 plugins {
-  id("com.android.application") apply false
-  kotlin("android") apply false
-  id("org.jlleitschuh.gradle.ktlint")
+  id(Plugins.Android.application) version Versions.androidGradle apply false
+  kotlin(Plugins.Kotlin.android) version Versions.kotlin apply false
+  id(Plugins.Misc.ktlint) version Versions.ktlintPlugin
+  id(Plugins.Misc.gradleVersions) version Versions.gradleVersions
 }
 
 subprojects {
-  apply(plugin = "org.jlleitschuh.gradle.ktlint")
+  apply(plugin = Plugins.Misc.ktlint)
   ktlint {
-    version.set("0.39.0")
+    version.set(Versions.ktlint)
     android.set(true)
   }
 }
+
+tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
+  gradleReleaseChannel = "current"
+  resolutionStrategy {
+    componentSelection {
+      all {
+        if (isNonStable(candidate.version) && !isNonStable(currentVersion)) {
+          reject("Release candidate")
+        }
+      }
+    }
+  }
+}
+
+fun isNonStable(version: String) = listOf("alpha", "beta", "rc", "cr", "m", "preview")
+  .any { version.matches(".*[.\\-]$it[.\\-\\d]*".toRegex(RegexOption.IGNORE_CASE)) }
 
 repositories {
   mavenCentral()
