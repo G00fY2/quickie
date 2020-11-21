@@ -12,6 +12,7 @@ pluginManagement {
       when (requested.id.namespace) {
         "com.android" -> useModule("com.android.tools.build:gradle:$androidGradlePluginVersion")
         "org.jetbrains.kotlin" -> useVersion(kotlinVersion)
+        "org.jetbrains.kotlin.plugin" -> useVersion(kotlinVersion)
       }
     }
   }

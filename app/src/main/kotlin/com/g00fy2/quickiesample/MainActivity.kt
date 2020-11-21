@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showSnackbar(result: QRResult) {
     val text = when (result) {
-      is QRSuccess -> result.content
+      is QRSuccess -> result.content.rawValue
       QRUserCanceled -> "User canceled"
       QRMissingPermission -> "Missing permission"
       is QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"

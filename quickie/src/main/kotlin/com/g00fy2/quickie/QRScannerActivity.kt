@@ -19,6 +19,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.g00fy2.quickie.databinding.ActivityScannerBinding
+import com.g00fy2.quickie.extensions.toParcelableContentType
+import com.google.mlkit.vision.barcode.Barcode
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -79,9 +81,13 @@ class QRScannerActivity : ComponentActivity() {
     }
   }
 
-  private fun onSuccess(result: String) {
+  private fun onSuccess(result: Barcode) {
     binding.decorationView.isHighlighted = true
-    setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_RESULT_DATA, result))
+    setResult(Activity.RESULT_OK, Intent().apply {
+      putExtra(EXTRA_RESULT_VALUE, result.rawValue)
+      putExtra(EXTRA_RESULT_TYPE, result.valueType)
+      putExtra(EXTRA_RESULT_PARCELABLE, result.toParcelableContentType())
+    })
     finish()
   }
 
@@ -125,7 +131,9 @@ class QRScannerActivity : ComponentActivity() {
   }
 
   companion object {
-    const val EXTRA_RESULT_DATA = "quickie-data"
+    const val EXTRA_RESULT_VALUE = "quickie-value"
+    const val EXTRA_RESULT_TYPE = "quickie-type"
+    const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"
     const val EXTRA_RESULT_EXCEPTION = "quickie-exception"
     const val RESULT_MISSING_PERMISSION = RESULT_FIRST_USER + 1
     const val RESULT_ERROR = RESULT_FIRST_USER + 2

@@ -10,7 +10,8 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
 @ExperimentalGetImage
-class QRCodeAnalyzer(val onSuccess: ((String) -> Unit), val onFailure: ((Exception) -> Unit)) : ImageAnalysis.Analyzer {
+class QRCodeAnalyzer(val onSuccess: ((Barcode) -> Unit), val onFailure: ((Exception) -> Unit)) :
+  ImageAnalysis.Analyzer {
 
   private var pendingTask: Task<List<Barcode>>? = null
   private val barcodeScanner by lazy {
@@ -21,7 +22,7 @@ class QRCodeAnalyzer(val onSuccess: ((String) -> Unit), val onFailure: ((Excepti
     if (pendingTask?.isComplete == false || imageProxy.image == null) return
 
     pendingTask = barcodeScanner.process(imageProxy.toInputImage())
-      .addOnSuccessListener { codes -> codes.mapNotNull { it.rawValue }.firstOrNull()?.let { onSuccess(it) } }
+      .addOnSuccessListener { codes -> codes.mapNotNull { it }.firstOrNull()?.let { onSuccess(it) } }
       .addOnFailureListener { onFailure(it) }
       .addOnCompleteListener { imageProxy.close() }
   }
