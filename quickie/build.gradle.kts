@@ -11,6 +11,7 @@ android {
   }
   buildFeatures {
     viewBinding = true
+    buildConfig = false
   }
   sourceSets {
     getByName("main") {
