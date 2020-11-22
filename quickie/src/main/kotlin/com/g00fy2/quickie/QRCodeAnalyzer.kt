@@ -10,7 +10,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
 @ExperimentalGetImage
-class QRCodeAnalyzer(val onSuccess: ((Barcode) -> Unit), val onFailure: ((Exception) -> Unit)) :
+internal class QRCodeAnalyzer(val onSuccess: ((Barcode) -> Unit), val onFailure: ((Exception) -> Unit)) :
   ImageAnalysis.Analyzer {
 
   private var pendingTask: Task<List<Barcode>>? = null

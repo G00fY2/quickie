@@ -4,7 +4,7 @@ sealed class QRContent(val rawValue: String) {
 
   override fun toString() = rawValue
 
-  // plain text or unknown content QR Code type
+  // Plain text or unknown content QR Code type
   class Plain(rawValue: String) : QRContent(rawValue)
 
   // Wi-Fi access point details from a 'WIFI:' or similar QR Code type

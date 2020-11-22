@@ -4,22 +4,22 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-object EmptyParcelable : Parcelable
+internal object EmptyParcelable : Parcelable
 
 @Parcelize
-data class WifiParcelable(val encryptionType: Int, val password: String, val ssid: String) : Parcelable
+internal data class WifiParcelable(val encryptionType: Int, val password: String, val ssid: String) : Parcelable
 
 @Parcelize
-data class UrlBookmarkParcelable(val title: String, val url: String) : Parcelable
+internal data class UrlBookmarkParcelable(val title: String, val url: String) : Parcelable
 
 @Parcelize
-data class SmsParcelable(val message: String, val phoneNumber: String) : Parcelable
+internal data class SmsParcelable(val message: String, val phoneNumber: String) : Parcelable
 
 @Parcelize
-data class GeoPointParcelable(val lat: Double, val lng: Double) : Parcelable
+internal data class GeoPointParcelable(val lat: Double, val lng: Double) : Parcelable
 
 @Parcelize
-data class ContactInfoParcelable(
+internal data class ContactInfoParcelable(
   val addressParcelables: List<AddressParcelable>,
   val emailParcelables: List<EmailParcelable>,
   val nameParcelable: PersonNameParcelable,
@@ -30,13 +30,13 @@ data class ContactInfoParcelable(
 ) : Parcelable
 
 @Parcelize
-data class EmailParcelable(val address: String, val body: String, val subject: String, val type: Int) : Parcelable
+internal data class EmailParcelable(val address: String, val body: String, val subject: String, val type: Int) : Parcelable
 
 @Parcelize
-data class PhoneParcelable(val number: String, val type: Int) : Parcelable
+internal data class PhoneParcelable(val number: String, val type: Int) : Parcelable
 
 @Parcelize
-data class PersonNameParcelable(
+internal data class PersonNameParcelable(
   val first: String,
   val formattedName: String,
   val last: String,
@@ -47,7 +47,7 @@ data class PersonNameParcelable(
 ) : Parcelable
 
 @Parcelize
-data class CalendarEventParcelable(
+internal data class CalendarEventParcelable(
   val description: String,
   val end: CalendarDateTimeParcelable,
   val location: String,
@@ -58,7 +58,7 @@ data class CalendarEventParcelable(
 ) : Parcelable
 
 @Parcelize
-data class CalendarDateTimeParcelable(
+internal data class CalendarDateTimeParcelable(
   val day: Int,
   val hours: Int,
   val minutes: Int,
@@ -69,4 +69,4 @@ data class CalendarDateTimeParcelable(
 ) : Parcelable
 
 @Parcelize
-data class AddressParcelable(val addressLines: List<String>, val type: Int) : Parcelable
+internal data class AddressParcelable(val addressLines: List<String>, val type: Int) : Parcelable

@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @ExperimentalGetImage
-class QRScannerActivity : ComponentActivity() {
+internal class QRScannerActivity : ComponentActivity() {
 
   private lateinit var binding: ActivityScannerBinding
   private lateinit var cameraExecutor: ExecutorService

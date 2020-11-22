@@ -19,7 +19,7 @@ import androidx.core.content.ContextCompat
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class QROverlayView @JvmOverloads constructor(
+internal class QROverlayView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0

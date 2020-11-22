@@ -31,7 +31,7 @@ import com.g00fy2.quickie.content.UrlBookmarkParcelable
 import com.g00fy2.quickie.content.WifiParcelable
 import com.google.mlkit.vision.barcode.Barcode
 
-fun Intent?.toQuickieContentType(): QRContent {
+internal fun Intent?.toQuickieContentType(): QRContent {
   if (this == null) return Plain("")
 
   val rawValue = getStringExtra(QRScannerActivity.EXTRA_RESULT_VALUE) ?: ""
@@ -105,7 +105,7 @@ fun Intent?.toQuickieContentType(): QRContent {
   return resultContent ?: Plain(rawValue)
 }
 
-fun Intent?.getRootException(): Exception {
+internal fun Intent?.getRootException(): Exception {
   return try {
     this?.getSerializableExtra(QRScannerActivity.EXTRA_RESULT_EXCEPTION) as Exception
   } catch (e: Exception) {
