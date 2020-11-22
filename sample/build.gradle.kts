@@ -20,13 +20,13 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
-  flavorDimensions("bundleMode")
+  flavorDimensions("mlkit")
   productFlavors {
-    create("bundledML") {
-      dimension("bundleMode")
+    create("bundled") {
+      dimension("mlkit")
     }
-    create("unbundledML") {
-      dimension("bundleMode")
+    create("unbundled") {
+      dimension("mlkit")
     }
   }
   buildFeatures {
