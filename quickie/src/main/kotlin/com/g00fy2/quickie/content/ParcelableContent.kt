@@ -30,7 +30,8 @@ internal data class ContactInfoParcelable(
 ) : Parcelable
 
 @Parcelize
-internal data class EmailParcelable(val address: String, val body: String, val subject: String, val type: Int) : Parcelable
+internal data class EmailParcelable(val address: String, val body: String, val subject: String, val type: Int) :
+  Parcelable
 
 @Parcelize
 internal data class PhoneParcelable(val number: String, val type: Int) : Parcelable
