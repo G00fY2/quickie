@@ -13,8 +13,8 @@
     android:paddingEnd="24dp"
     android:paddingStart="24dp"
     android:paddingTop="8dp"
-    android:text="@string/scan_qr_code"
+    android:text="@string/quickie_scan_qr_code"
     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-    android:textColor="@color/white"
-    app:drawableTopCompat="@drawable/ic_qrcode_32"
+    android:textColor="@color/quickie_white"
+    app:drawableTopCompat="@drawable/quickie_ic_qrcode"
     />

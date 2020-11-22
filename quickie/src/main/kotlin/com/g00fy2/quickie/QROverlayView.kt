@@ -25,12 +25,12 @@ internal class QROverlayView @JvmOverloads constructor(
   defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-  private val strokeColor = ContextCompat.getColor(context, R.color.qr_stroke_color)
-  private val highlightedStrokeColor = ContextCompat.getColor(context, R.color.qr_highlighted_stroke_color)
-  private val backgroundColor = ContextCompat.getColor(context, R.color.qr_background_color)
+  private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
+  private val highlightedStrokeColor = ContextCompat.getColor(context, R.color.quickie_highlighted_stroke_color)
+  private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    color = ContextCompat.getColor(context, android.R.color.transparent)
+    color = ContextCompat.getColor(context, R.color.quickie_transparent)
     xfermode = PorterDuffXfermode(CLEAR)
   }
   private val backgroundPaint = Paint().apply { color = backgroundColor }
@@ -50,7 +50,7 @@ internal class QROverlayView @JvmOverloads constructor(
 
   init {
     setWillNotDraw(false)
-    LayoutInflater.from(context).inflate(R.layout.qr_textview, this)
+    LayoutInflater.from(context).inflate(R.layout.quickie_textview, this)
     titleTextView = findViewById(R.id.title_textview)
   }
 

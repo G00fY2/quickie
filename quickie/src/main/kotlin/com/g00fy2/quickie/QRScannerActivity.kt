@@ -18,7 +18,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.g00fy2.quickie.databinding.ActivityScannerBinding
+import com.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import com.g00fy2.quickie.extensions.toParcelableContentType
 import com.google.mlkit.vision.barcode.Barcode
 import java.util.concurrent.ExecutorService
@@ -27,12 +27,12 @@ import java.util.concurrent.Executors
 @ExperimentalGetImage
 internal class QRScannerActivity : ComponentActivity() {
 
-  private lateinit var binding: ActivityScannerBinding
+  private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var cameraExecutor: ExecutorService
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = ActivityScannerBinding.inflate(layoutInflater)
+    binding = QuickieScannerActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
     setupEdgeToEdgeUI()

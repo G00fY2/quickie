@@ -10,6 +10,6 @@
 
     <activity
         android:name=".QRScannerActivity"
-        android:theme="@style/Theme.Quickie"/>
+        android:theme="@style/QuickieScannerActivity"/>
   </application>
 </manifest>
