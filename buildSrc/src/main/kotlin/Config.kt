@@ -1,3 +1,4 @@
+@Suppress("MemberVisibilityCanBePrivate")
 object Config {
   const val applicationId = "com.g00fy2.quickiesample"
 

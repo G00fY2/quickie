@@ -9,7 +9,7 @@ android {
   defaultConfig {
     minSdkVersion(Config.androidMinSdkVersion)
   }
-  resourcePrefix =  project.name
+  resourcePrefix = project.name
   buildFeatures {
     viewBinding = true
     buildConfig = false

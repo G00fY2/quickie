@@ -1,5 +1,6 @@
 package com.g00fy2.quickie.content
 
+@Suppress("unused")
 sealed class QRContent(val rawValue: String) {
 
   override fun toString() = rawValue

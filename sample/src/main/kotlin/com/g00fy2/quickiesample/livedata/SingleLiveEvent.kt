@@ -34,6 +34,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
   }
 
   // Used for cases where T is Void, to make calls cleaner
+  @Suppress("UsePropertyAccessSyntax")
   @MainThread
   fun call() {
     setValue(null)
