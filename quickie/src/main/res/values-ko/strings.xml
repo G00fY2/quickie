@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="quickie_scan_qr_code" >"QR 코드 스캔"</string>
+  <string name="quickie_scan_qr_code">"QR 코드 스캔"</string>
 </resources>
