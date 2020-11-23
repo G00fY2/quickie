@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff.Mode.CLEAR
 import android.graphics.PorterDuffXfermode
@@ -28,12 +29,13 @@ internal class QROverlayView @JvmOverloads constructor(
   private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
   private val highlightedStrokeColor = ContextCompat.getColor(context, R.color.quickie_highlighted_stroke_color)
   private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
+  // alpha paint used for drawing the bitmap. So the final background alpha will be multiplied
+  private val alphaPaint = Paint().apply { alpha = Color.alpha(backgroundColor) }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
     color = ContextCompat.getColor(context, R.color.quickie_transparent)
     xfermode = PorterDuffXfermode(CLEAR)
   }
-  private val backgroundPaint = Paint().apply { color = backgroundColor }
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
   private val innerRadius =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS - STROKE_WIDTH, resources.displayMetrics)
@@ -69,7 +71,7 @@ internal class QROverlayView @JvmOverloads constructor(
     maskCanvas!!.drawColor(backgroundColor)
     maskCanvas!!.drawRoundRect(outerFrame, radius, radius, strokePaint)
     maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, transparentPaint)
-    canvas.drawBitmap(maskBitmap!!, 0f, 0f, backgroundPaint)
+    canvas.drawBitmap(maskBitmap!!, 0f, 0f, alphaPaint)
     super.onDraw(canvas)
   }
 
