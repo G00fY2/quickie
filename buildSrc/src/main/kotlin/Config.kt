@@ -1,8 +1,8 @@
 @Suppress("MemberVisibilityCanBePrivate")
 object Config {
-  const val activitySampleId = "com.g00fy2.quickieactivitysample"
-  const val fragmentSampleId = "com.g00fy2.quickiefragmentsample"
-  const val advancedSampleId = "com.g00fy2.quickieadvancedsample"
+  const val activitySampleAppId = "com.g00fy2.quickieactivitysample"
+  const val fragmentSampleAppId = "com.g00fy2.quickiefragmentsample"
+  const val advancedSampleAppId = "com.g00fy2.quickieadvancedsample"
 
   const val androidMinSdkVersion = 21
   const val androidCompileSdkVersion = 30

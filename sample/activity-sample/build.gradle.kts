@@ -7,7 +7,7 @@ android {
   compileSdkVersion(Config.androidCompileSdkVersion)
   buildToolsVersion = Config.buildToolsVersion
   defaultConfig {
-    applicationId = Config.activitySampleId
+    applicationId = Config.activitySampleAppId
     minSdkVersion(Config.androidMinSdkVersion)
     targetSdkVersion(Config.androidTargetSdkVersion)
     versionCode = 1
