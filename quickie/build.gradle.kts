@@ -74,28 +74,55 @@ tasks.register<Jar>("androidSourcesJar") {
   from(android.sourceSets.getByName("main").java.srcDirs)
 }
 
+// JCenter does not support Gradle module metadata
+tasks.withType<GenerateModuleMetadata> {
+  enabled = false
+}
+
 afterEvaluate {
   publishing {
+    // publishBundledReleasePublicationToBintrayQuickieBundledRepository -Pbintray_user=name -Pbintray_key=key
     publications {
       create<MavenPublication>("bundledRelease") {
         from(components["bundledRelease"])
-        artifactId = "quickie-bundled"
+        val libraryName = "quickie-bundled"
+        artifactId = libraryName
         artifact(tasks.named("androidSourcesJar"))
-        configurePom()
+        configurePom(libraryName)
       }
+      // publishUnbundledReleasePublicationToBintrayQuickieUnbundledRepository -Pbintray_user=name -Pbintray_key=key
       create<MavenPublication>("unbundledRelease") {
         from(components["unbundledRelease"])
-        artifactId = "quickie-unbundled"
+        val libraryName = "quickie-unbundled"
+        artifactId = libraryName
         artifact(tasks.named("androidSourcesJar"))
-        configurePom()
+        configurePom(libraryName)
+      }
+    }
+    repositories {
+      maven {
+        name = "bintrayQuickieBundled"
+        url = uri("https://api.bintray.com/maven/g00fy2/maven/quickie-bundled/;publish=1;")
+        credentials {
+          username = findProperty("bintray_user") as String?
+          password = findProperty("bintray_key") as String?
+        }
+      }
+      maven {
+        name = "bintrayQuickieUnbundled"
+        url = uri("https://api.bintray.com/maven/g00fy2/maven/quickie-unbundled/;publish=1;")
+        credentials {
+          username = findProperty("bintray_user") as String?
+          password = findProperty("bintray_key") as String?
+        }
       }
     }
   }
 }
 
-fun MavenPublication.configurePom() {
+fun MavenPublication.configurePom(libraryName: String) {
   pom {
-    name.set(project.name)
+    name.set(libraryName)
     description.set("Android QR code scanner library")
     url.set("https://github.com/G00fY2/Quickie")
     licenses {
