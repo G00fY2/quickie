@@ -2,7 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
   id(Plugins.Android.application) version Versions.androidGradle apply false
-  kotlin(Plugins.Kotlin.android) version Versions.kotlin apply false
+  kotlin(Plugins.Kotlin.androidGradle) version Versions.kotlin apply false
   id(Plugins.Misc.ktlint) version Versions.ktlintPlugin
   id(Plugins.Misc.gradleVersions) version Versions.gradleVersions
 }

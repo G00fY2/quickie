@@ -1,7 +1,8 @@
 plugins {
   id(Plugins.Android.library)
-  kotlin(Plugins.Kotlin.android)
-  kotlin(Plugins.Kotlin.parcelize)
+  id(Plugins.Kotlin.android)
+  id(Plugins.Kotlin.parcelize)
+  id(Plugins.Kotlin.dokka) version Versions.dokka
   `maven-publish`
 }
 
@@ -43,7 +44,7 @@ repositories {
   mavenCentral()
   jcenter {
     content {
-      includeModule("org.jetbrains.trove4j", "trove4j") // required by com.android.tools.lint:lint-gradle
+      includeGroupByRegex("org\\.jetbrains.*")
     }
   }
 }
