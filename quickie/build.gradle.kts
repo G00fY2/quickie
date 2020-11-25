@@ -45,6 +45,7 @@ repositories {
   jcenter {
     content {
       includeGroupByRegex("org\\.jetbrains.*")
+      includeModule("com.soywiz.korlibs.korte","korte-jvm")
     }
   }
 }
@@ -65,10 +66,14 @@ dependencies {
   unbundledImplementation(Deps.MLKit.barcodeScanningGms)
 }
 
-group = "com.github.g00fy2" // TODO sync final groupId and package names
+group = "com.g00fy2"
 version = "0.1.0"
 
-// TODO add Dokka and javadocJar task
+tasks.register<Jar>("androidJavadocJar") {
+  archiveClassifier.set("javadoc")
+  from("$buildDir/dokka/javadoc")
+  dependsOn("dokkaJavadoc")
+}
 
 tasks.register<Jar>("androidSourcesJar") {
   archiveClassifier.set("sources")
@@ -88,6 +93,7 @@ afterEvaluate {
         from(components["bundledRelease"])
         val libraryName = "quickie-bundled"
         artifactId = libraryName
+        artifact(tasks.named("androidJavadocJar"))
         artifact(tasks.named("androidSourcesJar"))
         configurePom(libraryName)
       }
@@ -96,6 +102,7 @@ afterEvaluate {
         from(components["unbundledRelease"])
         val libraryName = "quickie-unbundled"
         artifactId = libraryName
+        artifact(tasks.named("androidJavadocJar"))
         artifact(tasks.named("androidSourcesJar"))
         configurePom(libraryName)
       }

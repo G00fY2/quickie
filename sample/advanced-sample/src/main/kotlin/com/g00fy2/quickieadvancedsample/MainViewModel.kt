@@ -14,7 +14,7 @@ class MainViewModel : ViewModel() {
   private val _qrCodeState = SingleLiveEvent<QRResult>()
   val qrCodeState: LiveData<QRResult> = _qrCodeState
 
-  // TODO consider injecting the registry
+  // consider injecting the registry
   fun registerQrScanLauncher(registry: ActivityResultRegistry) {
     scanQRCodeLauncher = registry.register("key", ScanQRCode()) { qrResult ->
       _qrCodeState.value = qrResult
