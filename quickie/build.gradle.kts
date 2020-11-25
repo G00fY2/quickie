@@ -127,7 +127,7 @@ fun MavenPublication.configurePom(libraryName: String) {
     url.set("https://github.com/G00fY2/Quickie")
     licenses {
       license {
-        name.set("The MIT License")
+        name.set("MIT License")
         url.set("https://opensource.org/licenses/MIT")
       }
     }
