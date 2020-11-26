@@ -135,6 +135,7 @@ internal class QRScannerActivity : ComponentActivity() {
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
       onResult(true)
     } else {
+      // register the activity result here is allowed since we call this in onCreate only
       registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         onResult(it)
       }.launch(Manifest.permission.CAMERA)
