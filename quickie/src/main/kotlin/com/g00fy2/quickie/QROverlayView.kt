@@ -27,7 +27,7 @@ internal class QROverlayView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
   private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
-  private val highlightedStrokeColor: Int = getAccentColor()
+  private val highlightedStrokeColor = getAccentColor()
   private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
   // alpha paint used for drawing the bitmap. So the final background alpha will be multiplied
   private val alphaPaint = Paint().apply { alpha = Color.alpha(backgroundColor) }
