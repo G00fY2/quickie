@@ -1,3 +1,4 @@
+![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png)
 # Quickie [![Build Status](https://github.com/G00fY2/Quickie/workflows/Android%20CI/badge.svg)](https://github.com/G00fY2/Quickie/actions)
 
 Android QR code scanner library - work in progress
