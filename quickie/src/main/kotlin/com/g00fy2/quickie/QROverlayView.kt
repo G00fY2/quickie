@@ -27,7 +27,7 @@ internal class QROverlayView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
   private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
-  private val highlightedStrokeColor = ContextCompat.getColor(context, R.color.quickie_highlighted_stroke_color)
+  private val highlightedStrokeColor: Int = getAccentColor()
   private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
   // alpha paint used for drawing the bitmap. So the final background alpha will be multiplied
   private val alphaPaint = Paint().apply { alpha = Color.alpha(backgroundColor) }
@@ -100,6 +100,9 @@ internal class QROverlayView @JvmOverloads constructor(
     // hide title text if not enough vertical space
     titleTextView.visibility = if (topInsetsToOuterFrame < titleTextView.height) View.INVISIBLE else View.VISIBLE
   }
+
+  private fun View.getAccentColor() =
+    TypedValue().let { if (context.theme.resolveAttribute(R.attr.colorAccent, it, true)) it.data else Color.WHITE }
 
   private fun View.updateTopMargin(@Px top: Int) {
     val params = layoutParams as MarginLayoutParams
