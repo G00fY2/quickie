@@ -1,7 +1,13 @@
-![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png)
-# Quickie [![Build Status](https://github.com/G00fY2/Quickie/workflows/Android%20CI/badge.svg)](https://github.com/G00fY2/Quickie/actions)
+![Image]()
+<p align="center">
+  <img width="227" height="120" src="https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png">
+</p>
 
-Android QR code scanner library - work in progress
+**quickie** is an Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's written in Kotlin and allows easy integration by using the AndroidX Activity Result API. quickie features:
+- Modern design, edge-to-edge scanning view with multilingual user hint
+- Easy API for launching the QR scanner and receiving results
+- Android Jetpack CameraX for communicating with the camera and showing the preview
+- Firebase ML Kit on-device barcode recognition and decoding (no network connection required)
 
 ## License
      The MIT License (MIT)
