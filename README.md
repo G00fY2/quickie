@@ -25,7 +25,7 @@ implementation("com.g00fy2:quickie:quickie-unbundled:0.1.0")
 ```
 
 ## Quick Start
-To use the QR scanner simply register the Activity result with a custom callback in the `initialization` or `onCreate()` lifecycle of your Activity/Fragment and call `launch(null)` to start it:
+To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract and a custom callback in the `initialization` or `onCreate()` lifecycle of your Activity/Fragment and call `launch(null)` to start it:
 ```kotlin
 private val scanQrCode = registerForActivityResult(ScanQRCode()) { handleResult(it) }
 
