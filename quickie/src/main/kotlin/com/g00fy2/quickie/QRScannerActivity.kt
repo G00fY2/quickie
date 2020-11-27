@@ -11,6 +11,7 @@ import android.util.Size
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
@@ -18,21 +19,26 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.g00fy2.quickie.databinding.ActivityScannerBinding
+import com.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import com.g00fy2.quickie.extensions.toParcelableContentType
 import com.google.mlkit.vision.barcode.Barcode
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @ExperimentalGetImage
-class QRScannerActivity : ComponentActivity() {
+internal class QRScannerActivity : ComponentActivity() {
 
-  private lateinit var binding: ActivityScannerBinding
+  private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var cameraExecutor: ExecutorService
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = ActivityScannerBinding.inflate(layoutInflater)
+    val themedInflater = if (applicationInfo.theme != 0) {
+      layoutInflater.cloneInContext(ContextThemeWrapper(this, applicationInfo.theme))
+    } else {
+      layoutInflater
+    }
+    binding = QuickieScannerActivityBinding.inflate(themedInflater)
     setContentView(binding.root)
 
     setupEdgeToEdgeUI()
@@ -129,6 +135,7 @@ class QRScannerActivity : ComponentActivity() {
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
       onResult(true)
     } else {
+      // register the activity result here is allowed since we call this in onCreate only
       registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         onResult(it)
       }.launch(Manifest.permission.CAMERA)

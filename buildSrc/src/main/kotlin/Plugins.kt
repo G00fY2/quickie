@@ -6,8 +6,10 @@ object Plugins {
   }
 
   object Kotlin {
-    const val android = "android"
-    const val parcelize = "plugin.parcelize"
+    const val androidGradle = "android"
+    const val android = "kotlin-android"
+    const val parcelize = "kotlin-parcelize"
+    const val dokka = "org.jetbrains.dokka"
   }
 
   object Misc {

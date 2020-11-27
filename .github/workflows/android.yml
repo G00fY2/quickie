@@ -3,9 +3,11 @@ name: Android CI
 on:
   push:
     branches:
+      - develop
       - master
   pull_request:
     branches:
+      - develop
       - master
 
 jobs:
@@ -33,4 +35,4 @@ jobs:
         with:
           java-version: 1.8
       - name: Build debug sample app
-        run: ./gradlew :sample:assembleBundledMLDebug
+        run: ./gradlew :activity-sample:assembleBundledDebug :advanced-sample:assembleBundledDebug :fragment-sample:assembleBundledDebug

@@ -1,25 +1,38 @@
 package com.g00fy2.quickie.content
 
+@Suppress("unused")
 sealed class QRContent(val rawValue: String) {
 
   override fun toString() = rawValue
 
-  // plain text or unknown content QR Code type
+  /**
+   * Plain text or unknown content QR Code type.
+   */
   class Plain(rawValue: String) : QRContent(rawValue)
 
-  // Wi-Fi access point details from a 'WIFI:' or similar QR Code type
+  /**
+   * Wi-Fi access point details from a 'WIFI:' or similar QR Code type.
+   */
   class Wifi(rawValue: String, val encryptionType: Int, val password: String, val ssid: String) : QRContent(rawValue)
 
-  // A URL or URL bookmark from a 'MEBKM:' or similar QR Code type
+  /**
+   * A URL or URL bookmark from a 'MEBKM:' or similar QR Code type.
+   */
   class Url(rawValue: String, val title: String, val url: String) : QRContent(rawValue)
 
-  // An SMS message from an 'SMS:' or similar QR Code type
+  /**
+   * An SMS message from an 'SMS:' or similar QR Code type.
+   */
   class Sms(rawValue: String, val message: String, val phoneNumber: String) : QRContent(rawValue)
 
-  // GPS coordinates from a 'GEO:' or similar QR Code type
+  /**
+   * GPS coordinates from a 'GEO:' or similar QR Code type.
+   */
   class GeoPoint(rawValue: String, val lat: Double, val lng: Double) : QRContent(rawValue)
 
-  // An email message from a 'MAILTO:' or similar QR Code type
+  /**
+   * An email message from a 'MAILTO:' or similar QR Code type.
+   */
   class Email(rawValue: String, val address: String, val body: String, val subject: String, val type: EmailType) :
     QRContent(rawValue) {
     enum class EmailType {
@@ -27,14 +40,18 @@ sealed class QRContent(val rawValue: String) {
     }
   }
 
-  // A phone number from a 'TEL:' or similar QR Code type
+  /**
+   * A phone number from a 'TEL:' or similar QR Code type.
+   */
   class Phone(rawValue: String, val number: String, val type: PhoneType) : QRContent(rawValue) {
     enum class PhoneType {
       UNKNOWN, WORK, HOME, FAX, MOBILE
     }
   }
 
-  // A person's or organization's business card
+  /**
+   * A person's or organization's business card.
+   */
   class ContactInfo(
     rawValue: String,
     val addresses: List<Address>,
@@ -63,7 +80,9 @@ sealed class QRContent(val rawValue: String) {
     )
   }
 
-  // A calendar event extracted from a QR Code
+  /**
+   * A calendar event extracted from a QR Code.
+   */
   class CalendarEvent(
     rawValue: String,
     val description: String,

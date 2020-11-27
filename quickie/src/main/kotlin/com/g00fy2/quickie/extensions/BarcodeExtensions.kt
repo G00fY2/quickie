@@ -15,7 +15,7 @@ import com.g00fy2.quickie.content.UrlBookmarkParcelable
 import com.g00fy2.quickie.content.WifiParcelable
 import com.google.mlkit.vision.barcode.Barcode
 
-fun Barcode.toParcelableContentType(): Parcelable {
+internal fun Barcode.toParcelableContentType(): Parcelable {
   return when (valueType) {
     Barcode.TYPE_CONTACT_INFO -> {
       ContactInfoParcelable(

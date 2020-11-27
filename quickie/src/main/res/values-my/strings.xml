@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="scan_qr_code">"QR ကုဒ်ကို စကင်ဖတ်ပါ"</string>
+  <string name="quickie_scan_qr_code">"QR ကုဒ်ကို စကင်ဖတ်ပါ"</string>
 </resources>

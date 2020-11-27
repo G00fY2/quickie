@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff.Mode.CLEAR
 import android.graphics.PorterDuffXfermode
@@ -19,21 +20,22 @@ import androidx.core.content.ContextCompat
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class QROverlayView @JvmOverloads constructor(
+internal class QROverlayView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-  private val strokeColor = ContextCompat.getColor(context, R.color.qr_stroke_color)
-  private val highlightedStrokeColor = ContextCompat.getColor(context, R.color.qr_highlighted_stroke_color)
-  private val backgroundColor = ContextCompat.getColor(context, R.color.qr_background_color)
+  private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
+  private val highlightedStrokeColor = getAccentColor()
+  private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
+  // alpha paint used for drawing the bitmap. So the final background alpha will be multiplied
+  private val alphaPaint = Paint().apply { alpha = Color.alpha(backgroundColor) }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    color = ContextCompat.getColor(context, android.R.color.transparent)
+    color = ContextCompat.getColor(context, R.color.quickie_transparent)
     xfermode = PorterDuffXfermode(CLEAR)
   }
-  private val backgroundPaint = Paint().apply { color = backgroundColor }
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
   private val innerRadius =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS - STROKE_WIDTH, resources.displayMetrics)
@@ -50,7 +52,7 @@ class QROverlayView @JvmOverloads constructor(
 
   init {
     setWillNotDraw(false)
-    LayoutInflater.from(context).inflate(R.layout.qr_textview, this)
+    LayoutInflater.from(context).inflate(R.layout.quickie_textview, this)
     titleTextView = findViewById(R.id.title_textview)
   }
 
@@ -69,7 +71,7 @@ class QROverlayView @JvmOverloads constructor(
     maskCanvas!!.drawColor(backgroundColor)
     maskCanvas!!.drawRoundRect(outerFrame, radius, radius, strokePaint)
     maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, transparentPaint)
-    canvas.drawBitmap(maskBitmap!!, 0f, 0f, backgroundPaint)
+    canvas.drawBitmap(maskBitmap!!, 0f, 0f, alphaPaint)
     super.onDraw(canvas)
   }
 
@@ -98,6 +100,9 @@ class QROverlayView @JvmOverloads constructor(
     // hide title text if not enough vertical space
     titleTextView.visibility = if (topInsetsToOuterFrame < titleTextView.height) View.INVISIBLE else View.VISIBLE
   }
+
+  private fun View.getAccentColor() =
+    TypedValue().let { if (context.theme.resolveAttribute(R.attr.colorAccent, it, true)) it.data else Color.WHITE }
 
   private fun View.updateTopMargin(@Px top: Int) {
     val params = layoutParams as MarginLayoutParams

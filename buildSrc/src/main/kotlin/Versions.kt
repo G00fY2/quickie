@@ -6,11 +6,14 @@ object Versions {
   const val ktlintPlugin = "9.4.1"
   const val ktlint = "0.39.0"
   const val gradleVersions = "0.36.0"
+  const val dokka = "1.4.10.2"
 
   const val activity = "1.2.0-beta01"
   const val fragment = "1.3.0-beta01"
   const val appcompat = "1.2.0"
   const val core = "1.3.2"
+
+  const val navigation = "2.3.1"
 
   const val camera = "1.0.0-beta12"
   const val cameraLifecycle = "1.0.0-beta12"

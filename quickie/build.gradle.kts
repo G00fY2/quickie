@@ -1,7 +1,9 @@
 plugins {
   id(Plugins.Android.library)
-  kotlin(Plugins.Kotlin.android)
-  kotlin(Plugins.Kotlin.parcelize)
+  id(Plugins.Kotlin.android)
+  id(Plugins.Kotlin.parcelize)
+  id(Plugins.Kotlin.dokka) version Versions.dokka
+  `maven-publish`
 }
 
 android {
@@ -9,6 +11,7 @@ android {
   defaultConfig {
     minSdkVersion(Config.androidMinSdkVersion)
   }
+  resourcePrefix = project.name
   buildFeatures {
     viewBinding = true
     buildConfig = false
@@ -25,13 +28,13 @@ android {
   kotlinOptions {
     jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
-  flavorDimensions("bundleMode")
+  flavorDimensions("mlkit")
   productFlavors {
-    create("bundledML") {
-      dimension("bundleMode")
+    create("bundled") {
+      dimension("mlkit")
     }
-    create("unbundledML") {
-      dimension("bundleMode")
+    create("unbundled") {
+      dimension("mlkit")
     }
   }
 }
@@ -41,13 +44,14 @@ repositories {
   mavenCentral()
   jcenter {
     content {
-      includeModule("org.jetbrains.trove4j", "trove4j") // required by com.android.tools.lint:lint-gradle
+      includeGroupByRegex("org\\.jetbrains.*")
+      includeModule("com.soywiz.korlibs.korte", "korte-jvm")
     }
   }
 }
 
-val bundledMLImplementation by configurations
-val unbundledMLImplementation by configurations
+val bundledImplementation by configurations
+val unbundledImplementation by configurations
 dependencies {
   implementation(Deps.AndroidX.activity)
   implementation(Deps.AndroidX.fragment)
@@ -58,6 +62,94 @@ dependencies {
   implementation(Deps.AndroidX.cameraLifecycle)
   implementation(Deps.AndroidX.cameraPreview)
 
-  bundledMLImplementation(Deps.MLKit.barcodeScanning)
-  unbundledMLImplementation(Deps.MLKit.barcodeScanningGms)
+  bundledImplementation(Deps.MLKit.barcodeScanning)
+  unbundledImplementation(Deps.MLKit.barcodeScanningGms)
+}
+
+group = "com.g00fy2.quickie"
+version = "0.1.0"
+
+tasks.register<Jar>("androidJavadocJar") {
+  archiveClassifier.set("javadoc")
+  from("$buildDir/dokka/javadoc")
+  dependsOn("dokkaJavadoc")
+}
+
+tasks.register<Jar>("androidSourcesJar") {
+  archiveClassifier.set("sources")
+  from(android.sourceSets.getByName("main").java.srcDirs)
+}
+
+// JCenter does not support Gradle module metadata
+tasks.withType<GenerateModuleMetadata> {
+  enabled = false
+}
+
+afterEvaluate {
+  publishing {
+    // publishBundledReleasePublicationToBintrayQuickieBundledRepository -Pbintray_user=name -Pbintray_key=key
+    publications {
+      create<MavenPublication>("bundledRelease") {
+        from(components["bundledRelease"])
+        val libraryName = "quickie-bundled"
+        artifactId = libraryName
+        artifact(tasks.named("androidJavadocJar"))
+        artifact(tasks.named("androidSourcesJar"))
+        configurePom(libraryName)
+      }
+      // publishUnbundledReleasePublicationToBintrayQuickieUnbundledRepository -Pbintray_user=name -Pbintray_key=key
+      create<MavenPublication>("unbundledRelease") {
+        from(components["unbundledRelease"])
+        val libraryName = "quickie-unbundled"
+        artifactId = libraryName
+        artifact(tasks.named("androidJavadocJar"))
+        artifact(tasks.named("androidSourcesJar"))
+        configurePom(libraryName)
+      }
+    }
+    repositories {
+      maven {
+        name = "bintrayQuickieBundled"
+        url = uri("https://api.bintray.com/maven/g00fy2/maven/quickie-bundled/;publish=1;")
+        credentials {
+          username = findProperty("bintray_user") as String?
+          password = findProperty("bintray_key") as String?
+        }
+      }
+      maven {
+        name = "bintrayQuickieUnbundled"
+        url = uri("https://api.bintray.com/maven/g00fy2/maven/quickie-unbundled/;publish=1;")
+        credentials {
+          username = findProperty("bintray_user") as String?
+          password = findProperty("bintray_key") as String?
+        }
+      }
+    }
+  }
+}
+
+fun MavenPublication.configurePom(libraryName: String) {
+  pom {
+    name.set(libraryName)
+    description.set("Android QR code scanner library")
+    url.set("https://github.com/G00fY2/Quickie")
+    licenses {
+      license {
+        name.set("MIT License")
+        url.set("https://opensource.org/licenses/MIT")
+      }
+    }
+    developers {
+      developer {
+        id.set("g00fy2")
+        name.set("Thomas Wirth")
+        email.set("twirth.development@gmail.com")
+      }
+    }
+    scm {
+      connection.set("https://github.com/G00fY2/Quickie.git")
+      developerConnection.set("https://github.com/G00fY2/Quickie.git")
+      url.set("https://github.com/G00fY2/Quickie")
+    }
+  }
 }
