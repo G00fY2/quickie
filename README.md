@@ -1,4 +1,3 @@
-![Image]()
 <p align="center">
   <img width="227" height="120" src="https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png">
 </p>
