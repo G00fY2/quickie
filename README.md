@@ -2,14 +2,14 @@
   <img width="345" height="120" src="https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png">
 </p>
 
-**quickie** is an Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's an alternative to ZXing and written in Kotlin. quickie features:
+**quickie** is a Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's an alternative to ZXing and written in Kotlin. quickie features:
 - Easy API for launching the QR scanner and receiving results by using the AndroidX Activity Result API
 - Modern design, edge-to-edge scanning view with multilingual user hint
 - Android Jetpack CameraX for communicating with the camera and showing the preview
 - Firebase ML Kit on-device barcode recognition and decoding (no network connection required)
 
 ## Download
-quickie is available on `jcenter()` in two different flavors:
+There a two different flavors available on `jcenter()`:
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
