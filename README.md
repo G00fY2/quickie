@@ -63,7 +63,7 @@ The library is designed to behave and look as generic as possible. Currently it'
 ![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/quickie-device-demo.png)
 
 ## Release state
-**quickie** relies on Google Jetpack libraries which are in pre-release stage. CameraX has no stable release version yet and the Activity Result API is part of the latest AndroidX Activitya and Fragment beta releases. What Google says about those releases:
+**quickie** relies on Google Jetpack libraries which are in pre-release state. CameraX has no stable release version yet and the Activity Result API is part of the latest AndroidX Activity and Fragment beta releases. Here is what Google says about this release state:
 * Beta releases are functionally stable and have a feature-complete API surface.
 * They are ready for production use but may contain bugs.
 
