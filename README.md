@@ -9,7 +9,7 @@
 - Firebase ML Kit on-device barcode recognition and decoding (no network connection required)
 
 ## Download
-There a two different flavors available on `jcenter()`:
+There are two different flavors available on `jcenter()`:
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
