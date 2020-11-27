@@ -56,7 +56,7 @@ Currently supported types are:
 
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
-### Sample
+### Screenshots
 ![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/quickie-device-demo.png)
 
 ## Release state
