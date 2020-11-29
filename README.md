@@ -74,7 +74,7 @@ You should consider **quickie** to be in beta state too. I will raise the versio
 ## Requirements
 * AndroidX
 * Min SDK 21+
-* (Google Play Services if using `quickie-unbundled`)
+* (Google Play Services available on the end device if using `quickie-unbundled`)
 
 ## License
      The MIT License (MIT)
