@@ -1,7 +1,4 @@
-include(":quickie")
-include(":activity-sample")
-include(":advanced-sample")
-include(":fragment-sample")
+include(":quickie", ":activity-sample", ":advanced-sample", ":fragment-sample")
 
 project(":activity-sample").projectDir = File(rootDir, "sample/activity-sample")
 project(":advanced-sample").projectDir = File(rootDir, "sample/advanced-sample")
