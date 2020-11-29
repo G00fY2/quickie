@@ -69,7 +69,7 @@ The library is designed to behave and look as generic as possible. Currently it'
 * Beta releases are functionally stable and have a feature-complete API surface.
 * They are ready for production use but may contain bugs.
 
-You should consider **quickie** as beta state too. I will raise the version to 1.0 once all dependent libraries hit stable.
+You should consider **quickie** to be in beta state too. I will raise the version to 1.0 once all dependent libraries hit stable.
 
 ## Requirements
 * AndroidX
