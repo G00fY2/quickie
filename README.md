@@ -2,14 +2,14 @@
   <img width="345" height="120" src="https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png">
 </p>
 
-**quickie** is an Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's an alternative to ZXing and written in Kotlin. quickie features:
+**quickie** is a Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's an alternative to ZXing and written in Kotlin. quickie features:
 - Easy API for launching the QR scanner and receiving results by using the AndroidX Activity Result API
 - Modern design, edge-to-edge scanning view with multilingual user hint
 - Android Jetpack CameraX for communicating with the camera and showing the preview
 - Firebase ML Kit on-device barcode recognition and decoding (no network connection required)
 
-## Download
-quickie is available on `jcenter()` in two different flavors:
+## Download [![Download](https://img.shields.io/maven-metadata/v?label=quickie-bundled&metadataUrl=https%3A%2F%2Fbintray.com%2Fg00fy2%2Fmaven%2Fdownload_file%3Ffile_path%3Dcom%252Fg00fy2%252Fquickie%252Fquickie-unbundled%252Fmaven-metadata.xml)](https://bintray.com/g00fy2/maven/quickie-bundled) [![Download](https://img.shields.io/maven-metadata/v?label=quickie-unbundled&metadataUrl=https%3A%2F%2Fbintray.com%2Fg00fy2%2Fmaven%2Fdownload_file%3Ffile_path%3Dcom%252Fg00fy2%252Fquickie%252Fquickie-bundled%252Fmaven-metadata.xml)](https://bintray.com/g00fy2/maven/quickie-unbundled)
+There are two different flavors available on `jcenter()`:
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
@@ -25,7 +25,7 @@ implementation("com.g00fy2:quickie:quickie-unbundled:0.1.0")
 ```
 
 ## Quick Start
-To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback in the `initialization` or `onCreate()` lifecycle of your Activity/Fragment and call `launch(null)` anywhere to start it:
+To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `initialization` or in the `onCreate()` lifecycle of your Activity/Fragment and call `launch(null)` anywhere to start it:
 ```kotlin
 private val scanQrCode = registerForActivityResult(ScanQRCode()) { handleResult(it) }
 
@@ -69,12 +69,12 @@ The library is designed to behave and look as generic as possible. Currently it'
 * Beta releases are functionally stable and have a feature-complete API surface.
 * They are ready for production use but may contain bugs.
 
-You should consider **quickie** as beta state too. I will raise the version to 1.0 once all dependent libraries hit stable.
+You should consider **quickie** to be in beta state too. I will raise the version to 1.0 once all dependent libraries hit stable.
 
 ## Requirements
 * AndroidX
 * Min SDK 21+
-* (Google Play Services if using `quickie-unbundled`)
+* (Google Play Services available on the end device if using `quickie-unbundled`)
 
 ## License
      The MIT License (MIT)

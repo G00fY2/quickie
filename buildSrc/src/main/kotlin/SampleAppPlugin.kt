@@ -1,5 +1,4 @@
 import com.android.build.gradle.AppExtension
-import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -45,14 +44,18 @@ class SampleAppPlugin : Plugin<Project> {
           proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
       }
+      splits {
+        abi {
+          isEnable = true
+          reset()
+          include("x86", "armeabi-v7a", "arm64-v8a", "x86_64")
+          isUniversalApk = true
+        }
+      }
       flavorDimensions("mlkit")
       productFlavors {
-        create("bundled") {
-          dimension("mlkit")
-        }
-        create("unbundled") {
-          dimension("mlkit")
-        }
+        create("bundled").dimension("mlkit")
+        create("unbundled").dimension("mlkit")
       }
       buildFeatures.run {
         viewBinding = true
@@ -61,15 +64,7 @@ class SampleAppPlugin : Plugin<Project> {
         resValues = false
         shaders = false
       }
-      sourceSets {
-        getByName("main") {
-          java.srcDirs("src/main/kotlin")
-        }
-      }
-      compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-      }
+      sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
     }
   }
 

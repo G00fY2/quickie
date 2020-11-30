@@ -1,4 +1,6 @@
+import com.android.build.gradle.BaseExtension
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   id(Plugins.Misc.ktlint) version Versions.ktlintPlugin
@@ -11,6 +13,21 @@ subprojects {
     version.set(Versions.ktlint)
     android.set(true)
   }
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+      allWarningsAsErrors = true
+      freeCompilerArgs = listOf("-progressive")
+      jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+  }
+  afterEvaluate {
+    extensions.configure<BaseExtension> {
+      compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+      }
+    }
+  }
 }
 
 tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
@@ -18,16 +35,13 @@ tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
   resolutionStrategy {
     componentSelection {
       all {
-        if (isNonStable(candidate.version) && !isNonStable(currentVersion)) {
+        if (Utils.isNonStable(candidate.version) && !Utils.isNonStable(currentVersion)) {
           reject("Release candidate")
         }
       }
     }
   }
 }
-
-fun isNonStable(version: String) = listOf("alpha", "beta", "rc", "cr", "m", "preview")
-  .any { version.matches(".*[.\\-]$it[.\\-\\d]*".toRegex(RegexOption.IGNORE_CASE)) }
 
 repositories {
   mavenCentral()
