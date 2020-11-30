@@ -1,5 +1,7 @@
 object Plugins {
 
+  const val sampleApp = "com.g00fy2.quickie.sample"
+
   object Android {
     const val application = "com.android.application"
     const val library = "com.android.library"
