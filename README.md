@@ -36,7 +36,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     binding.buttonQrScanner.setOnClickListener { scanQrCode.launch(null) }
 }
 ```
-**Note: You can't register the ActivityResultContract inside of the OnClickListener. This will fail since the code get's executed after the onCreate lifecycle!**
+⚠️ **You can't register the ActivityResultContract inside of the OnClickListener. This will fail since the code get's executed after the onCreate lifecycle!**
 
 Check out the [samples](https://github.com/G00fY2/quickie/tree/master/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
