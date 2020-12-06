@@ -8,35 +8,18 @@ plugins {
 
 android {
   compileSdkVersion(Config.androidCompileSdkVersion)
-  defaultConfig {
-    minSdkVersion(Config.androidMinSdkVersion)
-  }
+  defaultConfig.minSdkVersion(Config.androidMinSdkVersion)
   resourcePrefix = project.name
   buildFeatures {
     viewBinding = true
     buildConfig = false
   }
-  sourceSets {
-    getByName("main") {
-      java.srcDirs("src/main/kotlin")
-    }
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
-  kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
-  }
   flavorDimensions("mlkit")
   productFlavors {
-    create("bundled") {
-      dimension("mlkit")
-    }
-    create("unbundled") {
-      dimension("mlkit")
-    }
+    create("bundled").dimension("mlkit")
+    create("unbundled").dimension("mlkit")
   }
+  sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
 }
 
 repositories {
@@ -67,7 +50,7 @@ dependencies {
 }
 
 group = "com.g00fy2.quickie"
-version = "0.1.0"
+version = "0.2.0"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")

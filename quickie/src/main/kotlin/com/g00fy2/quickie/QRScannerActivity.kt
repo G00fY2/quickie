@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.util.Size
 import android.view.View
 import androidx.activity.ComponentActivity
@@ -102,7 +101,6 @@ internal class QRScannerActivity : ComponentActivity() {
 
   private fun onFailure(exception: Exception) {
     setResult(RESULT_ERROR, Intent().putExtra(EXTRA_RESULT_EXCEPTION, exception))
-    Log.e(localClassName, exception.message, exception)
     finish()
   }
 
