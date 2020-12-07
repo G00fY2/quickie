@@ -70,8 +70,8 @@ tasks.withType<GenerateModuleMetadata> {
 
 afterEvaluate {
   publishing {
-    // publishBundledReleasePublicationToBintrayQuickieBundledRepository -Pbintray_user=name -Pbintray_key=key
     publications {
+      // publishBundledReleasePublicationToBintrayQuickieBundledRepository -Pbintray_user=name -Pbintray_key=key
       create<MavenPublication>("bundledRelease") {
         from(components["bundledRelease"])
         val libraryName = "quickie-bundled"
