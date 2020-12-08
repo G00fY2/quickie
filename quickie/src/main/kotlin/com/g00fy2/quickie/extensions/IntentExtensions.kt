@@ -35,7 +35,8 @@ internal fun Intent?.toQuickieContentType(): QRContent {
   if (this == null) return Plain("")
 
   val rawValue = getStringExtra(QRScannerActivity.EXTRA_RESULT_VALUE) ?: ""
-  val resultContent = when (getIntExtra(QRScannerActivity.EXTRA_RESULT_TYPE, Barcode.TYPE_UNKNOWN)) {
+
+  return when (getIntExtra(QRScannerActivity.EXTRA_RESULT_TYPE, Barcode.TYPE_UNKNOWN)) {
     Barcode.TYPE_CONTACT_INFO -> {
       getParcelableExtra<ContactInfoParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
         ContactInfo(
@@ -101,8 +102,7 @@ internal fun Intent?.toQuickieContentType(): QRContent {
       }
     }
     else -> null
-  }
-  return resultContent ?: Plain(rawValue)
+  } ?: Plain(rawValue)
 }
 
 internal fun Intent?.getRootException(): Exception {
