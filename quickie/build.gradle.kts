@@ -50,7 +50,7 @@ dependencies {
 }
 
 group = "com.g00fy2.quickie"
-version = "0.2.0"
+version = "0.3.0"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
@@ -70,8 +70,8 @@ tasks.withType<GenerateModuleMetadata> {
 
 afterEvaluate {
   publishing {
-    // publishBundledReleasePublicationToBintrayQuickieBundledRepository -Pbintray_user=name -Pbintray_key=key
     publications {
+      // publishBundledReleasePublicationToBintrayQuickieBundledRepository -Pbintray_user=name -Pbintray_key=key
       create<MavenPublication>("bundledRelease") {
         from(components["bundledRelease"])
         val libraryName = "quickie-bundled"
