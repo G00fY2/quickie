@@ -17,6 +17,7 @@ import android.widget.FrameLayout
 import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import com.g00fy2.quickie.databinding.QuickieTextviewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -52,8 +53,7 @@ internal class QROverlayView @JvmOverloads constructor(
 
   init {
     setWillNotDraw(false)
-    LayoutInflater.from(context).inflate(R.layout.quickie_textview, this)
-    titleTextView = findViewById(R.id.title_textview)
+    titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).titleTextview
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
