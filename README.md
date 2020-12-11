@@ -38,7 +38,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 ```
 ⚠️ **You can't register the ActivityResultContract inside of the OnClickListener. This will fail since the code get's executed after the onCreate lifecycle!**
 
-Check out the [samples](https://github.com/G00fY2/quickie/tree/master/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
+Check out the [samples](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
 #### Responses
 The callback you add to the `registerForActivityResult` will receive an instance of the sealed `QRResult` class: 
