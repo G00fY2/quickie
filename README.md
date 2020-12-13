@@ -27,14 +27,16 @@ implementation("com.g00fy2.quickie:quickie-unbundled:0.3.0")
 ## Quick Start
 To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `initialization` or in the `onCreate()` lifecycle of your Activity/Fragment and call `launch(null)` anywhere to start it:
 ```kotlin
-private val scanQrCode = registerForActivityResult(ScanQRCode()) { handleResult(it) }
+val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     ...
-
-    binding.buttonQrScanner.setOnClickListener { scanQrCode.launch(null) }
+    binding.button.setOnClickListener { scanQrCode.launch(null) }
 }
+
+fun handleResult(result: QRResult) {
+    ...
 ```
 ⚠️ **You can't register the ActivityResultContract inside of the OnClickListener. This will fail since the code get's executed after the onCreate lifecycle!**
 
