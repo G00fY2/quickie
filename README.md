@@ -31,14 +31,14 @@ val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    ...
+    …
     binding.button.setOnClickListener { scanQrCode.launch(null) }
 }
 
 fun handleResult(result: QRResult) {
-    ...
+    …
 ```
-⚠️ **You can't register the ActivityResultContract inside of the OnClickListener. This will fail since the code get's executed after the onCreate lifecycle!**
+⚠️ **You can't register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code get's executed after the onCreate lifecycle!**
 
 Check out the [samples](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
