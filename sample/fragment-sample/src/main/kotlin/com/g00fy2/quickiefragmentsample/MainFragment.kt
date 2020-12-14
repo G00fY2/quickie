@@ -20,9 +20,7 @@ class MainFragment : Fragment() {
   private val binding get() = _binding!!
   private var snackbar: Snackbar? = null
 
-  private val scanQrCode = registerForActivityResult(ScanQRCode()) {
-    showSnackbar(it)
-  }
+  private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     _binding = FragmentMainBinding.inflate(inflater, container, false)

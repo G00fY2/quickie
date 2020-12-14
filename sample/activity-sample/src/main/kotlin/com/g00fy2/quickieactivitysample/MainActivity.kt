@@ -16,9 +16,7 @@ class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
   private var snackbar: Snackbar? = null
 
-  private val scanQrCode = registerForActivityResult(ScanQRCode()) {
-    showSnackbar(it)
-  }
+  private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

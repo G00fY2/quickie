@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
       viewModel.scanQRCode()
     }
 
-    viewModel.qrCodeState.observe(this) { showSnackbar(it) }
+    viewModel.qrCodeState.observe(this, ::showSnackbar)
   }
 
   private fun showSnackbar(result: QRResult) {

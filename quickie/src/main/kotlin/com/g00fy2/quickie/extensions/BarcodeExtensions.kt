@@ -6,7 +6,6 @@ import com.g00fy2.quickie.content.CalendarDateTimeParcelable
 import com.g00fy2.quickie.content.CalendarEventParcelable
 import com.g00fy2.quickie.content.ContactInfoParcelable
 import com.g00fy2.quickie.content.EmailParcelable
-import com.g00fy2.quickie.content.EmptyParcelable
 import com.g00fy2.quickie.content.GeoPointParcelable
 import com.g00fy2.quickie.content.PersonNameParcelable
 import com.g00fy2.quickie.content.PhoneParcelable
@@ -15,7 +14,7 @@ import com.g00fy2.quickie.content.UrlBookmarkParcelable
 import com.g00fy2.quickie.content.WifiParcelable
 import com.google.mlkit.vision.barcode.Barcode
 
-internal fun Barcode.toParcelableContentType(): Parcelable {
+internal fun Barcode.toParcelableContentType(): Parcelable? {
   return when (valueType) {
     Barcode.TYPE_CONTACT_INFO -> {
       ContactInfoParcelable(
@@ -58,7 +57,7 @@ internal fun Barcode.toParcelableContentType(): Parcelable {
         summary = calendarEvent?.summary ?: ""
       )
     }
-    else -> EmptyParcelable // TYPE_TEXT, TYPE_ISBN, TYPE_PRODUCT, TYPE_DRIVER_LICENSE, TYPE_UNKNOWN
+    else -> null // TYPE_TEXT, TYPE_ISBN, TYPE_PRODUCT, TYPE_DRIVER_LICENSE, TYPE_UNKNOWN
   }
 }
 

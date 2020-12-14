@@ -18,27 +18,29 @@ There are two different flavors available on `jcenter()`:
 | V2 barcode model is used (possibly faster, more accurate) | currently V1 will be downloaded
 ```kotlin
 // bundled:  
-implementation("com.g00fy2.quickie:quickie-bundled:0.3.0")
+implementation("com.g00fy2.quickie:quickie-bundled:0.3.1")
 
 // unbundled:
-implementation("com.g00fy2.quickie:quickie-unbundled:0.3.0")
+implementation("com.g00fy2.quickie:quickie-unbundled:0.3.1")
 ```
 
 ## Quick Start
 To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `initialization` or in the `onCreate()` lifecycle of your Activity/Fragment and call `launch(null)` anywhere to start it:
 ```kotlin
-private val scanQrCode = registerForActivityResult(ScanQRCode()) { handleResult(it) }
+val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    ...
-
-    binding.buttonQrScanner.setOnClickListener { scanQrCode.launch(null) }
+    …
+    binding.button.setOnClickListener { scanQrCode.launch(null) }
 }
-```
-⚠️ **You can't register the ActivityResultContract inside of the OnClickListener. This will fail since the code get's executed after the onCreate lifecycle!**
 
-Check out the [samples](https://github.com/G00fY2/quickie/tree/master/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
+fun handleResult(result: QRResult) {
+    …
+```
+⚠️ **You can't register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code get's executed after the onCreate lifecycle!**
+
+Check out the [samples](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
 #### Responses
 The callback you add to the `registerForActivityResult` will receive an instance of the sealed `QRResult` class: 
