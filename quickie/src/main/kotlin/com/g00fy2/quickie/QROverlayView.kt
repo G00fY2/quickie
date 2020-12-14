@@ -101,8 +101,15 @@ internal class QROverlayView @JvmOverloads constructor(
     titleTextView.visibility = if (topInsetsToOuterFrame < titleTextView.height) View.INVISIBLE else View.VISIBLE
   }
 
-  private fun View.getAccentColor() =
-    TypedValue().let { if (context.theme.resolveAttribute(R.attr.colorAccent, it, true)) it.data else Color.WHITE }
+  private fun View.getAccentColor(): Int {
+    return TypedValue().let {
+      if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) {
+        it.data
+      } else {
+        Color.WHITE
+      }
+    }
+  }
 
   private fun View.updateTopMargin(@Px top: Int) {
     val params = layoutParams as MarginLayoutParams
