@@ -122,7 +122,7 @@ private fun EmailParcelable.toEmail(rawValue: String) =
     address = address,
     body = body,
     subject = subject,
-    EmailType.values().getOrElse(type) { EmailType.UNKNOWN }
+    type = EmailType.values().getOrElse(type) { EmailType.UNKNOWN }
   )
 
 private fun AddressParcelable.toAddress() =
