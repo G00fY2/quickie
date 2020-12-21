@@ -4,6 +4,7 @@ object Deps {
     const val activity = "androidx.activity:activity:${Versions.activity}"
     const val fragment = "androidx.fragment:fragment:${Versions.fragment}"
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
+    const val core = "androidx.core:core:${Versions.core}"
 
     const val camera = "androidx.camera:camera-camera2:${Versions.cameraX}"
     const val cameraLifecycle = "androidx.camera:camera-lifecycle:${Versions.cameraX}"
