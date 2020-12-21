@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/title_textview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="top|center_horizontal"
     android:drawablePadding="16dp"
+    android:drawableTop="@drawable/quickie_ic_qrcode"
     android:ellipsize="end"
     android:gravity="center"
     android:maxLines="2"
@@ -14,7 +14,6 @@
     android:paddingStart="24dp"
     android:paddingTop="8dp"
     android:text="@string/quickie_scan_qr_code"
-    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+    android:textAppearance="@android:style/TextAppearance.Material.Headline"
     android:textColor="@color/quickie_white"
-    app:drawableTopCompat="@drawable/quickie_ic_qrcode"
     />

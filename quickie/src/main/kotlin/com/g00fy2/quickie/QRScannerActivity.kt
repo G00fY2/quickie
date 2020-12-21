@@ -7,10 +7,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
+import android.view.ContextThemeWrapper
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
@@ -80,14 +80,14 @@ internal class QRScannerActivity : ComponentActivity() {
     try {
       cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview)
       preview.setSurfaceProvider(binding.previewView.surfaceProvider)
-      binding.decorationView.visibility = View.VISIBLE
+      binding.overlayView.visibility = View.VISIBLE
     } catch (e: Exception) {
       onFailure(e)
     }
   }
 
   private fun onSuccess(result: Barcode) {
-    binding.decorationView.isHighlighted = true
+    binding.overlayView.isHighlighted = true
     setResult(
       Activity.RESULT_OK,
       Intent().apply {
@@ -105,7 +105,6 @@ internal class QRScannerActivity : ComponentActivity() {
   }
 
   private fun setupEdgeToEdgeUI() {
-    // TODO migrate to androidx.core:core:1.5.0 once stable
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
       window.setDecorFitsSystemWindows(false)
     } else {
@@ -121,7 +120,7 @@ internal class QRScannerActivity : ComponentActivity() {
         }
       }
     }
-    ViewCompat.setOnApplyWindowInsetsListener(binding.decorationView) { v, insets ->
+    ViewCompat.setOnApplyWindowInsetsListener(binding.overlayView) { v, insets ->
       insets.systemWindowInsets.let {
         v.setPadding(it.left, it.top, it.right, it.bottom)
       }

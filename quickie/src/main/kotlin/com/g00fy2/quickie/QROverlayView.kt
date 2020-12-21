@@ -14,8 +14,8 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.Px
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.g00fy2.quickie.databinding.QuickieTextviewBinding
 import kotlin.math.min
@@ -40,7 +40,7 @@ internal class QROverlayView @JvmOverloads constructor(
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
   private val innerRadius =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS - STROKE_WIDTH, resources.displayMetrics)
-  private val titleTextView: AppCompatTextView
+  private val titleTextView: TextView
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
   private var outerFrame = RectF()
