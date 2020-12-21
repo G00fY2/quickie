@@ -14,8 +14,8 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.annotation.Px
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.g00fy2.quickie.databinding.QuickieTextviewBinding
 import kotlin.math.min
@@ -30,7 +30,6 @@ internal class QROverlayView @JvmOverloads constructor(
   private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
   private val highlightedStrokeColor = getAccentColor()
   private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
-  // alpha paint used for drawing the bitmap. So the final background alpha will be multiplied
   private val alphaPaint = Paint().apply { alpha = Color.alpha(backgroundColor) }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -40,7 +39,7 @@ internal class QROverlayView @JvmOverloads constructor(
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
   private val innerRadius =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS - STROKE_WIDTH, resources.displayMetrics)
-  private val titleTextView: TextView
+  private val titleTextView: AppCompatTextView
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
   private var outerFrame = RectF()
@@ -103,11 +102,7 @@ internal class QROverlayView @JvmOverloads constructor(
 
   private fun View.getAccentColor(): Int {
     return TypedValue().let {
-      if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) {
-        it.data
-      } else {
-        Color.WHITE
-      }
+      if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) it.data else Color.WHITE
     }
   }
 

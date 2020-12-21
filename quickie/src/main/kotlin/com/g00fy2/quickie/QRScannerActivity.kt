@@ -7,10 +7,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
-import android.view.ContextThemeWrapper
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
@@ -32,10 +32,8 @@ internal class QRScannerActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val themedInflater = if (applicationInfo.theme != 0) {
-      layoutInflater.cloneInContext(ContextThemeWrapper(this, applicationInfo.theme))
-    } else {
-      layoutInflater
+    val themedInflater = applicationInfo.theme.let {
+      if (it != 0) layoutInflater.cloneInContext(ContextThemeWrapper(this, it)) else layoutInflater
     }
     binding = QuickieScannerActivityBinding.inflate(themedInflater)
     setContentView(binding.root)
