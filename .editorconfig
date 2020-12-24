@@ -15,10 +15,5 @@ ij_kotlin_name_count_to_use_star_import=2147483647
 ij_kotlin_name_count_to_use_star_import_for_members=2147483647
 
 # ktlint
-# Comma-separated list of rules to disable (Since 0.34.0)
-# Note that rules in any ruleset other than the standard ruleset will need to be prefixed by the ruleset identifier.
-# noinspection EditorConfigKeyCorrectness
-disabled_rules=final-newline
-# Defines the imports layout. There are predefined layouts like "ascii" or "idea", as well as a custom layout.
 # noinspection EditorConfigKeyCorrectness
 kotlin_imports_layout=idea
