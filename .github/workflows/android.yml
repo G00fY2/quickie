@@ -13,7 +13,7 @@ on:
 jobs:
   ktlint:
     name: Run ktlint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
 
   build:
     name: Build debug app
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
