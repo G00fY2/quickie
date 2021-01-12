@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import com.g00fy2.quickie.extensions.toParcelableContentType
+import com.g00fy2.quickie.utils.PlayServicesValidator
 import com.google.mlkit.vision.barcode.Barcode
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -71,7 +72,18 @@ internal class QRScannerActivity : ComponentActivity() {
     val imageAnalysis = ImageAnalysis.Builder()
       .setTargetResolution(Size(1280, 720))
       .build()
-      .apply { setAnalyzer(cameraExecutor, QRCodeAnalyzer({ onSuccess(it) }, { onFailure(it) })) }
+      .apply {
+        setAnalyzer(
+          cameraExecutor,
+          QRCodeAnalyzer(
+            { onSuccess(it) },
+            {
+              clearAnalyzer()
+              onFailure(it)
+            }
+          )
+        )
+      }
     val preview = Preview.Builder().build()
 
     cameraProvider.unbindAll()
@@ -99,7 +111,7 @@ internal class QRScannerActivity : ComponentActivity() {
 
   private fun onFailure(exception: Exception) {
     setResult(RESULT_ERROR, Intent().putExtra(EXTRA_RESULT_EXCEPTION, exception))
-    finish()
+    if (!PlayServicesValidator.handleGooglePlayServicesError(this, exception)) finish()
   }
 
   private fun setupEdgeToEdgeUI() {
