@@ -10,7 +10,7 @@ internal object PlayServicesValidator {
   private const val MIN_SERVICES_VERSION = 201214 * 1000
   private const val REQUEST_CODE = 9000
 
-  internal fun handleGooglePlayServicesError(activity: Activity, exception: Exception?): Boolean {
+  internal fun handleGooglePlayServicesError(activity: Activity, exception: Exception): Boolean {
     if (exception is MlKitException) {
       // check if Google Play services is available and its version is at least MIN_SERVICES_VERSION
       val resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity, MIN_SERVICES_VERSION)
