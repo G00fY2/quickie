@@ -18,10 +18,10 @@ There are two different flavors available on `jcenter()`:
 | V2 barcode model is used (possibly faster, more accurate) | currently V1 will be downloaded
 ```kotlin
 // bundled:  
-implementation("com.g00fy2.quickie:quickie-bundled:0.4.0")
+implementation("com.g00fy2.quickie:quickie-bundled:0.5.0")
 
 // unbundled:
-implementation("com.g00fy2.quickie:quickie-unbundled:0.4.0")
+implementation("com.g00fy2.quickie:quickie-unbundled:0.5.0")
 ```
 
 ## Quick Start
@@ -67,11 +67,11 @@ The library is designed to behave and look as generic as possible. Currently it'
 ![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/quickie-device-demo.png)
 
 ## Release state
-**quickie** relies on Google Jetpack libraries which are in pre-release state. CameraX has no stable release version yet and the Activity Result API is part of the latest AndroidX Activity and Fragment beta releases. Here is what Google says about this release state:
-* Beta releases are functionally stable and have a feature-complete API surface.
-* They are ready for production use but may contain bugs.
+**quickie** relies on Google Jetpack libraries which are in pre-release state. CameraX has no stable release version yet and the Activity Result API is part of the latest AndroidX Activity and Fragment release candidates. Here is what Google says about this release state:
+* A release candidate is a prospective stable release.
+* It may contain critical last-minute fixes.
 
-You should consider **quickie** to be in beta state too. I will raise the version to 1.0 once all dependent libraries hit stable.
+You should consider **quickie** to be in pre-release state too. I will raise the version to 1.0 once all dependent libraries hit stable.
 
 ## Requirements
 * AndroidX
