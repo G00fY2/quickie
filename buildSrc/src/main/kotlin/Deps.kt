@@ -6,9 +6,9 @@ object Deps {
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val core = "androidx.core:core:${Versions.core}"
 
-    const val camera = "androidx.camera:camera-camera2:${Versions.camera}"
-    const val cameraLifecycle = "androidx.camera:camera-lifecycle:${Versions.cameraLifecycle}"
-    const val cameraPreview = "androidx.camera:camera-view:${Versions.cameraPreview}"
+    const val camera = "androidx.camera:camera-camera2:${Versions.cameraX}"
+    const val cameraLifecycle = "androidx.camera:camera-lifecycle:${Versions.cameraX}"
+    const val cameraPreview = "androidx.camera:camera-view:${Versions.cameraView}"
 
     const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
   }

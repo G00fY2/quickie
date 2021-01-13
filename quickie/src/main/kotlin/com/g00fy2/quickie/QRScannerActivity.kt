@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import com.g00fy2.quickie.extensions.toParcelableContentType
+import com.g00fy2.quickie.utils.PlayServicesValidator
 import com.google.mlkit.vision.barcode.Barcode
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -32,10 +33,8 @@ internal class QRScannerActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val themedInflater = if (applicationInfo.theme != 0) {
-      layoutInflater.cloneInContext(ContextThemeWrapper(this, applicationInfo.theme))
-    } else {
-      layoutInflater
+    val themedInflater = applicationInfo.theme.let {
+      if (it != 0) layoutInflater.cloneInContext(ContextThemeWrapper(this, it)) else layoutInflater
     }
     binding = QuickieScannerActivityBinding.inflate(themedInflater)
     setContentView(binding.root)
@@ -73,21 +72,32 @@ internal class QRScannerActivity : ComponentActivity() {
     val imageAnalysis = ImageAnalysis.Builder()
       .setTargetResolution(Size(1280, 720))
       .build()
-      .apply { setAnalyzer(cameraExecutor, QRCodeAnalyzer({ onSuccess(it) }, { onFailure(it) })) }
+      .apply {
+        setAnalyzer(
+          cameraExecutor,
+          QRCodeAnalyzer(
+            { onSuccess(it) },
+            {
+              clearAnalyzer()
+              onFailure(it)
+            }
+          )
+        )
+      }
     val preview = Preview.Builder().build()
 
     cameraProvider.unbindAll()
     try {
       cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview)
       preview.setSurfaceProvider(binding.previewView.surfaceProvider)
-      binding.decorationView.visibility = View.VISIBLE
+      binding.overlayView.visibility = View.VISIBLE
     } catch (e: Exception) {
       onFailure(e)
     }
   }
 
   private fun onSuccess(result: Barcode) {
-    binding.decorationView.isHighlighted = true
+    binding.overlayView.isHighlighted = true
     setResult(
       Activity.RESULT_OK,
       Intent().apply {
@@ -101,11 +111,10 @@ internal class QRScannerActivity : ComponentActivity() {
 
   private fun onFailure(exception: Exception) {
     setResult(RESULT_ERROR, Intent().putExtra(EXTRA_RESULT_EXCEPTION, exception))
-    finish()
+    if (!PlayServicesValidator.handleGooglePlayServicesError(this, exception)) finish()
   }
 
   private fun setupEdgeToEdgeUI() {
-    // TODO migrate to androidx.core:core:1.5.0 once stable
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
       window.setDecorFitsSystemWindows(false)
     } else {
@@ -121,7 +130,7 @@ internal class QRScannerActivity : ComponentActivity() {
         }
       }
     }
-    ViewCompat.setOnApplyWindowInsetsListener(binding.decorationView) { v, insets ->
+    ViewCompat.setOnApplyWindowInsetsListener(binding.overlayView) { v, insets ->
       insets.systemWindowInsets.let {
         v.setPadding(it.left, it.top, it.right, it.bottom)
       }

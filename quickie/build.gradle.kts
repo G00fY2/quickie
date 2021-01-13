@@ -19,7 +19,11 @@ android {
     create("bundled").dimension("mlkit")
     create("unbundled").dimension("mlkit")
   }
-  sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
+  sourceSets {
+    getByName("main").java.srcDirs("src/main/kotlin")
+    getByName("bundled").java.srcDirs("src/bundled/kotlin")
+    getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
+  }
 }
 
 repositories {
@@ -50,7 +54,7 @@ dependencies {
 }
 
 group = "com.g00fy2.quickie"
-version = "0.4.0"
+version = "0.5.0"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")

@@ -30,7 +30,6 @@ internal class QROverlayView @JvmOverloads constructor(
   private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
   private val highlightedStrokeColor = getAccentColor()
   private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
-  // alpha paint used for drawing the bitmap. So the final background alpha will be multiplied
   private val alphaPaint = Paint().apply { alpha = Color.alpha(backgroundColor) }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -103,11 +102,7 @@ internal class QROverlayView @JvmOverloads constructor(
 
   private fun View.getAccentColor(): Int {
     return TypedValue().let {
-      if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) {
-        it.data
-      } else {
-        Color.WHITE
-      }
+      if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) it.data else Color.WHITE
     }
   }
 

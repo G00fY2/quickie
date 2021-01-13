@@ -15,9 +15,8 @@ object Versions {
 
   const val navigation = "2.3.2"
 
-  const val camera = "1.0.0-rc01"
-  const val cameraLifecycle = "1.0.0-rc01"
-  const val cameraPreview = "1.0.0-alpha20"
+  const val cameraX = "1.0.0-rc01"
+  const val cameraView = "1.0.0-alpha20"
 
   const val materialDesign = "1.2.1"
 
