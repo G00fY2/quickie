@@ -91,7 +91,7 @@ internal class QRScannerActivity : AppCompatActivity() {
 
     cameraProvider.unbindAll()
     try {
-      cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview)
+      cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
       preview.setSurfaceProvider(binding.previewView.surfaceProvider)
       binding.overlayView.visibility = View.VISIBLE
     } catch (e: Exception) {
