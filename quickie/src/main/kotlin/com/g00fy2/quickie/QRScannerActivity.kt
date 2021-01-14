@@ -76,7 +76,10 @@ internal class QRScannerActivity : AppCompatActivity() {
         setAnalyzer(
           cameraExecutor,
           QRCodeAnalyzer(
-            { onSuccess(it) },
+            {
+              clearAnalyzer()
+              onSuccess(it)
+            },
             {
               clearAnalyzer()
               onFailure(it)
