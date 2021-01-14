@@ -56,13 +56,17 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-    super.onLayout(changed, left, top, right, bottom)
     if (maskBitmap == null) {
-      maskBitmap = Bitmap.createBitmap(width, height, ARGB_8888).apply {
-        maskCanvas = Canvas(this)
+      try {
+        maskBitmap = Bitmap.createBitmap(width, height, ARGB_8888).apply {
+          maskCanvas = Canvas(this)
+        }
+      } catch (e: IllegalArgumentException) {
+        // catch rare issues where width/height is not set correctly to retry in next onLayout
       }
     }
     calculateFrameAndTitlePos()
+    super.onLayout(changed, left, top, right, bottom)
   }
 
   override fun onDraw(canvas: Canvas) {
