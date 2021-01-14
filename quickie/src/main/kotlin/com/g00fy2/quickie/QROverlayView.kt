@@ -56,7 +56,6 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-    super.onLayout(changed, left, top, right, bottom)
     if (maskBitmap == null) {
       try {
         maskBitmap = Bitmap.createBitmap(width, height, ARGB_8888).apply {
@@ -67,6 +66,7 @@ internal class QROverlayView @JvmOverloads constructor(
       }
     }
     calculateFrameAndTitlePos()
+    super.onLayout(changed, left, top, right, bottom)
   }
 
   override fun onDraw(canvas: Canvas) {
