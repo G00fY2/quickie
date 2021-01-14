@@ -8,8 +8,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Size
 import android.view.View
-import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @ExperimentalGetImage
-internal class QRScannerActivity : ComponentActivity() {
+internal class QRScannerActivity : AppCompatActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var cameraExecutor: ExecutorService
