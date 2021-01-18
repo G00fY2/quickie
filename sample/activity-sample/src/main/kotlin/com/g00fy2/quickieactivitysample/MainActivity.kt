@@ -1,6 +1,10 @@
 package com.g00fy2.quickieactivitysample
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.g00fy2.quickie.QRResult
 import com.g00fy2.quickie.QRResult.QRError
@@ -8,6 +12,7 @@ import com.g00fy2.quickie.QRResult.QRMissingPermission
 import com.g00fy2.quickie.QRResult.QRSuccess
 import com.g00fy2.quickie.QRResult.QRUserCanceled
 import com.g00fy2.quickie.ScanQRCode
+import com.g00fy2.quickie.content.QRContent
 import com.g00fy2.quickieactivitysample.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -38,8 +43,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     snackbar = Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
-      setAction(android.R.string.ok) { }
+      view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = 5
+      if (result is QRSuccess && result.content is QRContent.Url) {
+        setAction(R.string.open_action) { openUrl(result.content.rawValue) }
+      } else {
+        setAction(R.string.ok_action) { }
+      }
     }
     snackbar?.show()
+  }
+
+  private fun openUrl(url: String) {
+    try {
+      startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    } catch (e: ActivityNotFoundException) {
+      // no Activity found to run the given Intent
+    }
   }
 }
