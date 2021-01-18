@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
+import android.view.HapticFeedbackConstants
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -101,6 +102,10 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private fun onSuccess(result: Barcode) {
     binding.overlayView.isHighlighted = true
+    binding.overlayView.performHapticFeedback(
+      HapticFeedbackConstants.KEYBOARD_TAP,
+      HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+    )
     setResult(
       Activity.RESULT_OK,
       Intent().apply {

@@ -13,6 +13,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatTextView
@@ -53,20 +54,26 @@ internal class QROverlayView @JvmOverloads constructor(
   init {
     setWillNotDraw(false)
     titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).titleTextview
+    titleTextView.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+      override fun onGlobalLayout() {
+        titleTextView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+        calculateFrameAndTitlePos()
+      }
+    })
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    super.onLayout(changed, left, top, right, bottom)
+
     if (maskBitmap == null) {
       try {
         maskBitmap = Bitmap.createBitmap(width, height, ARGB_8888).apply {
           maskCanvas = Canvas(this)
         }
       } catch (e: IllegalArgumentException) {
-        // catch rare issues where width/height is not set correctly to retry in next onLayout
+        // retry in next onLayout pass if width/height was 0
       }
     }
-    calculateFrameAndTitlePos()
-    super.onLayout(changed, left, top, right, bottom)
   }
 
   override fun onDraw(canvas: Canvas) {
@@ -104,7 +111,7 @@ internal class QROverlayView @JvmOverloads constructor(
     titleTextView.visibility = if (topInsetsToOuterFrame < titleTextView.height) View.INVISIBLE else View.VISIBLE
   }
 
-  private fun View.getAccentColor(): Int {
+  private fun getAccentColor(): Int {
     return TypedValue().let {
       if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) it.data else Color.WHITE
     }
