@@ -1,6 +1,6 @@
 object Versions {
 
-  const val androidGradle = "4.1.1"
+  const val androidGradle = "4.1.2"
   const val kotlin = "1.4.21"
 
   const val ktlintPlugin = "9.4.1"
