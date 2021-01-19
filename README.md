@@ -63,7 +63,7 @@ See the ML Kit [Barcode documentation](https://developers.google.com/android/ref
 ### Customization
 The library is designed to behave and look as generic as possible. Currently it's not possible to change the UI, but there are plans to add customizations in future releases.
 
-### Screenshots / Sample App
+## Screenshots / Sample App
 Check out the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
 
 ![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/quickie-device-demo.png)
