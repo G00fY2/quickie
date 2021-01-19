@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
   <style name="QuickieScannerActivity" parent="Theme.AppCompat.DayNight.NoActionBar">
     <item name="android:statusBarColor">@color/quickie_transparent</item>
