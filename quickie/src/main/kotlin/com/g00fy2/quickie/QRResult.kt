@@ -9,7 +9,7 @@ sealed class QRResult {
    *
    * @property content the wrapped MLKit response.
    */
-  data class QRSuccess(val content: QRContent) : QRResult()
+  data class QRSuccess internal constructor(val content: QRContent) : QRResult()
 
   /**
    * Activity got cancelled by the user.
@@ -26,5 +26,5 @@ sealed class QRResult {
    *
    * @property exception the cause why the Activity was finished.
    */
-  data class QRError(val exception: Exception) : QRResult()
+  data class QRError internal constructor(val exception: Exception) : QRResult()
 }

@@ -8,40 +8,46 @@ sealed class QRContent(val rawValue: String) {
   /**
    * Plain text or unknown content QR Code type.
    */
-  data class Plain(private val _rawValue: String) : QRContent(_rawValue)
+  data class Plain internal constructor(private val _rawValue: String) : QRContent(_rawValue)
 
   /**
    * Wi-Fi access point details from a 'WIFI:' or similar QR Code type.
    */
-  data class Wifi(private val _rawValue: String, val encryptionType: Int, val password: String, val ssid: String) :
-    QRContent(_rawValue)
+  data class Wifi internal constructor(
+    private val _rawValue: String,
+    val encryptionType: Int,
+    val password: String,
+    val ssid: String
+  ) : QRContent(_rawValue)
 
   /**
    * A URL or URL bookmark from a 'MEBKM:' or similar QR Code type.
    */
-  data class Url(private val _rawValue: String, val title: String, val url: String) : QRContent(_rawValue)
+  data class Url internal constructor(private val _rawValue: String, val title: String, val url: String) :
+    QRContent(_rawValue)
 
   /**
    * An SMS message from an 'SMS:' or similar QR Code type.
    */
-  data class Sms(private val _rawValue: String, val message: String, val phoneNumber: String) : QRContent(_rawValue)
+  data class Sms internal constructor(private val _rawValue: String, val message: String, val phoneNumber: String) :
+    QRContent(_rawValue)
 
   /**
    * GPS coordinates from a 'GEO:' or similar QR Code type.
    */
-  data class GeoPoint(private val _rawValue: String, val lat: Double, val lng: Double) : QRContent(_rawValue)
+  data class GeoPoint internal constructor(private val _rawValue: String, val lat: Double, val lng: Double) :
+    QRContent(_rawValue)
 
   /**
    * An email message from a 'MAILTO:' or similar QR Code type.
    */
-  data class Email(
+  data class Email internal constructor(
     private val _rawValue: String,
     val address: String,
     val body: String,
     val subject: String,
     val type: EmailType
-  ) :
-    QRContent(_rawValue) {
+  ) : QRContent(_rawValue) {
     enum class EmailType {
       UNKNOWN, WORK, HOME
     }
@@ -50,7 +56,8 @@ sealed class QRContent(val rawValue: String) {
   /**
    * A phone number from a 'TEL:' or similar QR Code type.
    */
-  data class Phone(private val _rawValue: String, val number: String, val type: PhoneType) : QRContent(_rawValue) {
+  data class Phone internal constructor(private val _rawValue: String, val number: String, val type: PhoneType) :
+    QRContent(_rawValue) {
     enum class PhoneType {
       UNKNOWN, WORK, HOME, FAX, MOBILE
     }
@@ -59,7 +66,7 @@ sealed class QRContent(val rawValue: String) {
   /**
    * A person's or organization's business card.
    */
-  data class ContactInfo(
+  data class ContactInfo internal constructor(
     private val _rawValue: String,
     val addresses: List<Address>,
     val emails: List<Email>,
@@ -70,13 +77,13 @@ sealed class QRContent(val rawValue: String) {
     val urls: List<String>
   ) : QRContent(_rawValue) {
 
-    data class Address(val addressLines: List<String>, val type: AddressType) {
+    data class Address internal constructor(val addressLines: List<String>, val type: AddressType) {
       enum class AddressType {
         UNKNOWN, WORK, HOME
       }
     }
 
-    data class PersonName(
+    data class PersonName internal constructor(
       val first: String,
       val formattedName: String,
       val last: String,
@@ -90,7 +97,7 @@ sealed class QRContent(val rawValue: String) {
   /**
    * A calendar event extracted from a QR Code.
    */
-  data class CalendarEvent(
+  data class CalendarEvent internal constructor(
     private val _rawValue: String,
     val description: String,
     val end: CalendarDateTime,
@@ -101,7 +108,7 @@ sealed class QRContent(val rawValue: String) {
     val summary: String
   ) : QRContent(_rawValue) {
 
-    data class CalendarDateTime(
+    data class CalendarDateTime internal constructor(
       val day: Int,
       val hours: Int,
       val minutes: Int,
