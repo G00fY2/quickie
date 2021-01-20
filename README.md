@@ -61,10 +61,10 @@ Currently, supported subtypes are:
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
 ### Customization
-The library is designed to behave and look as generic as possible. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
+The library is designed to behave and look as generic as possible while matching Material Design guidelines. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
 
 ## Screenshots / Sample App
-Check out the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
+You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
 
 ![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/quickie-device-demo.png)
 
@@ -73,7 +73,7 @@ Check out the sample app APKs inside the [release](https://github.com/G00fY2/qui
 * A release candidate is a prospective stable release.
 * It may contain critical last-minute fixes.
 
-You should consider **quickie** to be in pre-release state too. I will raise the version to 1.0 once all dependent libraries hit stable.
+Even though **quickie** is battle-tested you should consider this library to be in pre-release state too. This will change once the dependent libraries hit stable.
 
 ## Requirements
 * AndroidX
