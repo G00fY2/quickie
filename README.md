@@ -81,7 +81,7 @@ Even though **quickie** is battle-tested you should consider this library to be 
 * (Google Play Services available on the end device if using `quickie-unbundled`)
 
 ## License
-     The MIT License (MIT)
+    The MIT License (MIT)
 
     Copyright (C) 2021 Thomas Wirth
 
