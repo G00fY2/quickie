@@ -15,7 +15,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
-import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.g00fy2.quickie.databinding.QuickieTextviewBinding
@@ -117,9 +116,9 @@ internal class QROverlayView @JvmOverloads constructor(
     }
   }
 
-  private fun View.updateTopMargin(@Px top: Int) {
+  private fun View.updateTopMargin(topPx: Int) {
     val params = layoutParams as MarginLayoutParams
-    params.topMargin = top
+    params.topMargin = topPx
     layoutParams = params
   }
 
