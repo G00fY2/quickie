@@ -34,15 +34,7 @@ subprojects {
 
 tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
   gradleReleaseChannel = "current"
-  resolutionStrategy {
-    componentSelection {
-      all {
-        if (Utils.isNonStable(candidate.version) && !Utils.isNonStable(currentVersion)) {
-          reject("Release candidate")
-        }
-      }
-    }
-  }
+  rejectVersionIf { Utils.isNonStable(candidate.version) && !Utils.isNonStable(currentVersion) }
 }
 
 repositories {
