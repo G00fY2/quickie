@@ -14,7 +14,7 @@ import com.g00fy2.quickie.QRScannerActivity.Companion.RESULT_MISSING_PERMISSION
 import com.g00fy2.quickie.extensions.getRootException
 import com.g00fy2.quickie.extensions.toQuickieContentType
 
-class ScanQRCode : ActivityResultContract<Nothing?, QRResult>() {
+public class ScanQRCode : ActivityResultContract<Nothing?, QRResult>() {
 
   override fun createIntent(context: Context, input: Nothing?): Intent =
     Intent(context, QRScannerActivity::class.java)
