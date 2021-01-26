@@ -54,7 +54,7 @@ dependencies {
 }
 
 group = "com.g00fy2.quickie"
-version = "0.5.2"
+version = "0.5.3"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")

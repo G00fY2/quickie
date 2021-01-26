@@ -1,6 +1,6 @@
 object Versions {
 
-  const val androidGradle = "4.1.1"
+  const val androidGradle = "4.1.2"
   const val kotlin = "1.4.21"
 
   const val ktlintPlugin = "9.4.1"
@@ -20,6 +20,6 @@ object Versions {
 
   const val materialDesign = "1.2.1"
 
-  const val barcodeScanning = "16.1.0"
-  const val barcodeScanningGms = "16.1.3"
+  const val barcodeScanning = "16.1.1"
+  const val barcodeScanningGms = "16.1.4"
 }
