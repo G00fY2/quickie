@@ -20,6 +20,6 @@ object Versions {
 
   const val materialDesign = "1.2.1"
 
-  const val barcodeScanning = "16.1.0"
-  const val barcodeScanningGms = "16.1.3"
+  const val barcodeScanning = "16.1.1"
+  const val barcodeScanningGms = "16.1.4"
 }
