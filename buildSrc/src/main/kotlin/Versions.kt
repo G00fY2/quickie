@@ -9,14 +9,14 @@ object Versions {
   const val dokka = "1.4.20"
 
   const val activity = "1.2.0-rc01"
-  const val fragment = "1.3.0-rc01"
+  const val fragment = "1.3.0-rc02"
   const val appcompat = "1.2.0"
   const val core = "1.3.2"
 
-  const val navigation = "2.3.2"
+  const val navigation = "2.3.3"
 
-  const val cameraX = "1.0.0-rc01"
-  const val cameraView = "1.0.0-alpha20"
+  const val cameraX = "1.0.0-rc02"
+  const val cameraView = "1.0.0-alpha21"
 
   const val materialDesign = "1.2.1"
 
