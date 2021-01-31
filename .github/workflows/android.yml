@@ -21,19 +21,19 @@ jobs:
         run: ./gradlew ktlintCheck
 
   build_bundled:
-    name: Build bundled debug apps
+    name: Build bundled debug
     runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
       - name: Build debug bundled sample app
-        run: ./gradlew :activity-sample:assembleBundledDebug :advanced-sample:assembleBundledDebug :fragment-sample:assembleBundledDebug
+        run: ./gradlew :sample:assembleBundledDebug
 
   build_unbundled:
-    name: Build unbundled debug apps
+    name: Build unbundled debug
     runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
       - name: Build debug unbundled sample app
-        run: ./gradlew :activity-sample:assembleUnbundledDebug :advanced-sample:assembleUnbundledDebug :fragment-sample:assembleUnbundledDebug
+        run: ./gradlew :sample:assembleUnbundledDebug

@@ -1,14 +1,11 @@
-package com.g00fy2.quickiefragmentsample
+package com.g00fy2.quickiesample
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.g00fy2.quickie.QRResult
 import com.g00fy2.quickie.QRResult.QRError
 import com.g00fy2.quickie.QRResult.QRMissingPermission
@@ -16,33 +13,25 @@ import com.g00fy2.quickie.QRResult.QRSuccess
 import com.g00fy2.quickie.QRResult.QRUserCanceled
 import com.g00fy2.quickie.ScanQRCode
 import com.g00fy2.quickie.content.QRContent
-import com.g00fy2.quickiefragmentsample.databinding.FragmentMainBinding
+import com.g00fy2.quickiesample.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
-class MainFragment : Fragment() {
+class MainActivity : AppCompatActivity() {
 
-  private var _binding: FragmentMainBinding? = null
-  private val binding get() = _binding!!
+  private lateinit var binding: ActivityMainBinding
   private var snackbar: Snackbar? = null
 
   private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-    _binding = FragmentMainBinding.inflate(inflater, container, false)
-    return binding.root
-  }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
     binding.buttonQrScanner.setOnClickListener {
       snackbar?.dismiss()
       scanQrCode.launch(null)
     }
-  }
-
-  override fun onDestroyView() {
-    super.onDestroyView()
-    _binding = null
   }
 
   private fun showSnackbar(result: QRResult) {

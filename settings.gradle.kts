@@ -1,8 +1,4 @@
-include(":quickie", ":activity-sample", ":advanced-sample", ":fragment-sample")
-
-project(":activity-sample").projectDir = File(rootDir, "sample/activity-sample")
-project(":advanced-sample").projectDir = File(rootDir, "sample/advanced-sample")
-project(":fragment-sample").projectDir = File(rootDir, "sample/fragment-sample")
+include(":quickie", ":sample")
 
 pluginManagement {
   repositories {

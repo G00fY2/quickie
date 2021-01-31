@@ -9,8 +9,6 @@ object Deps {
     const val camera = "androidx.camera:camera-camera2:${Versions.cameraX}"
     const val cameraLifecycle = "androidx.camera:camera-lifecycle:${Versions.cameraX}"
     const val cameraPreview = "androidx.camera:camera-view:${Versions.cameraView}"
-
-    const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
   }
 
   object Mdc {

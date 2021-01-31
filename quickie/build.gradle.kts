@@ -7,8 +7,8 @@ plugins {
 }
 
 android {
-  compileSdkVersion(Config.androidCompileSdkVersion)
-  defaultConfig.minSdkVersion(Config.androidMinSdkVersion)
+  compileSdkVersion(Versions.androidCompileSdk)
+  defaultConfig.minSdkVersion(Versions.androidMinSdk)
   resourcePrefix = project.name
   buildFeatures {
     viewBinding = true

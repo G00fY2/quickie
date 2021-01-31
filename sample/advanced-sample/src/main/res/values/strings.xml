@@ -1,7 +1,0 @@
-<resources>
-  <string name="app_name" translatable="false">Quickie Advanced Sample</string>
-
-  <string name="qr_button" translatable="false">QR Scanner</string>
-  <string name="ok_action" translatable="false">OK</string>
-  <string name="open_action" translatable="false">Open</string>
-</resources>
