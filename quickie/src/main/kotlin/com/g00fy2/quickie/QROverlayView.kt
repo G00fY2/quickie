@@ -13,7 +13,6 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -52,26 +51,17 @@ internal class QROverlayView @JvmOverloads constructor(
 
   init {
     setWillNotDraw(false)
-    titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).titleTextview
-    titleTextView.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-      override fun onGlobalLayout() {
-        titleTextView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-        calculateFrameAndTitlePos()
-      }
-    })
+    titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
     super.onLayout(changed, left, top, right, bottom)
 
-    if (maskBitmap == null) {
-      try {
-        maskBitmap = Bitmap.createBitmap(width, height, ARGB_8888).apply {
-          maskCanvas = Canvas(this)
-        }
-      } catch (e: IllegalArgumentException) {
-        // retry in next onLayout pass if width/height was 0
+    if (maskBitmap == null && width > 0 && height > 0) {
+      maskBitmap = Bitmap.createBitmap(width, height, ARGB_8888).apply {
+        maskCanvas = Canvas(this)
       }
+      calculateFrameAndTitlePos()
     }
   }
 
