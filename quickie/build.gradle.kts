@@ -7,8 +7,8 @@ plugins {
 }
 
 android {
-  compileSdkVersion(Config.androidCompileSdkVersion)
-  defaultConfig.minSdkVersion(Config.androidMinSdkVersion)
+  compileSdkVersion(Versions.androidCompileSdk)
+  defaultConfig.minSdkVersion(Versions.androidMinSdk)
   resourcePrefix = project.name
   buildFeatures {
     viewBinding = true
@@ -54,7 +54,7 @@ dependencies {
 }
 
 group = "com.g00fy2.quickie"
-version = "0.5.4"
+version = "0.5.5"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")

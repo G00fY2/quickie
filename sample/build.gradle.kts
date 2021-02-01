@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-  compileSdkVersion(Config.androidCompileSdkVersion)
-  buildToolsVersion = Config.buildToolsVersion
+  compileSdkVersion(Versions.androidCompileSdk)
+  buildToolsVersion = Versions.androidBuildTools
   defaultConfig {
-    applicationId = Config.advancedSampleAppId
-    minSdkVersion(Config.androidMinSdkVersion)
-    targetSdkVersion(Config.androidTargetSdkVersion)
+    applicationId = "com.g00fy2.quickiesample"
+    minSdkVersion(Versions.androidMinSdk)
+    targetSdkVersion(Versions.androidTargetSdk)
     versionCode = 1
     versionName = "1.0"
   }

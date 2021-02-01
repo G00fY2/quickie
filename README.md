@@ -2,7 +2,7 @@
   <img width="345" height="120" src="https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png">
 </p>
 
-**quickie** is a Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's an alternative to ZXing based libraries and written in Kotlin. quickie features:
+**quickie** is a Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's an alternative to ZXing based libraries and written in Kotlin. **quickie** features:
 - Easy API for launching the QR scanner and receiving results by using the new Activity Result API
 - Modern design, edge-to-edge scanning view with multilingual user hint
 - Android Jetpack CameraX for communicating with the camera and showing the preview
@@ -18,10 +18,10 @@ There are two different flavors available on `jcenter()`:
 | V2 barcode model is used (possibly faster, more accurate) | currently V1 will be downloaded
 ```kotlin
 // bundled:  
-implementation("com.g00fy2.quickie:quickie-bundled:0.5.4")
+implementation("com.g00fy2.quickie:quickie-bundled:0.5.5")
 
 // unbundled:
-implementation("com.g00fy2.quickie:quickie-unbundled:0.5.4")
+implementation("com.g00fy2.quickie:quickie-unbundled:0.5.5")
 ```
 
 ## Quick Start
@@ -40,7 +40,7 @@ fun handleResult(result: QRResult) {
 ```
 ⚠️ **You can't register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code gets executed after the onCreate lifecycle!**
 
-Check out the [samples](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
+Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
 #### Responses
 The callback you add to the `registerForActivityResult` will receive a subclass of the sealed `QRResult` class: 
