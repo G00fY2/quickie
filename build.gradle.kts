@@ -36,7 +36,7 @@ subprojects {
 
 tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
   gradleReleaseChannel = "current"
-  rejectVersionIf { Versions.isNonStable(candidate.version) && !Versions.isNonStable(currentVersion) }
+  rejectVersionIf { Versions.maturityLevel(candidate.version) < Versions.maturityLevel(currentVersion) }
 }
 
 repositories {
