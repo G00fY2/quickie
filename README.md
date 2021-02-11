@@ -69,7 +69,7 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 ![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/quickie-device-demo.png)
 
 ## Release state
-**quickie** relies on Google Jetpack libraries which are in pre-release state. CameraX has no stable release version yet and the Activity Result API is part of the latest AndroidX Activity and Fragment release candidates. Here is what Google says about this release state:
+**quickie** relies on CameraX which is currently available as a release candidate. Here is what Google says about this release state:
 * A release candidate is a prospective stable release.
 * It may contain critical last-minute fixes.
 
