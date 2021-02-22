@@ -9,7 +9,7 @@
 - ML Kit Vision API for best, fully on-device barcode recognition and decoding
 
 ## Download [![Download](https://img.shields.io/maven-metadata/v?label=quickie-bundled&metadataUrl=https%3A%2F%2Fbintray.com%2Fg00fy2%2Fmaven%2Fdownload_file%3Ffile_path%3Dcom%252Fg00fy2%252Fquickie%252Fquickie-unbundled%252Fmaven-metadata.xml)](https://bintray.com/g00fy2/maven/quickie-bundled) [![Download](https://img.shields.io/maven-metadata/v?label=quickie-unbundled&metadataUrl=https%3A%2F%2Fbintray.com%2Fg00fy2%2Fmaven%2Fdownload_file%3Ffile_path%3Dcom%252Fg00fy2%252Fquickie%252Fquickie-bundled%252Fmaven-metadata.xml)](https://bintray.com/g00fy2/maven/quickie-unbundled)
-There are two different flavors available on `jcenter()`:
+There are two different flavors available on `jcenter()` (I'm planing to move to *mavenCentral()* soon):
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
