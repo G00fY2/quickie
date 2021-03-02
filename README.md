@@ -18,10 +18,10 @@ There are two different flavors available on `jcenter()` (I'm planing to move to
 | V2 barcode model is used (possibly faster, more accurate) | currently V1 will be downloaded
 ```kotlin
 // bundled:  
-implementation("com.g00fy2.quickie:quickie-bundled:0.6.0")
+implementation("com.g00fy2.quickie:quickie-bundled:0.6.1")
 
 // unbundled:
-implementation("com.g00fy2.quickie:quickie-unbundled:0.6.0")
+implementation("com.g00fy2.quickie:quickie-unbundled:0.6.1")
 ```
 
 ## Quick Start
