@@ -6,15 +6,15 @@ object Versions {
   const val androidBuildTools = "30.0.3"
 
   const val androidGradle = "4.1.2"
-  const val kotlin = "1.4.30"
+  const val kotlin = "1.4.31"
 
   const val activity = "1.2.0"
   const val fragment = "1.3.0"
   const val appcompat = "1.2.0"
   const val core = "1.3.2"
 
-  const val cameraX = "1.0.0-rc02"
-  const val cameraView = "1.0.0-alpha21"
+  const val cameraX = "1.0.0-rc03"
+  const val cameraView = "1.0.0-alpha22"
 
   const val materialDesign = "1.3.0"
 
