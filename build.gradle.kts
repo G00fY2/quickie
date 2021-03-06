@@ -19,8 +19,8 @@ subprojects {
     kotlinOptions {
       allWarningsAsErrors = true
       val arguments = mutableListOf("-progressive")
-      if (!this@subprojects.name.contains("sample")) arguments += "-Xexplicit-api=strict"
-      freeCompilerArgs = arguments
+      if (this@subprojects.name != "sample") arguments += "-Xexplicit-api=strict"
+      freeCompilerArgs = freeCompilerArgs + arguments
       jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
   }
