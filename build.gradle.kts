@@ -1,5 +1,4 @@
 import com.android.build.gradle.BaseExtension
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -34,7 +33,7 @@ subprojects {
   }
 }
 
-tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
+tasks.dependencyUpdates.configure {
   gradleReleaseChannel = "current"
   rejectVersionIf { Versions.maturityLevel(candidate.version) < Versions.maturityLevel(currentVersion) }
 }
