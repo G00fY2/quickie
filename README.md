@@ -14,8 +14,8 @@ There are two different flavors available on `jcenter()` (I'm planing to move to
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
 | ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (after app install) |
-| additional 1.1 MB size per ABI (you should use AAB or ABI splitting) | smaller app size |
-| V2 barcode model is used (possibly faster, more accurate) | currently V1 will be downloaded
+| additional 1.1 MB per ABI (you should use App Bundle or ABI splitting) | smaller app size |
+| V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
 implementation("com.g00fy2.quickie:quickie-bundled:0.6.1")
