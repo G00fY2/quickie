@@ -13,7 +13,4 @@ indent_style=space
 # TODO remove .idea/codeStyles from vcs when https://youtrack.jetbrains.com/issue/KTIJ-165 is fixed
 ij_kotlin_name_count_to_use_star_import=2147483647
 ij_kotlin_name_count_to_use_star_import_for_members=2147483647
-
-# ktlint
-# noinspection EditorConfigKeyCorrectness
-kotlin_imports_layout=idea
+ij_kotlin_imports_layout=*,java.**,javax.**,kotlin.**,^

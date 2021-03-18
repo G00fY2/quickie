@@ -22,7 +22,7 @@ object Versions {
   const val barcodeScanningGms = "16.1.4"
 
   const val ktlintPlugin = "10.0.0"
-  const val ktlint = "0.40.0"
+  const val ktlint = "0.41.0"
   const val gradleVersions = "0.38.0"
   const val dokka = "1.4.20"
 
