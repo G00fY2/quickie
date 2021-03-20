@@ -32,7 +32,6 @@ repositories {
   jcenter {
     content {
       includeGroupByRegex("org\\.jetbrains.*")
-      includeModule("com.soywiz.korlibs.korte", "korte-jvm")
     }
   }
 }

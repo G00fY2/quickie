@@ -24,7 +24,7 @@ object Versions {
   const val ktlintPlugin = "10.0.0"
   const val ktlint = "0.41.0"
   const val gradleVersions = "0.38.0"
-  const val dokka = "1.4.20"
+  const val dokka = "1.4.30"
 
   fun maturityLevel(version: String): Int {
     val levels = listOf("alpha", "beta", "m", "rc")
