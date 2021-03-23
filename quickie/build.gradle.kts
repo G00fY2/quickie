@@ -4,6 +4,7 @@ plugins {
   id(Plugins.Kotlin.parcelize)
   id(Plugins.Kotlin.dokka) version Versions.dokka
   `maven-publish`
+  signing
 }
 
 android {
@@ -53,7 +54,7 @@ dependencies {
 }
 
 group = "io.github.g00fy2.quickie"
-version = "0.6.1"
+version = "0.7.0"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
@@ -66,15 +67,9 @@ tasks.register<Jar>("androidSourcesJar") {
   from(android.sourceSets.getByName("main").java.srcDirs)
 }
 
-// JCenter does not support Gradle module metadata
-tasks.withType<GenerateModuleMetadata> {
-  enabled = false
-}
-
 afterEvaluate {
   publishing {
     publications {
-      // publishBundledReleasePublicationToBintrayQuickieBundledRepository -Pbintray_user=name -Pbintray_key=key
       create<MavenPublication>("bundledRelease") {
         from(components["bundledRelease"])
         val libraryName = "quickie-bundled"
@@ -83,7 +78,6 @@ afterEvaluate {
         artifact(tasks.named("androidSourcesJar"))
         configurePom(libraryName)
       }
-      // publishUnbundledReleasePublicationToBintrayQuickieUnbundledRepository -Pbintray_user=name -Pbintray_key=key
       create<MavenPublication>("unbundledRelease") {
         from(components["unbundledRelease"])
         val libraryName = "quickie-unbundled"
@@ -95,23 +89,22 @@ afterEvaluate {
     }
     repositories {
       maven {
-        name = "bintrayQuickieBundled"
-        url = uri("https://api.bintray.com/maven/g00fy2/maven/quickie-bundled/;publish=1;")
+        name = "sonatype"
+        url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
         credentials {
-          username = findProperty("bintray_user") as String?
-          password = findProperty("bintray_key") as String?
-        }
-      }
-      maven {
-        name = "bintrayQuickieUnbundled"
-        url = uri("https://api.bintray.com/maven/g00fy2/maven/quickie-unbundled/;publish=1;")
-        credentials {
-          username = findProperty("bintray_user") as String?
-          password = findProperty("bintray_key") as String?
+          username = project.findStringProperty("sonatypeUsername")
+          password = project.findStringProperty("sonatypePassword")
         }
       }
     }
   }
+}
+
+signing {
+  project.findStringProperty("signing.keyId")
+  project.findStringProperty("signing.password")
+  project.findStringProperty("signing.secretKeyRingFile")
+  sign(publishing.publications)
 }
 
 fun MavenPublication.configurePom(libraryName: String) {
@@ -138,4 +131,11 @@ fun MavenPublication.configurePom(libraryName: String) {
       url.set("https://github.com/G00fY2/Quickie")
     }
   }
+}
+
+fun Project.findStringProperty(propertyName: String): String? {
+  return findProperty(propertyName) as String? ?: {
+    logger.error("$propertyName missing in gradle.properties")
+    null
+  }()
 }
