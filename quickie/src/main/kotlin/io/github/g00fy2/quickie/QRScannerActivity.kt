@@ -19,10 +19,10 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import com.google.mlkit.vision.barcode.Barcode
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
 import io.github.g00fy2.quickie.utils.PlayServicesValidator
-import com.google.mlkit.vision.barcode.Barcode
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

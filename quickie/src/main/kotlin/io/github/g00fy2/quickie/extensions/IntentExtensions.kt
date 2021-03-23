@@ -1,6 +1,7 @@
 package io.github.g00fy2.quickie.extensions
 
 import android.content.Intent
+import com.google.mlkit.vision.barcode.Barcode
 import io.github.g00fy2.quickie.QRScannerActivity
 import io.github.g00fy2.quickie.content.AddressParcelable
 import io.github.g00fy2.quickie.content.CalendarDateTimeParcelable
@@ -29,7 +30,6 @@ import io.github.g00fy2.quickie.content.QRContent.Wifi
 import io.github.g00fy2.quickie.content.SmsParcelable
 import io.github.g00fy2.quickie.content.UrlBookmarkParcelable
 import io.github.g00fy2.quickie.content.WifiParcelable
-import com.google.mlkit.vision.barcode.Barcode
 
 internal fun Intent?.toQuickieContentType(): QRContent {
   if (this == null) return Plain("")

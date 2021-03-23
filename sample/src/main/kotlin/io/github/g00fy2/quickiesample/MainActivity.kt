@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.QRResult.QRError
 import io.github.g00fy2.quickie.QRResult.QRMissingPermission
@@ -14,7 +15,6 @@ import io.github.g00fy2.quickie.QRResult.QRUserCanceled
 import io.github.g00fy2.quickie.ScanQRCode
 import io.github.g00fy2.quickie.content.QRContent
 import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 

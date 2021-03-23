@@ -1,6 +1,7 @@
 package io.github.g00fy2.quickie.extensions
 
 import android.os.Parcelable
+import com.google.mlkit.vision.barcode.Barcode
 import io.github.g00fy2.quickie.content.AddressParcelable
 import io.github.g00fy2.quickie.content.CalendarDateTimeParcelable
 import io.github.g00fy2.quickie.content.CalendarEventParcelable
@@ -12,7 +13,6 @@ import io.github.g00fy2.quickie.content.PhoneParcelable
 import io.github.g00fy2.quickie.content.SmsParcelable
 import io.github.g00fy2.quickie.content.UrlBookmarkParcelable
 import io.github.g00fy2.quickie.content.WifiParcelable
-import com.google.mlkit.vision.barcode.Barcode
 
 internal fun Barcode.toParcelableContentType(): Parcelable? {
   return when (valueType) {
