@@ -52,7 +52,7 @@ dependencies {
   unbundledImplementation(Deps.MLKit.barcodeScanningGms)
 }
 
-group = "com.g00fy2.quickie"
+group = "io.github.g00fy2.quickie"
 version = "0.6.1"
 
 tasks.register<Jar>("androidJavadocJar") {

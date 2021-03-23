@@ -1,4 +1,4 @@
-package com.g00fy2.quickie.content
+package io.github.g00fy2.quickie.content
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

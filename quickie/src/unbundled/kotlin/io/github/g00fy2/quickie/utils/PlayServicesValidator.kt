@@ -1,4 +1,4 @@
-package com.g00fy2.quickie.utils
+package io.github.g00fy2.quickie.utils
 
 import android.app.Activity
 import com.google.android.gms.common.ConnectionResult

@@ -1,4 +1,4 @@
-package com.g00fy2.quickie
+package io.github.g00fy2.quickie
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -16,7 +16,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import com.g00fy2.quickie.databinding.QuickieTextviewBinding
+import io.github.g00fy2.quickie.databinding.QuickieTextviewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
 

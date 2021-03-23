@@ -1,7 +1,8 @@
-package com.g00fy2.quickiesample
+package io.github.g00fy2.quickiesample
 
 import android.app.Application
 import android.os.StrictMode
+import androidx.viewbinding.BuildConfig
 
 class SampleApp : Application() {
 

@@ -1,4 +1,4 @@
-package com.g00fy2.quickie
+package io.github.g00fy2.quickie
 
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis

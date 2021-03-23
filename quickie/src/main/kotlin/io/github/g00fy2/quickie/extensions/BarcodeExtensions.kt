@@ -1,17 +1,17 @@
-package com.g00fy2.quickie.extensions
+package io.github.g00fy2.quickie.extensions
 
 import android.os.Parcelable
-import com.g00fy2.quickie.content.AddressParcelable
-import com.g00fy2.quickie.content.CalendarDateTimeParcelable
-import com.g00fy2.quickie.content.CalendarEventParcelable
-import com.g00fy2.quickie.content.ContactInfoParcelable
-import com.g00fy2.quickie.content.EmailParcelable
-import com.g00fy2.quickie.content.GeoPointParcelable
-import com.g00fy2.quickie.content.PersonNameParcelable
-import com.g00fy2.quickie.content.PhoneParcelable
-import com.g00fy2.quickie.content.SmsParcelable
-import com.g00fy2.quickie.content.UrlBookmarkParcelable
-import com.g00fy2.quickie.content.WifiParcelable
+import io.github.g00fy2.quickie.content.AddressParcelable
+import io.github.g00fy2.quickie.content.CalendarDateTimeParcelable
+import io.github.g00fy2.quickie.content.CalendarEventParcelable
+import io.github.g00fy2.quickie.content.ContactInfoParcelable
+import io.github.g00fy2.quickie.content.EmailParcelable
+import io.github.g00fy2.quickie.content.GeoPointParcelable
+import io.github.g00fy2.quickie.content.PersonNameParcelable
+import io.github.g00fy2.quickie.content.PhoneParcelable
+import io.github.g00fy2.quickie.content.SmsParcelable
+import io.github.g00fy2.quickie.content.UrlBookmarkParcelable
+import io.github.g00fy2.quickie.content.WifiParcelable
 import com.google.mlkit.vision.barcode.Barcode
 
 internal fun Barcode.toParcelableContentType(): Parcelable? {

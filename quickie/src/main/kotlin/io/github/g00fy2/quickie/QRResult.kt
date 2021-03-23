@@ -1,6 +1,6 @@
-package com.g00fy2.quickie
+package io.github.g00fy2.quickie
 
-import com.g00fy2.quickie.content.QRContent
+import io.github.g00fy2.quickie.content.QRContent
 
 public sealed class QRResult {
 
