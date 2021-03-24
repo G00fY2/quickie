@@ -72,19 +72,11 @@ afterEvaluate {
     publications {
       create<MavenPublication>("bundledRelease") {
         from(components["bundledRelease"])
-        val libraryName = "quickie-bundled"
-        artifactId = libraryName
-        artifact(tasks.named("androidJavadocJar"))
-        artifact(tasks.named("androidSourcesJar"))
-        configurePom(libraryName)
+        commonConfig("quickie-bundled")
       }
       create<MavenPublication>("unbundledRelease") {
         from(components["unbundledRelease"])
-        val libraryName = "quickie-unbundled"
-        artifactId = libraryName
-        artifact(tasks.named("androidJavadocJar"))
-        artifact(tasks.named("androidSourcesJar"))
-        configurePom(libraryName)
+        commonConfig("quickie-unbundled")
       }
     }
     repositories {
@@ -107,9 +99,12 @@ signing {
   sign(publishing.publications)
 }
 
-fun MavenPublication.configurePom(libraryName: String) {
+fun MavenPublication.commonConfig(artifactName: String) {
+  artifactId = artifactName
+  artifact(tasks.named("androidJavadocJar"))
+  artifact(tasks.named("androidSourcesJar"))
   pom {
-    name.set(libraryName)
+    name.set(artifactName)
     description.set("Android QR code scanner library")
     url.set("https://github.com/G00fY2/Quickie")
     licenses {
