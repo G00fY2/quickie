@@ -7,7 +7,7 @@ android {
   compileSdkVersion(Versions.androidCompileSdk)
   buildToolsVersion = Versions.androidBuildTools
   defaultConfig {
-    applicationId = "com.g00fy2.quickiesample"
+    applicationId = "io.github.g00fy2.quickiesample"
     minSdkVersion(Versions.androidMinSdk)
     targetSdkVersion(Versions.androidTargetSdk)
     versionCode = 1

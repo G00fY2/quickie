@@ -1,5 +1,4 @@
 import com.android.build.gradle.BaseExtension
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -19,8 +18,8 @@ subprojects {
     kotlinOptions {
       allWarningsAsErrors = true
       val arguments = mutableListOf("-progressive")
-      if (!this@subprojects.name.contains("sample")) arguments += "-Xexplicit-api=strict"
-      freeCompilerArgs = arguments
+      if (this@subprojects.name != "sample") arguments += "-Xexplicit-api=strict"
+      freeCompilerArgs = freeCompilerArgs + arguments
       jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
   }
@@ -34,7 +33,7 @@ subprojects {
   }
 }
 
-tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
+tasks.dependencyUpdates.configure {
   gradleReleaseChannel = "current"
   rejectVersionIf { Versions.maturityLevel(candidate.version) < Versions.maturityLevel(currentVersion) }
 }

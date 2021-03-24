@@ -1,4 +1,4 @@
-package com.g00fy2.quickiesample
+package io.github.g00fy2.quickiesample
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -6,15 +6,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.g00fy2.quickie.QRResult
-import com.g00fy2.quickie.QRResult.QRError
-import com.g00fy2.quickie.QRResult.QRMissingPermission
-import com.g00fy2.quickie.QRResult.QRSuccess
-import com.g00fy2.quickie.QRResult.QRUserCanceled
-import com.g00fy2.quickie.ScanQRCode
-import com.g00fy2.quickie.content.QRContent
-import com.g00fy2.quickiesample.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import io.github.g00fy2.quickie.QRResult
+import io.github.g00fy2.quickie.QRResult.QRError
+import io.github.g00fy2.quickie.QRResult.QRMissingPermission
+import io.github.g00fy2.quickie.QRResult.QRSuccess
+import io.github.g00fy2.quickie.QRResult.QRUserCanceled
+import io.github.g00fy2.quickie.ScanQRCode
+import io.github.g00fy2.quickie.content.QRContent
+import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

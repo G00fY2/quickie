@@ -1,4 +1,4 @@
-package com.g00fy2.quickie
+package io.github.g00fy2.quickie
 
 import android.Manifest
 import android.app.Activity
@@ -19,10 +19,10 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.g00fy2.quickie.databinding.QuickieScannerActivityBinding
-import com.g00fy2.quickie.extensions.toParcelableContentType
-import com.g00fy2.quickie.utils.PlayServicesValidator
 import com.google.mlkit.vision.barcode.Barcode
+import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
+import io.github.g00fy2.quickie.extensions.toParcelableContentType
+import io.github.g00fy2.quickie.utils.PlayServicesValidator
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

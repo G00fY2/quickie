@@ -8,20 +8,20 @@
 - Android Jetpack CameraX for communicating with the camera and showing the preview
 - ML Kit Vision API for best, fully on-device barcode recognition and decoding
 
-## Download [![Download](https://img.shields.io/maven-metadata/v?label=quickie-bundled&metadataUrl=https%3A%2F%2Fbintray.com%2Fg00fy2%2Fmaven%2Fdownload_file%3Ffile_path%3Dcom%252Fg00fy2%252Fquickie%252Fquickie-unbundled%252Fmaven-metadata.xml)](https://bintray.com/g00fy2/maven/quickie-bundled) [![Download](https://img.shields.io/maven-metadata/v?label=quickie-unbundled&metadataUrl=https%3A%2F%2Fbintray.com%2Fg00fy2%2Fmaven%2Fdownload_file%3Ffile_path%3Dcom%252Fg00fy2%252Fquickie%252Fquickie-bundled%252Fmaven-metadata.xml)](https://bintray.com/g00fy2/maven/quickie-unbundled)
-There are two different flavors available on `jcenter()` (I'm planing to move to *mavenCentral()* soon):
+## Download [![Maven Central](https://img.shields.io/maven-central/v/io.github.g00fy2.quickie/quickie-unbundled)](https://search.maven.org/search?q=g:io.github.g00fy2.quickie)
+There are two different flavors available on `mavenCentral()`:
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
 | ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (after app install) |
-| additional 1.1 MB size per ABI (you should use AAB or ABI splitting) | smaller app size |
-| V2 barcode model is used (possibly faster, more accurate) | currently V1 will be downloaded
+| additional 1.1 MB per ABI (you should use App Bundle or ABI splitting) | smaller app size |
+| V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("com.g00fy2.quickie:quickie-bundled:0.6.1")
+implementation("io.github.g00fy2.quickie:quickie-bundled:0.7.0")
 
 // unbundled:
-implementation("com.g00fy2.quickie:quickie-unbundled:0.6.1")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:0.7.0")
 ```
 
 ## Quick Start
@@ -73,7 +73,7 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 * A release candidate is a prospective stable release.
 * It may contain critical last-minute fixes.
 
-Even though **quickie** is battle-tested you should consider this library to be in pre-release state too. This will change once the dependent libraries hit stable.
+Even though **quickie** is battle-tested (used in apps with 500k+ users) you should consider this library to be in pre-release state too. This will change once the dependent libraries hit stable.
 
 ## Requirements
 * AndroidX
