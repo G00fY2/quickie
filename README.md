@@ -42,7 +42,7 @@ fun handleResult(result: QRResult) {
 
 Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
-#### Responses
+### Responses
 The callback you add to the `registerForActivityResult` will receive a subclass of the sealed `QRResult` class: 
 
 1. `QRSuccess` when ML Kit successfully detected a QR code
@@ -52,7 +52,7 @@ The callback you add to the `registerForActivityResult` will receive a subclass 
 1. `QRError` when CameraX or ML kit threw an exception
    * wraps the `exception`
 
-#### Content
+### Content
 The content type of the QR code detected by ML Kit is wrapped inside a subclass of the sealed `QRContent` class which always provides a `rawValue`.
 
 Currently, supported subtypes are:
