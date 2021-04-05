@@ -12,7 +12,8 @@ subprojects {
   apply(plugin = Plugins.Misc.detekt)
   detekt {
     toolVersion = Versions.detekt
-    config = files("${project.rootDir}/config/detekt/detekt.yml")
+    config = files("$rootDir/config/detekt/detekt.yml")
+    baseline = file("$projectDir/config/detekt/baseline.xml")
     buildUponDefaultConfig = true
     ignoredBuildTypes = listOf("release")
   }

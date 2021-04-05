@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
   private fun openUrl(url: String) {
     try {
       startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-    } catch (e: ActivityNotFoundException) {
+    } catch (ignored: ActivityNotFoundException) {
       // no Activity found to run the given Intent
     }
   }

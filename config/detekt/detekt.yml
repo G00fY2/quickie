@@ -1,19 +1,10 @@
 complexity:
   ComplexMethod:
     ignoreSingleWhenExpression: true
-  LongMethod:
-    threshold: 70
   LongParameterList:
     ignoreAnnotated: ['Parcelize']
 
 exceptions:
-  SwallowedException:
-    ignoredExceptionTypes:
-      - InterruptedException
-      - NumberFormatException
-      - ParseException
-      - MalformedURLException
-      - ActivityNotFoundException
   TooGenericExceptionCaught:
     active: false
 

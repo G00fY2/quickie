@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>LongMethod:IntentExtensions.kt$private fun Intent.toQuickieContentType(rawValue: String): QRContent?</ID>
+    <ID>UnsafeCallOnNullableType:QRCodeAnalyzer.kt$QRCodeAnalyzer$image!!</ID>
+    <ID>UnsafeCallOnNullableType:QROverlayView.kt$QROverlayView$maskBitmap!!</ID>
+    <ID>UnsafeCallOnNullableType:QROverlayView.kt$QROverlayView$maskCanvas!!</ID>
+  </CurrentIssues>
+</SmellBaseline>

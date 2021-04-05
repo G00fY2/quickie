@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run detekt with ktlint
-        run: ./gradlew detekt
+        run: ./gradlew detektBundledDebug detektUnbundledDebug
 
   build_bundled:
     name: Build bundled debug
