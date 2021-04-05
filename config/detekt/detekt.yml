@@ -1,0 +1,31 @@
+complexity:
+  ComplexMethod:
+    ignoreSingleWhenExpression: true
+  LongMethod:
+    threshold: 70
+  LongParameterList:
+    ignoreAnnotated: ['Parcelize']
+
+exceptions:
+  SwallowedException:
+    ignoredExceptionTypes:
+      - InterruptedException
+      - NumberFormatException
+      - ParseException
+      - MalformedURLException
+      - ActivityNotFoundException
+  TooGenericExceptionCaught:
+    active: false
+
+formatting:
+  android: true
+  FinalNewline:
+    insertFinalNewLine: false
+  ParameterListWrapping:
+    indentSize: 2
+
+style:
+  MagicNumber:
+    active: false
+  NewLineAtEndOfFile:
+    active: false

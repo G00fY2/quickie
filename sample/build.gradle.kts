@@ -43,12 +43,6 @@ android {
   sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
 }
 
-repositories {
-  google()
-  mavenCentral()
-  jcenter()
-}
-
 dependencies {
   implementation(project(":quickie"))
 

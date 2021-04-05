@@ -27,16 +27,6 @@ android {
   }
 }
 
-repositories {
-  google()
-  mavenCentral()
-  jcenter {
-    content {
-      includeGroupByRegex("org\\.jetbrains.*")
-    }
-  }
-}
-
 val bundledImplementation by configurations
 val unbundledImplementation by configurations
 dependencies {

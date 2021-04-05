@@ -11,14 +11,14 @@ on:
       - master
 
 jobs:
-  ktlint:
-    name: Run ktlint
+  detekt:
+    name: Run detekt
     runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
-      - name: Run ktlintCheck
-        run: ./gradlew ktlintCheck
+      - name: Run detekt with ktlint
+        run: ./gradlew detekt
 
   build_bundled:
     name: Build bundled debug

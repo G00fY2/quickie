@@ -4,15 +4,23 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   id(Plugins.Android.application) version Versions.androidGradle apply false
   kotlin(Plugins.Kotlin.androidGradle) version Versions.kotlin apply false
-  id(Plugins.Misc.ktlint) version Versions.ktlintPlugin
+  id(Plugins.Misc.detekt) version Versions.detekt
   id(Plugins.Misc.gradleVersions) version Versions.gradleVersions
 }
 
 subprojects {
-  apply(plugin = Plugins.Misc.ktlint)
-  ktlint {
-    version.set(Versions.ktlint)
-    android.set(true)
+  apply(plugin = Plugins.Misc.detekt)
+  detekt {
+    toolVersion = Versions.detekt
+    config = files("${project.rootDir}/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    ignoredBuildTypes = listOf("release")
+  }
+  dependencies {
+    detektPlugins(Plugins.Misc.detektFormatting)
+  }
+  tasks.detekt {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
@@ -36,10 +44,6 @@ subprojects {
 tasks.dependencyUpdates.configure {
   gradleReleaseChannel = "current"
   rejectVersionIf { Versions.maturityLevel(candidate.version) < Versions.maturityLevel(currentVersion) }
-}
-
-repositories {
-  mavenCentral()
 }
 
 tasks.register<Delete>("clean") {
