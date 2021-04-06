@@ -10,7 +10,7 @@ plugins {
 android {
   compileSdkVersion(Versions.androidCompileSdk)
   defaultConfig.minSdkVersion(Versions.androidMinSdk)
-  resourcePrefix = project.name
+  resourcePrefix = "quickie"
   buildFeatures {
     viewBinding = true
     buildConfig = false
@@ -74,8 +74,8 @@ afterEvaluate {
         name = "sonatype"
         url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
         credentials {
-          username = project.findStringProperty("sonatypeUsername")
-          password = project.findStringProperty("sonatypePassword")
+          username = findStringProperty("sonatypeUsername")
+          password = findStringProperty("sonatypePassword")
         }
       }
     }
@@ -83,9 +83,9 @@ afterEvaluate {
 }
 
 signing {
-  project.findStringProperty("signing.keyId")
-  project.findStringProperty("signing.password")
-  project.findStringProperty("signing.secretKeyRingFile")
+  findStringProperty("signing.keyId")
+  findStringProperty("signing.password")
+  findStringProperty("signing.secretKeyRingFile")
   sign(publishing.publications)
 }
 

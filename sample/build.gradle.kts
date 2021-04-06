@@ -35,10 +35,6 @@ android {
   }
   buildFeatures {
     viewBinding = true
-    aidl = false
-    renderScript = false
-    resValues = false
-    shaders = false
   }
   sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
 }
