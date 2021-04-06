@@ -1,4 +1,5 @@
 import com.android.build.gradle.BaseExtension
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -20,7 +21,7 @@ subprojects {
   dependencies {
     detektPlugins(Plugins.Misc.detektFormatting)
   }
-  tasks.detekt {
+  tasks.withType<Detekt>().configureEach {
     jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
   tasks.withType<KotlinCompile>().configureEach {
