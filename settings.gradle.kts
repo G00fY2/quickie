@@ -5,11 +5,8 @@ dependencyResolutionManagement {
   repositories {
     google()
     mavenCentral()
-    jcenter {
-      content {
-        includeGroupByRegex("org\\.jetbrains.*")
-      }
-    }
+    // TODO remove repository once https://github.com/detekt/detekt/pull/3455 available
+    maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
   }
 }
 
