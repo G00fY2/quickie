@@ -1,18 +1,28 @@
 import com.android.build.gradle.BaseExtension
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   id(Plugins.Android.application) version Versions.androidGradle apply false
   kotlin(Plugins.Kotlin.androidGradle) version Versions.kotlin apply false
-  id(Plugins.Misc.ktlint) version Versions.ktlintPlugin
+  id(Plugins.Misc.detekt) version Versions.detekt
   id(Plugins.Misc.gradleVersions) version Versions.gradleVersions
 }
 
 subprojects {
-  apply(plugin = Plugins.Misc.ktlint)
-  ktlint {
-    version.set(Versions.ktlint)
-    android.set(true)
+  apply(plugin = Plugins.Misc.detekt)
+  detekt {
+    toolVersion = Versions.detekt
+    config = files("$rootDir/config/detekt/detekt.yml")
+    baseline = file("$projectDir/config/detekt/baseline.xml")
+    buildUponDefaultConfig = true
+    ignoredBuildTypes = listOf("release")
+  }
+  dependencies {
+    detektPlugins(Plugins.Misc.detektFormatting)
+  }
+  tasks.withType<Detekt>().configureEach {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
@@ -36,10 +46,6 @@ subprojects {
 tasks.dependencyUpdates.configure {
   gradleReleaseChannel = "current"
   rejectVersionIf { Versions.maturityLevel(candidate.version) < Versions.maturityLevel(currentVersion) }
-}
-
-repositories {
-  mavenCentral()
 }
 
 tasks.register<Delete>("clean") {

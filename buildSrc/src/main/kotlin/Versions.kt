@@ -9,20 +9,19 @@ object Versions {
   const val kotlin = "1.4.32"
 
   const val activity = "1.2.2"
-  const val fragment = "1.3.2"
+  const val fragment = "1.3.3"
   const val appcompat = "1.2.0"
   const val core = "1.3.2"
 
-  const val cameraX = "1.0.0-rc04"
-  const val cameraView = "1.0.0-alpha23"
+  const val cameraX = "1.0.0-rc05"
+  const val cameraView = "1.0.0-alpha24"
 
   const val materialDesign = "1.3.0"
 
   const val barcodeScanning = "16.1.1"
   const val barcodeScanningGms = "16.1.4"
 
-  const val ktlintPlugin = "10.0.0"
-  const val ktlint = "0.41.0"
+  const val detekt = "1.16.0"
   const val gradleVersions = "0.38.0"
   const val dokka = "1.4.30"
 

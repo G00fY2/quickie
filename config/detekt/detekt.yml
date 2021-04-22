@@ -1,0 +1,24 @@
+complexity:
+  ComplexMethod:
+    ignoreSingleWhenExpression: true
+  LongParameterList:
+    ignoreAnnotated: ['Parcelize']
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
+
+formatting:
+  android: true
+  ImportOrdering:
+    active: true
+  FinalNewline:
+    insertFinalNewLine: false
+  ParameterListWrapping:
+    indentSize: 2
+
+style:
+  MagicNumber:
+    active: false
+  NewLineAtEndOfFile:
+    active: false

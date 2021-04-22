@@ -32,10 +32,11 @@ import io.github.g00fy2.quickie.content.UrlBookmarkParcelable
 import io.github.g00fy2.quickie.content.WifiParcelable
 
 internal fun Intent?.toQuickieContentType(): QRContent {
-  if (this == null) return Plain("")
+  val rawValue = this?.getStringExtra(QRScannerActivity.EXTRA_RESULT_VALUE) ?: ""
+  return this?.toQuickieContentType(rawValue) ?: Plain(rawValue)
+}
 
-  val rawValue = getStringExtra(QRScannerActivity.EXTRA_RESULT_VALUE) ?: ""
-
+private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
   return when (getIntExtra(QRScannerActivity.EXTRA_RESULT_TYPE, Barcode.TYPE_UNKNOWN)) {
     Barcode.TYPE_CONTACT_INFO -> {
       getParcelableExtra<ContactInfoParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
@@ -102,14 +103,12 @@ internal fun Intent?.toQuickieContentType(): QRContent {
       }
     }
     else -> null
-  } ?: Plain(rawValue)
+  }
 }
 
 internal fun Intent?.getRootException(): Exception {
-  return try {
-    this?.getSerializableExtra(QRScannerActivity.EXTRA_RESULT_EXCEPTION) as Exception
-  } catch (e: Exception) {
-    IllegalStateException("Could retrieve root exception")
+  this?.getSerializableExtra(QRScannerActivity.EXTRA_RESULT_EXCEPTION).let {
+    return if (it is Exception) it else IllegalStateException("Could retrieve root exception")
   }
 }
 

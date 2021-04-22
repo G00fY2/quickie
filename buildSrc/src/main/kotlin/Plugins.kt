@@ -13,7 +13,8 @@ object Plugins {
   }
 
   object Misc {
-    const val ktlint = "org.jlleitschuh.gradle.ktlint"
+    const val detekt = "io.gitlab.arturbosch.detekt"
+    const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
     const val gradleVersions = "com.github.ben-manes.versions"
   }
 }

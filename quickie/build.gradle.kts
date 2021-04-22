@@ -10,7 +10,7 @@ plugins {
 android {
   compileSdkVersion(Versions.androidCompileSdk)
   defaultConfig.minSdkVersion(Versions.androidMinSdk)
-  resourcePrefix = project.name
+  resourcePrefix = "quickie"
   buildFeatures {
     viewBinding = true
     buildConfig = false
@@ -24,16 +24,6 @@ android {
     getByName("main").java.srcDirs("src/main/kotlin")
     getByName("bundled").java.srcDirs("src/bundled/kotlin")
     getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
-  }
-}
-
-repositories {
-  google()
-  mavenCentral()
-  jcenter {
-    content {
-      includeGroupByRegex("org\\.jetbrains.*")
-    }
   }
 }
 
@@ -54,7 +44,7 @@ dependencies {
 }
 
 group = "io.github.g00fy2.quickie"
-version = "0.7.1"
+version = "0.7.2"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
@@ -84,8 +74,8 @@ afterEvaluate {
         name = "sonatype"
         url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
         credentials {
-          username = project.findStringProperty("sonatypeUsername")
-          password = project.findStringProperty("sonatypePassword")
+          username = findStringProperty("sonatypeUsername")
+          password = findStringProperty("sonatypePassword")
         }
       }
     }
@@ -93,9 +83,9 @@ afterEvaluate {
 }
 
 signing {
-  project.findStringProperty("signing.keyId")
-  project.findStringProperty("signing.password")
-  project.findStringProperty("signing.secretKeyRingFile")
+  findStringProperty("signing.keyId")
+  findStringProperty("signing.password")
+  findStringProperty("signing.secretKeyRingFile")
   sign(publishing.publications)
 }
 
