@@ -6,7 +6,7 @@ object Versions {
   const val androidBuildTools = "30.0.3"
 
   const val androidGradle = "4.1.3"
-  const val kotlin = "1.4.32"
+  const val kotlin = "1.5.0"
 
   const val activity = "1.2.2"
   const val fragment = "1.3.3"
