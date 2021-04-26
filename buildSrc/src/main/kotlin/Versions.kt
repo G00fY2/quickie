@@ -23,7 +23,7 @@ object Versions {
 
   const val detekt = "1.16.0"
   const val gradleVersions = "0.38.0"
-  const val dokka = "1.4.30"
+  const val dokka = "1.4.32"
 
   fun maturityLevel(version: String): Int {
     val levels = listOf("alpha", "beta", "m", "rc")
