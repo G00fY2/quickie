@@ -30,10 +30,7 @@ android {
 val bundledImplementation by configurations
 val unbundledImplementation by configurations
 dependencies {
-  implementation(Deps.AndroidX.activity)
-  implementation(Deps.AndroidX.fragment)
   implementation(Deps.AndroidX.appcompat)
-  implementation(Deps.AndroidX.core)
 
   implementation(Deps.AndroidX.camera)
   implementation(Deps.AndroidX.cameraLifecycle)

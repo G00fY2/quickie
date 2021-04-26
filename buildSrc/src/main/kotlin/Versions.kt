@@ -8,10 +8,7 @@ object Versions {
   const val androidGradle = "4.1.3"
   const val kotlin = "1.4.32"
 
-  const val activity = "1.2.2"
-  const val fragment = "1.3.3"
-  const val appcompat = "1.2.0"
-  const val core = "1.3.2"
+  const val appcompat = "1.3.0-rc01"
 
   const val cameraX = "1.0.0-rc05"
   const val cameraView = "1.0.0-alpha24"
@@ -23,7 +20,7 @@ object Versions {
 
   const val detekt = "1.16.0"
   const val gradleVersions = "0.38.0"
-  const val dokka = "1.4.30"
+  const val dokka = "1.4.32"
 
   fun maturityLevel(version: String): Int {
     val levels = listOf("alpha", "beta", "m", "rc")
