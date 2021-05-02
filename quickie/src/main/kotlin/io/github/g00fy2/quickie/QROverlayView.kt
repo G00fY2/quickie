@@ -14,7 +14,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import androidx.annotation.FloatRange
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -116,7 +115,6 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   companion object {
-    @FloatRange(from = 0.0, to = 255.0)
     private const val BACKGROUND_ALPHA = 0.77 * 255
     private const val STROKE_WIDTH = 4f
     private const val OUT_RADIUS = 16f
