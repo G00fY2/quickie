@@ -20,10 +20,10 @@ subprojects {
     ignoredBuildTypes = listOf("release")
   }
   dependencies {
-    add("detektPlugins", Plugins.Misc.detektFormatting)
+    "detektPlugins"(Plugins.Misc.detektFormatting)
   }
   tasks.withType<Detekt>().configureEach {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
+    jvmTarget = "1.8"
   }
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
@@ -31,7 +31,7 @@ subprojects {
       val arguments = mutableListOf("-progressive")
       if (this@subprojects.name != "sample") arguments += "-Xexplicit-api=strict"
       freeCompilerArgs = freeCompilerArgs + arguments
-      jvmTarget = JavaVersion.VERSION_1_8.toString()
+      jvmTarget = "1.8"
     }
   }
   afterEvaluate {
