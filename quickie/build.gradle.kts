@@ -119,8 +119,8 @@ fun MavenPublication.commonConfig(artifactName: String) {
 }
 
 fun Project.findStringProperty(propertyName: String): String? {
-  return findProperty(propertyName) as String? ?: {
+  return findProperty(propertyName) as String? ?: run {
     println("$propertyName missing in gradle.properties")
     null
-  }()
+  }
 }
