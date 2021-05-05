@@ -8,12 +8,12 @@ object Versions {
   const val androidGradle = "4.2.0"
   const val kotlin = "1.5.0"
 
-  const val activity = "1.2.2"
+  const val activity = "1.2.3"
   const val fragment = "1.3.3"
   const val appcompat = "1.2.0"
   const val core = "1.3.2"
 
-  const val cameraX = "1.0.0-rc05"
+  const val cameraX = "1.0.0"
   const val cameraView = "1.0.0-alpha24"
 
   const val materialDesign = "1.3.0"
