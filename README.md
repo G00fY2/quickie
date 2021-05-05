@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 | V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:0.7.2")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.0.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:0.7.2")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.0.0")
 ```
 
 ## Quick Start
@@ -67,13 +67,6 @@ The library is designed to behave and look as generic as possible while matching
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
 
 ![Image](https://raw.githubusercontent.com/G00fY2/quickie/gh-pages/media/quickie-device-demo.png)
-
-## Release state
-**quickie** relies on CameraX which is currently available as a release candidate. Here is what Google says about this release state:
-* A release candidate is a prospective stable release.
-* It may contain critical last-minute fixes.
-
-Even though **quickie** is battle-tested (used in apps with 500k+ users) you should consider this library to be in pre-release state too. This will change once the dependent libraries hit stable.
 
 ## Requirements
 * AndroidX
