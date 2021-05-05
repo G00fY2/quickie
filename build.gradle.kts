@@ -1,17 +1,18 @@
 import com.android.build.gradle.BaseExtension
 import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   id(Plugins.Android.application) version Versions.androidGradle apply false
   kotlin(Plugins.Kotlin.androidGradle) version Versions.kotlin apply false
-  id(Plugins.Misc.detekt) version Versions.detekt
+  id(Plugins.Misc.detekt) version Versions.detekt apply false
   id(Plugins.Misc.gradleVersions) version Versions.gradleVersions
 }
 
 subprojects {
   apply(plugin = Plugins.Misc.detekt)
-  detekt {
+  extensions.configure<DetektExtension> {
     toolVersion = Versions.detekt
     config = files("$rootDir/config/detekt/detekt.yml")
     baseline = file("$projectDir/config/detekt/baseline.xml")
@@ -19,10 +20,10 @@ subprojects {
     ignoredBuildTypes = listOf("release")
   }
   dependencies {
-    detektPlugins(Plugins.Misc.detektFormatting)
+    "detektPlugins"(Plugins.Misc.detektFormatting)
   }
   tasks.withType<Detekt>().configureEach {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
+    jvmTarget = "1.8"
   }
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
@@ -30,7 +31,7 @@ subprojects {
       val arguments = mutableListOf("-progressive")
       if (this@subprojects.name != "sample") arguments += "-Xexplicit-api=strict"
       freeCompilerArgs = freeCompilerArgs + arguments
-      jvmTarget = JavaVersion.VERSION_1_8.toString()
+      jvmTarget = "1.8"
     }
   }
   afterEvaluate {
