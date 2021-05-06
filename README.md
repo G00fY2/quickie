@@ -61,7 +61,7 @@ Currently, supported subtypes are:
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
 ### Customization
-The library is designed to behave and look as generic as possible while matching Material Design guidelines. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
+The library is designed to behave and look as generic as possible (your app theme gets applied) while matching Material Design guidelines. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
