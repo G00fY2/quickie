@@ -29,12 +29,11 @@ internal class QROverlayView @JvmOverloads constructor(
 
   private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke)
   private val highlightedStrokeColor = getAccentColor()
-  private val backgroundColor =
-    ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.quickie_black), BACKGROUND_ALPHA.roundToInt())
+  private val backgroundColor = ColorUtils.setAlphaComponent(Color.BLACK, BACKGROUND_ALPHA.roundToInt())
   private val alphaPaint = Paint().apply { alpha = BACKGROUND_ALPHA.roundToInt() }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    color = ContextCompat.getColor(context, R.color.quickie_transparent)
+    color = Color.TRANSPARENT
     xfermode = PorterDuffXfermode(CLEAR)
   }
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
