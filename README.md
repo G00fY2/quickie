@@ -25,7 +25,7 @@ implementation("io.github.g00fy2.quickie:quickie-unbundled:1.0.0")
 ```
 
 ## Quick Start
-To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `init` or `onCreate()` lifecycle of your Activity/Fragment and use the returned ActivityResultLauncher to launch the QR scanner activity.
+To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `init` or `onCreate()` lifecycle of your Activity/Fragment and use the returned ActivityResultLauncher to launch the QR scanner Activity.
 ```kotlin
 val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
 
@@ -47,9 +47,9 @@ The callback you add to the `registerForActivityResult` will receive a subclass 
 
 1. `QRSuccess` when ML Kit successfully detected a QR code
    * wraps a `QRContent` object
-1. `QRUserCanceled` when the activity got canceled by the user
+1. `QRUserCanceled` when the Activity got canceled by the user
 1. `QRMissingPermission` when the user didn't accept the camera permission
-1. `QRError` when CameraX or ML kit threw an exception
+1. `QRError` when CameraX or ML Kit threw an exception
    * wraps the `exception`
 
 ### Content
