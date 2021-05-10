@@ -27,8 +27,6 @@ android {
   }
 }
 
-val bundledImplementation by configurations
-val unbundledImplementation by configurations
 dependencies {
   implementation(Deps.AndroidX.activity)
   implementation(Deps.AndroidX.fragment)
@@ -39,8 +37,8 @@ dependencies {
   implementation(Deps.AndroidX.cameraLifecycle)
   implementation(Deps.AndroidX.cameraPreview)
 
-  bundledImplementation(Deps.MLKit.barcodeScanning)
-  unbundledImplementation(Deps.MLKit.barcodeScanningGms)
+  "bundledImplementation"(Deps.MLKit.barcodeScanning)
+  "unbundledImplementation"(Deps.MLKit.barcodeScanningGms)
 }
 
 group = "io.github.g00fy2.quickie"
