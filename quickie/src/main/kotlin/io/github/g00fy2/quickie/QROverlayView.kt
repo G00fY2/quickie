@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import io.github.g00fy2.quickie.databinding.QuickieTextviewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -26,13 +27,13 @@ internal class QROverlayView @JvmOverloads constructor(
   defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-  private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke_color)
+  private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke)
   private val highlightedStrokeColor = getAccentColor()
-  private val backgroundColor = ContextCompat.getColor(context, R.color.quickie_background_color)
-  private val alphaPaint = Paint().apply { alpha = Color.alpha(backgroundColor) }
+  private val backgroundColor = ColorUtils.setAlphaComponent(Color.BLACK, BACKGROUND_ALPHA.roundToInt())
+  private val alphaPaint = Paint().apply { alpha = BACKGROUND_ALPHA.roundToInt() }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    color = ContextCompat.getColor(context, R.color.quickie_transparent)
+    color = Color.TRANSPARENT
     xfermode = PorterDuffXfermode(CLEAR)
   }
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
@@ -113,6 +114,7 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   companion object {
+    private const val BACKGROUND_ALPHA = 0.77 * 255
     private const val STROKE_WIDTH = 4f
     private const val OUT_RADIUS = 16f
     private const val FRAME_MARGIN_RATIO = 1f / 4

@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="345" height="120" src="https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/logo.png">
+  <img width="345" height="120" src="https://raw.githubusercontent.com/G00fY2/quickie/gh-pages/media/logo.png">
 </p>
 
 **quickie** is a Quick Response (QR) Code scanning library for Android that is based on CameraX and ML Kit on-device barcode detection. It's an alternative to ZXing based libraries and written in Kotlin. **quickie** features:
@@ -13,19 +13,19 @@ There are two different flavors available on `mavenCentral()`:
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
-| ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (after app install) |
+| ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (once after app install) |
 | additional 1.1 MB per ABI (you should use App Bundle or ABI splitting) | smaller app size |
 | V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:0.7.2")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.0.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:0.7.2")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.0.0")
 ```
 
 ## Quick Start
-To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `init` or `onCreate()` lifecycle of your Activity/Fragment and use the returned ActivityResultLauncher to launch the QR scanner activity.
+To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `init` or `onCreate()` lifecycle of your Activity/Fragment and use the returned ActivityResultLauncher to launch the QR scanner Activity.
 ```kotlin
 val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
 
@@ -47,9 +47,9 @@ The callback you add to the `registerForActivityResult` will receive a subclass 
 
 1. `QRSuccess` when ML Kit successfully detected a QR code
    * wraps a `QRContent` object
-1. `QRUserCanceled` when the activity got canceled by the user
+1. `QRUserCanceled` when the Activity got canceled by the user
 1. `QRMissingPermission` when the user didn't accept the camera permission
-1. `QRError` when CameraX or ML kit threw an exception
+1. `QRError` when CameraX or ML Kit threw an exception
    * wraps the `exception`
 
 ### Content
@@ -61,19 +61,12 @@ Currently, supported subtypes are:
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
 ### Customization
-The library is designed to behave and look as generic as possible while matching Material Design guidelines. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
+The library is designed to behave and look as generic as possible (your app theme gets applied) while matching Material Design guidelines. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
 
-![Image](https://raw.githubusercontent.com/G00fY2/Quickie/gh-pages/media/quickie-device-demo.png)
-
-## Release state
-**quickie** relies on CameraX which is currently available as a release candidate. Here is what Google says about this release state:
-* A release candidate is a prospective stable release.
-* It may contain critical last-minute fixes.
-
-Even though **quickie** is battle-tested (used in apps with 500k+ users) you should consider this library to be in pre-release state too. This will change once the dependent libraries hit stable.
+![Image](https://raw.githubusercontent.com/G00fY2/quickie/gh-pages/media/quickie-device-demo.png)
 
 ## Requirements
 * AndroidX

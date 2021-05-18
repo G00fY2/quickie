@@ -27,8 +27,6 @@ android {
   }
 }
 
-val bundledImplementation by configurations
-val unbundledImplementation by configurations
 dependencies {
   implementation(Deps.AndroidX.appcompat)
 
@@ -36,12 +34,12 @@ dependencies {
   implementation(Deps.AndroidX.cameraLifecycle)
   implementation(Deps.AndroidX.cameraPreview)
 
-  bundledImplementation(Deps.MLKit.barcodeScanning)
-  unbundledImplementation(Deps.MLKit.barcodeScanningGms)
+  "bundledImplementation"(Deps.MLKit.barcodeScanning)
+  "unbundledImplementation"(Deps.MLKit.barcodeScanningGms)
 }
 
 group = "io.github.g00fy2.quickie"
-version = "0.7.2"
+version = "1.0.0"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
@@ -92,8 +90,8 @@ fun MavenPublication.commonConfig(artifactName: String) {
   artifact(tasks.named("androidSourcesJar"))
   pom {
     name.set(artifactName)
-    description.set("Android QR code scanner library")
-    url.set("https://github.com/G00fY2/Quickie")
+    description.set("Android QR code scanning library")
+    url.set("https://github.com/G00fY2/quickie")
     licenses {
       license {
         name.set("MIT License")
@@ -108,16 +106,16 @@ fun MavenPublication.commonConfig(artifactName: String) {
       }
     }
     scm {
-      connection.set("https://github.com/G00fY2/Quickie.git")
-      developerConnection.set("https://github.com/G00fY2/Quickie.git")
-      url.set("https://github.com/G00fY2/Quickie")
+      connection.set("https://github.com/G00fY2/quickie.git")
+      developerConnection.set("https://github.com/G00fY2/quickie.git")
+      url.set("https://github.com/G00fY2/quickie")
     }
   }
 }
 
 fun Project.findStringProperty(propertyName: String): String? {
-  return findProperty(propertyName) as String? ?: {
-    logger.error("$propertyName missing in gradle.properties")
+  return findProperty(propertyName) as String? ?: run {
+    println("$propertyName missing in gradle.properties")
     null
-  }()
+  }
 }

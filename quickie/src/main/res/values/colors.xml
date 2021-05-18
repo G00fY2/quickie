@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="quickie_stroke_color">#dadce0</color>
-  <color name="quickie_background_color">#b3000000</color> <!-- 70% black transparency -->
-  <color name="quickie_transparent">#00000000</color>
+  <color name="quickie_stroke">#dadce0</color>
   <color name="quickie_white">#ffffff</color>
+  <color name="quickie_transparent">#00000000</color>
 </resources>
