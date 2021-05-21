@@ -62,36 +62,36 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private fun startCamera() {
     val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-    cameraProviderFuture.addListener({ setupUseCases(cameraProviderFuture.get()) }, ContextCompat.getMainExecutor(this))
-  }
 
-  private fun setupUseCases(cameraProvider: ProcessCameraProvider) {
-    val preview = Preview.Builder().build()
-    val imageAnalysis = ImageAnalysis.Builder()
-      .setTargetResolution(Size(1280, 720))
-      .build()
-      .also {
-        it.setAnalyzer(cameraExecutor,
-          QRCodeAnalyzer(
-            { barcode ->
-              it.clearAnalyzer()
-              onSuccess(barcode)
-            }, { exception ->
-              it.clearAnalyzer()
-              onFailure(exception)
-            }
+    cameraProviderFuture.addListener({
+      val cameraProvider = cameraProviderFuture.get()
+
+      val preview = Preview.Builder().build().also { it.setSurfaceProvider(binding.previewView.surfaceProvider) }
+      val imageAnalysis = ImageAnalysis.Builder()
+        .setTargetResolution(Size(1280, 720))
+        .build()
+        .also {
+          it.setAnalyzer(cameraExecutor,
+            QRCodeAnalyzer(
+              { barcode ->
+                it.clearAnalyzer()
+                onSuccess(barcode)
+              }, { exception ->
+                it.clearAnalyzer()
+                onFailure(exception)
+              }
+            )
           )
-        )
-      }
+        }
 
-    cameraProvider.unbindAll()
-    try {
-      cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalysis)
-      preview.setSurfaceProvider(binding.previewView.surfaceProvider)
-      binding.overlayView.visibility = View.VISIBLE
-    } catch (e: Exception) {
-      onFailure(e)
-    }
+      cameraProvider.unbindAll()
+      try {
+        cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalysis)
+        binding.overlayView.visibility = View.VISIBLE
+      } catch (e: Exception) {
+        onFailure(e)
+      }
+    }, ContextCompat.getMainExecutor(this))
   }
 
   private fun onSuccess(result: Barcode) {
