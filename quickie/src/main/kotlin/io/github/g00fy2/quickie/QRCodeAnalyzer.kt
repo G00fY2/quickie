@@ -19,9 +19,12 @@ internal class QRCodeAnalyzer(
 
   private var pendingTask: Task<List<Barcode>>? = null
   private val barcodeScanner by lazy {
-    BarcodeScanning.getClient(
-      BarcodeScannerOptions.Builder().setBarcodeFormats(formats.first(), *formats.drop(1).toIntArray()).build()
-    )
+    val optionsBuilder = if (formats.size > 1) {
+      BarcodeScannerOptions.Builder().setBarcodeFormats(formats.first(), *formats.drop(1).toIntArray())
+    } else {
+      BarcodeScannerOptions.Builder().setBarcodeFormats(formats.firstOrNull() ?: Barcode.FORMAT_UNKNOWN)
+    }
+    BarcodeScanning.getClient(optionsBuilder.build())
   }
 
   override fun analyze(imageProxy: ImageProxy) {
