@@ -20,13 +20,13 @@ public object ScannerConfigBuilder {
    * Set a string resource used for the scanner overlay.
    */
   @StringRes
-  public var overlayText: Int = R.string.quickie_scan_qr_code
+  public var overlayTextRes: Int = R.string.quickie_scan_qr_code
 
   /**
    * Set a drawable resource used for the scanner overlay.
    */
   @DrawableRes
-  public var overlayIcon: Int = R.drawable.quickie_ic_qrcode
+  public var overlayIconRes: Int = R.drawable.quickie_ic_qrcode
 
   /**
    * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
@@ -39,8 +39,12 @@ public object ScannerConfigBuilder {
   public fun build(): ScannerConfig {
     if (barcodeFormats.isEmpty()) barcodeFormats = listOf(BarcodeFormat.FORMAT_ALL_FORMATS)
 
-    return ScannerConfig(barcodeFormats.map { it.value }.toIntArray(), overlayText, overlayIcon)
+    return ScannerConfig(barcodeFormats.map { it.value }.toIntArray(), overlayTextRes, overlayIconRes)
   }
 
-  public class ScannerConfig(internal val formats: IntArray, internal val text: Int, internal val icon: Int)
+  public class ScannerConfig internal constructor(
+    internal val formats: IntArray,
+    internal val text: Int,
+    internal val icon: Int
+  )
 }

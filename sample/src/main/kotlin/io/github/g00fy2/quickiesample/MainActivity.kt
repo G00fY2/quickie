@@ -16,6 +16,7 @@ import io.github.g00fy2.quickie.ScanBarcode
 import io.github.g00fy2.quickie.ScanQRCode
 import io.github.g00fy2.quickie.config.BarcodeFormat
 import io.github.g00fy2.quickie.config.ScannerConfigBuilder
+import io.github.g00fy2.quickie.config.ScannerConfigBuilder.ScannerConfig
 import io.github.g00fy2.quickie.content.QRContent
 import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
 
@@ -42,8 +43,8 @@ class MainActivity : AppCompatActivity() {
       scanBarcode.launch(
         ScannerConfigBuilder.build {
           barcodeFormats = listOf(BarcodeFormat.FORMAT_CODE_128)
-          overlayIcon = R.drawable.ic_scan_barcode
-          overlayText = R.string.scan_barcode
+          overlayIconRes = R.drawable.ic_scan_barcode
+          overlayTextRes = R.string.scan_barcode
         }
       )
     }
