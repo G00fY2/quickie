@@ -42,6 +42,5 @@ android {
 dependencies {
   implementation(project(":quickie"))
 
-  implementation(Deps.AndroidX.appcompat)
   implementation(Deps.Mdc.materialDesign)
 }
