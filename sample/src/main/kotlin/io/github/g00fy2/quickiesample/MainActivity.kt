@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity() {
       scanBarcode.launch(
         ScannerConfigBuilder.build {
           barcodeFormats = listOf(BarcodeFormat.FORMAT_CODE_128)
-          overlayIconRes = R.drawable.ic_scan_barcode
-          overlayTextRes = R.string.scan_barcode
+          overlayDrawableRes = R.drawable.ic_scan_barcode
+          overlayStringRes = R.string.scan_barcode
         }
       )
     }
