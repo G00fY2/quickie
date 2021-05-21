@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources.NotFoundException
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Size
 import android.view.HapticFeedbackConstants
@@ -17,21 +19,25 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.mlkit.vision.barcode.Barcode
+import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
 import io.github.g00fy2.quickie.utils.PlayServicesValidator
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.math.roundToInt
 
 @ExperimentalGetImage
 internal class QRScannerActivity : AppCompatActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var cameraExecutor: ExecutorService
+  private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -42,6 +48,7 @@ internal class QRScannerActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     setupEdgeToEdgeUI()
+    applyScannerConfig()
 
     cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -73,6 +80,7 @@ internal class QRScannerActivity : AppCompatActivity() {
         .also {
           it.setAnalyzer(cameraExecutor,
             QRCodeAnalyzer(
+              barcodeFormats,
               { barcode ->
                 it.clearAnalyzer()
                 onSuccess(barcode)
@@ -126,6 +134,27 @@ internal class QRScannerActivity : AppCompatActivity() {
     }
   }
 
+  private fun applyScannerConfig() {
+    intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
+      if (it.formats.isNotEmpty()) barcodeFormats = it.formats
+      try {
+        binding.overlayView.titleTextView.setText(it.text)
+      } catch (ignore: NotFoundException) {
+        // string resource not found
+      }
+      try {
+        binding.overlayView.titleTextView.setCompoundDrawables(
+          null,
+          ResourcesCompat.getDrawable(resources, it.icon, null)?.limitDrawableSize(56),
+          null,
+          null,
+        )
+      } catch (ignore: NotFoundException) {
+        // drawable resource not found
+      }
+    }
+  }
+
   private fun requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
       onResult(true)
@@ -137,7 +166,15 @@ internal class QRScannerActivity : AppCompatActivity() {
     }
   }
 
+  private fun Drawable.limitDrawableSize(maxDpHeight: Int): Drawable {
+    val scale = (maxDpHeight * resources.displayMetrics.density) / minimumHeight
+    if (scale < 1) setBounds(0, 0, (minimumWidth * scale).roundToInt(), (minimumHeight * scale).roundToInt())
+    else setBounds(0, 0, minimumWidth, minimumHeight)
+    return this
+  }
+
   companion object {
+    const val EXTRA_CONFIG = "quickie-config"
     const val EXTRA_RESULT_VALUE = "quickie-value"
     const val EXTRA_RESULT_TYPE = "quickie-type"
     const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"

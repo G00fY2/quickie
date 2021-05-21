@@ -10,12 +10,18 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
 @ExperimentalGetImage
-internal class QRCodeAnalyzer(val onSuccess: ((Barcode) -> Unit), val onFailure: ((Exception) -> Unit)) :
+internal class QRCodeAnalyzer(
+  private val formats: IntArray,
+  private val onSuccess: ((Barcode) -> Unit),
+  private val onFailure: ((Exception) -> Unit)
+) :
   ImageAnalysis.Analyzer {
 
   private var pendingTask: Task<List<Barcode>>? = null
   private val barcodeScanner by lazy {
-    BarcodeScanning.getClient(BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build())
+    BarcodeScanning.getClient(
+      BarcodeScannerOptions.Builder().setBarcodeFormats(formats.first(), *formats.drop(1).toIntArray()).build()
+    )
   }
 
   override fun analyze(imageProxy: ImageProxy) {

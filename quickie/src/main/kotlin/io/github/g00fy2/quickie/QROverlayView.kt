@@ -39,11 +39,11 @@ internal class QROverlayView @JvmOverloads constructor(
   private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
   private val innerRadius =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS - STROKE_WIDTH, resources.displayMetrics)
-  private val titleTextView: AppCompatTextView
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
   private var outerFrame = RectF()
   private var innerFrame = RectF()
+  val titleTextView: AppCompatTextView
   var isHighlighted = false
     set(value) {
       field = value
