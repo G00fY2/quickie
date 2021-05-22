@@ -14,8 +14,7 @@ internal class QRCodeAnalyzer(
   private val barcodeFormats: IntArray,
   private val onSuccess: ((Barcode) -> Unit),
   private val onFailure: ((Exception) -> Unit)
-) :
-  ImageAnalysis.Analyzer {
+) : ImageAnalysis.Analyzer {
 
   private var pendingTask: Task<List<Barcode>>? = null
   private val barcodeScanner by lazy {
