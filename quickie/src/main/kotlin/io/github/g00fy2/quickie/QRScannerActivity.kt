@@ -4,8 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources.NotFoundException
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Size
 import android.view.HapticFeedbackConstants
@@ -19,7 +17,6 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -30,7 +27,6 @@ import io.github.g00fy2.quickie.extensions.toParcelableContentType
 import io.github.g00fy2.quickie.utils.PlayServicesValidator
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.math.roundToInt
 
 @ExperimentalGetImage
 internal class QRScannerActivity : AppCompatActivity() {
@@ -136,22 +132,8 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private fun applyScannerConfig() {
     intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
-      if (it.formats.isNotEmpty()) barcodeFormats = it.formats
-      try {
-        binding.overlayView.titleTextView.setText(it.stringRes)
-      } catch (ignore: NotFoundException) {
-        // string resource not found
-      }
-      try {
-        binding.overlayView.titleTextView.setCompoundDrawables(
-          null,
-          ResourcesCompat.getDrawable(resources, it.drawableRes, null)?.limitDrawableSize(56),
-          null,
-          null,
-        )
-      } catch (ignore: NotFoundException) {
-        // drawable resource not found
-      }
+      barcodeFormats = it.formats
+      binding.overlayView.setCustomTextAndIcon(it.stringRes, it.drawableRes)
     }
   }
 
@@ -164,13 +146,6 @@ internal class QRScannerActivity : AppCompatActivity() {
         onResult(it)
       }.launch(Manifest.permission.CAMERA)
     }
-  }
-
-  private fun Drawable.limitDrawableSize(maxDpHeight: Int): Drawable {
-    val scale = (maxDpHeight * resources.displayMetrics.density) / minimumHeight
-    if (scale < 1) setBounds(0, 0, (minimumWidth * scale).roundToInt(), (minimumHeight * scale).roundToInt())
-    else setBounds(0, 0, minimumWidth, minimumHeight)
-    return this
   }
 
   companion object {

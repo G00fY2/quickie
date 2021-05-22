@@ -2,7 +2,6 @@ package io.github.g00fy2.quickie.config
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import io.github.g00fy2.quickie.R
 
 /**
  * Builder for ScannerConfig used in ScanBarcode ActivityResultContract.
@@ -16,8 +15,8 @@ public class ScannerConfig internal constructor(
 
   public class Builder {
     private var barcodeFormats: List<BarcodeFormat> = listOf(BarcodeFormat.FORMAT_ALL_FORMATS)
-    private var overlayStringRes: Int = R.string.quickie_scan_qr_code
-    private var overlayDrawableRes: Int = R.drawable.quickie_ic_qrcode
+    private var overlayStringRes: Int = 0
+    private var overlayDrawableRes: Int = 0
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
