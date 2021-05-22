@@ -12,7 +12,7 @@ import io.github.g00fy2.quickie.QRResult.QRError
 import io.github.g00fy2.quickie.QRResult.QRMissingPermission
 import io.github.g00fy2.quickie.QRResult.QRSuccess
 import io.github.g00fy2.quickie.QRResult.QRUserCanceled
-import io.github.g00fy2.quickie.ScanBarcode
+import io.github.g00fy2.quickie.ScanCustomCode
 import io.github.g00fy2.quickie.ScanQRCode
 import io.github.g00fy2.quickie.config.BarcodeFormat
 import io.github.g00fy2.quickie.config.ScannerConfig
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
   private var snackbar: Snackbar? = null
 
   private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
-  private val scanBarcode = registerForActivityResult(ScanBarcode(), ::showSnackbar)
+  private val scanCustomCode = registerForActivityResult(ScanCustomCode(), ::showSnackbar)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     binding.buttonBarcodeScanner.setOnClickListener {
       snackbar?.dismiss()
-      scanBarcode.launch(
+      scanCustomCode.launch(
         ScannerConfig.Builder().build {
           setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
           setOverlayStringRes(R.string.scan_barcode)
