@@ -5,7 +5,6 @@ import com.google.mlkit.vision.barcode.Barcode
 /**
  * Wrapper class to access the ML Kit BarcodeFormat constants.
  */
-@Suppress("unused")
 public enum class BarcodeFormat(internal val value: Int) {
   FORMAT_ALL_FORMATS(Barcode.FORMAT_ALL_FORMATS),
   FORMAT_CODE_128(Barcode.FORMAT_CODE_128),

@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 /**
  * Builder for ScannerConfig used in ScanBarcode ActivityResultContract.
  */
-@Suppress("MemberVisibilityCanBePrivate")
 public class ScannerConfig internal constructor(
   internal val formats: IntArray,
   internal val stringRes: Int,
@@ -43,6 +42,7 @@ public class ScannerConfig internal constructor(
     /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     public fun build(): ScannerConfig =
       ScannerConfig(barcodeFormats.map { it.value }.toIntArray(), overlayStringRes, overlayDrawableRes)
   }
