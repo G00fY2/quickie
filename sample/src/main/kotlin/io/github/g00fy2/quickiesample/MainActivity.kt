@@ -16,7 +16,6 @@ import io.github.g00fy2.quickie.ScanBarcode
 import io.github.g00fy2.quickie.ScanQRCode
 import io.github.g00fy2.quickie.config.BarcodeFormat
 import io.github.g00fy2.quickie.config.ScannerConfigBuilder
-import io.github.g00fy2.quickie.config.ScannerConfigBuilder.ScannerConfig
 import io.github.g00fy2.quickie.content.QRContent
 import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
 
