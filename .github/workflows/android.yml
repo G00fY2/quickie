@@ -20,6 +20,15 @@ jobs:
       - name: Run detekt with ktlint
         run: ./gradlew detektBundledDebug detektUnbundledDebug
 
+  unit_tests:
+    name: Run unit tests
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run bundled and unbundled unit tests
+        run: ./gradlew test
+
   build_bundled:
     name: Build bundled debug
     runs-on: ubuntu-20.04

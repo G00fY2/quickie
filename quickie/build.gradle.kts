@@ -24,6 +24,7 @@ android {
     getByName("main").java.srcDirs("src/main/kotlin")
     getByName("bundled").java.srcDirs("src/bundled/kotlin")
     getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
+    getByName("test").java.srcDirs("src/test/kotlin")
   }
 }
 
@@ -36,6 +37,9 @@ dependencies {
 
   "bundledImplementation"(Deps.MLKit.barcodeScanning)
   "unbundledImplementation"(Deps.MLKit.barcodeScanningGms)
+
+  testImplementation(Deps.Test.junitApi)
+  testRuntimeOnly(Deps.Test.junitEngine)
 }
 
 group = "io.github.g00fy2.quickie"
@@ -53,6 +57,12 @@ tasks.register<Jar>("androidSourcesJar") {
 }
 
 afterEvaluate {
+  tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+    testLogging.events("failed", "passed", "skipped")
+    enabled = name.endsWith("DebugUnitTest")
+  }
+
   publishing {
     publications {
       create<MavenPublication>("bundledRelease") {

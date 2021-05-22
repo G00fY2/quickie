@@ -22,6 +22,8 @@ object Versions {
   const val gradleVersions = "0.38.0"
   const val dokka = "1.4.32"
 
+  const val junit = "5.7.2"
+
   fun maturityLevel(version: String): Int {
     val levels = listOf("alpha", "beta", "m", "rc")
     levels.forEachIndexed { index, s ->
