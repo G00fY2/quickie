@@ -15,7 +15,7 @@ import io.github.g00fy2.quickie.QRResult.QRUserCanceled
 import io.github.g00fy2.quickie.ScanBarcode
 import io.github.g00fy2.quickie.ScanQRCode
 import io.github.g00fy2.quickie.config.BarcodeFormat
-import io.github.g00fy2.quickie.config.ScannerConfigBuilder
+import io.github.g00fy2.quickie.config.ScannerConfig
 import io.github.g00fy2.quickie.content.QRContent
 import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
 
@@ -40,10 +40,10 @@ class MainActivity : AppCompatActivity() {
     binding.buttonBarcodeScanner.setOnClickListener {
       snackbar?.dismiss()
       scanBarcode.launch(
-        ScannerConfigBuilder.build {
-          barcodeFormats = listOf(BarcodeFormat.FORMAT_CODE_128)
-          overlayDrawableRes = R.drawable.ic_scan_barcode
-          overlayStringRes = R.string.scan_barcode
+        ScannerConfig.Builder().build {
+          setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
+          setOverlayStringRes(R.string.scan_barcode)
+          setOverlayDrawableRes(R.drawable.ic_scan_barcode)
         }
       )
     }

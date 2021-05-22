@@ -138,14 +138,14 @@ internal class QRScannerActivity : AppCompatActivity() {
     intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
       if (it.formats.isNotEmpty()) barcodeFormats = it.formats
       try {
-        binding.overlayView.titleTextView.setText(it.text)
+        binding.overlayView.titleTextView.setText(it.stringRes)
       } catch (ignore: NotFoundException) {
         // string resource not found
       }
       try {
         binding.overlayView.titleTextView.setCompoundDrawables(
           null,
-          ResourcesCompat.getDrawable(resources, it.icon, null)?.limitDrawableSize(56),
+          ResourcesCompat.getDrawable(resources, it.drawableRes, null)?.limitDrawableSize(56),
           null,
           null,
         )

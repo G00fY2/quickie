@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal class ParcelableScannerConfig(val formats: IntArray, val text: Int, val icon: Int) : Parcelable
+internal class ParcelableScannerConfig(val formats: IntArray, val stringRes: Int, val drawableRes: Int) : Parcelable
