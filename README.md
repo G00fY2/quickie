@@ -92,7 +92,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     …
     binding.button.setOnClickListener {
       scanCustomCode.launch(
-        ScannerConfig.Builder().build {
+        ScannerConfig.build {
           setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
           setOverlayStringRes(R.string.scan_barcode)
           setOverlayDrawableRes(R.drawable.ic_scan_barcode)

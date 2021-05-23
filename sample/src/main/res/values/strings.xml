@@ -2,8 +2,9 @@
   <string name="app_name" translatable="false">Quickie Activity Sample</string>
 
   <string name="qr_button" translatable="false">QR-Code Scanner</string>
-  <string name="barcode_button" translatable="false">Barcode Scanner</string>
+  <string name="custom_button" translatable="false">Custom Scanner</string>
   <string name="ok_action" translatable="false">OK</string>
   <string name="open_action" translatable="false">Open</string>
   <string name="scan_barcode" translatable="false">Scan barcode</string>
+  <string name="barcode_format" translatable="false">BarcodeFormat</string>
 </resources>

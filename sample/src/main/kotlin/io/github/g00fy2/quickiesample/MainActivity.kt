@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityMainBinding
   private var snackbar: Snackbar? = null
+  private var selectedBarcodeFormat = BarcodeFormat.FORMAT_ALL_FORMATS
 
   private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
   private val scanCustomCode = registerForActivityResult(ScanCustomCode(), ::showSnackbar)
@@ -32,20 +34,32 @@ class MainActivity : AppCompatActivity() {
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    binding.buttonQrScanner.setOnClickListener {
+    setupBarcodeFormatDropdown()
+
+    binding.qrScannerButton.setOnClickListener {
       snackbar?.dismiss()
       scanQrCode.launch(null)
     }
 
-    binding.buttonBarcodeScanner.setOnClickListener {
+    binding.customScannerButton.setOnClickListener {
       snackbar?.dismiss()
       scanCustomCode.launch(
-        ScannerConfig.Builder().build {
-          setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
+        ScannerConfig.build {
+          setBarcodeFormats(listOf(selectedBarcodeFormat))
           setOverlayStringRes(R.string.scan_barcode)
           setOverlayDrawableRes(R.drawable.ic_scan_barcode)
         }
       )
+    }
+  }
+
+  private fun setupBarcodeFormatDropdown() {
+    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.values().map { it.name }).let {
+      binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
+      binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
+      binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+        selectedBarcodeFormat = BarcodeFormat.values()[position]
+      }
     }
   }
 

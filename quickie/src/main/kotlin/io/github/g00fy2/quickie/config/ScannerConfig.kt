@@ -37,13 +37,14 @@ public class ScannerConfig internal constructor(
     /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
-    public fun build(func: Builder.() -> Unit): ScannerConfig = apply { func() }.build()
-
-    /**
-     * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
-     */
-    @Suppress("MemberVisibilityCanBePrivate")
     public fun build(): ScannerConfig =
       ScannerConfig(barcodeFormats.map { it.value }.toIntArray(), overlayStringRes, overlayDrawableRes)
+  }
+
+  public companion object {
+    /**
+     * Kotlin friendly method to build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
+     */
+    public fun build(func: Builder.() -> Unit): ScannerConfig = Builder().apply { func() }.build()
   }
 }
