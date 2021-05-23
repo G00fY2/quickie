@@ -24,27 +24,26 @@ android {
     getByName("main").java.srcDirs("src/main/kotlin")
     getByName("bundled").java.srcDirs("src/bundled/kotlin")
     getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
+    getByName("test").java.srcDirs("src/test/kotlin")
   }
 }
 
-val bundledImplementation by configurations
-val unbundledImplementation by configurations
 dependencies {
-  implementation(Deps.AndroidX.activity)
-  implementation(Deps.AndroidX.fragment)
   implementation(Deps.AndroidX.appcompat)
-  implementation(Deps.AndroidX.core)
 
   implementation(Deps.AndroidX.camera)
   implementation(Deps.AndroidX.cameraLifecycle)
   implementation(Deps.AndroidX.cameraPreview)
 
-  bundledImplementation(Deps.MLKit.barcodeScanning)
-  unbundledImplementation(Deps.MLKit.barcodeScanningGms)
+  "bundledImplementation"(Deps.MLKit.barcodeScanning)
+  "unbundledImplementation"(Deps.MLKit.barcodeScanningGms)
+
+  testImplementation(Deps.Test.junitApi)
+  testRuntimeOnly(Deps.Test.junitEngine)
 }
 
 group = "io.github.g00fy2.quickie"
-version = "1.0.0"
+version = "1.1.0"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
@@ -58,6 +57,12 @@ tasks.register<Jar>("androidSourcesJar") {
 }
 
 afterEvaluate {
+  tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+    testLogging.events("failed", "passed", "skipped")
+    enabled = name.endsWith("DebugUnitTest")
+  }
+
   publishing {
     publications {
       create<MavenPublication>("bundledRelease") {

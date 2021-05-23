@@ -13,19 +13,19 @@ There are two different flavors available on `mavenCentral()`:
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
-| ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (after app install) |
+| ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (once after app install) |
 | additional 1.1 MB per ABI (you should use App Bundle or ABI splitting) | smaller app size |
 | V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.0.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.1.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.0.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.1.0")
 ```
 
 ## Quick Start
-To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `init` or `onCreate()` lifecycle of your Activity/Fragment and use the returned ActivityResultLauncher to launch the QR scanner activity.
+To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `init` or `onCreate()` lifecycle of your Activity/Fragment and use the returned ActivityResultLauncher to launch the QR scanner Activity.
 ```kotlin
 val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
 
@@ -47,9 +47,9 @@ The callback you add to the `registerForActivityResult` will receive a subclass 
 
 1. `QRSuccess` when ML Kit successfully detected a QR code
    * wraps a `QRContent` object
-1. `QRUserCanceled` when the activity got canceled by the user
+1. `QRUserCanceled` when the Activity got canceled by the user
 1. `QRMissingPermission` when the user didn't accept the camera permission
-1. `QRError` when CameraX or ML kit threw an exception
+1. `QRError` when CameraX or ML Kit threw an exception
    * wraps the `exception`
 
 ### Content
@@ -61,7 +61,49 @@ Currently, supported subtypes are:
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
 ### Customization
-The library is designed to behave and look as generic as possible while matching Material Design guidelines. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
+Use the `ScanCustomCode()` ActivityResultContract to create a configurable barcode scan. When launching the ActivityResultLauncher pass in a `ScannerConfig` object. You can set the supported `BarcodeFormat` list, `overlayStringRes` and `overlayDrawableRes` resource ID.
+
+<details>
+  <summary>BarcodeFormat options</summary>
+
+```kotlin
+BarcodeFormat.FORMAT_ALL_FORMATS
+BarcodeFormat.FORMAT_CODE_128
+BarcodeFormat.FORMAT_CODE_39
+BarcodeFormat.FORMAT_CODE_93
+BarcodeFormat.FORMAT_CODABAR
+BarcodeFormat.FORMAT_DATA_MATRIX
+BarcodeFormat.FORMAT_EAN_13
+BarcodeFormat.FORMAT_EAN_8
+BarcodeFormat.FORMAT_ITF
+BarcodeFormat.FORMAT_QR_CODE
+BarcodeFormat.FORMAT_UPC_A
+BarcodeFormat.FORMAT_UPC_E
+BarcodeFormat.FORMAT_PDF417
+BarcodeFormat.FORMAT_AZTEC
+```
+</details>
+
+```kotlin
+val scanCustomCode = registerForActivityResult(ScanCustomCode(), ::handleResult)
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    …
+    binding.button.setOnClickListener {
+      scanCustomCode.launch(
+        ScannerConfig.build {
+          setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
+          setOverlayStringRes(R.string.scan_barcode)
+          setOverlayDrawableRes(R.drawable.ic_scan_barcode)
+        }
+      )
+    }
+}
+
+fun handleResult(result: QRResult) {
+    …
+```
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.

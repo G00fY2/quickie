@@ -28,9 +28,10 @@ subprojects {
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
       allWarningsAsErrors = true
-      val arguments = mutableListOf("-progressive")
-      if (this@subprojects.name != "sample") arguments += "-Xexplicit-api=strict"
-      freeCompilerArgs = freeCompilerArgs + arguments
+      freeCompilerArgs = freeCompilerArgs + listOfNotNull(
+        "-progressive",
+        if (this@subprojects.name != "sample") "-Xexplicit-api=strict" else null,
+      )
       jvmTarget = "1.8"
     }
   }

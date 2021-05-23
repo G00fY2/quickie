@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Size
 import android.view.HapticFeedbackConstants
@@ -19,7 +18,10 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.mlkit.vision.barcode.Barcode
+import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
 import io.github.g00fy2.quickie.utils.PlayServicesValidator
@@ -31,16 +33,18 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var cameraExecutor: ExecutorService
+  private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val themedInflater = applicationInfo.theme.let {
-      if (it != 0) layoutInflater.cloneInContext(ContextThemeWrapper(this, it)) else layoutInflater
+    val appThemeLayoutInflater = applicationInfo.theme.let { appThemeRes ->
+      if (appThemeRes != 0) layoutInflater.cloneInContext(ContextThemeWrapper(this, appThemeRes)) else layoutInflater
     }
-    binding = QuickieScannerActivityBinding.inflate(themedInflater)
+    binding = QuickieScannerActivityBinding.inflate(appThemeLayoutInflater)
     setContentView(binding.root)
 
     setupEdgeToEdgeUI()
+    applyScannerConfig()
 
     cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -62,42 +66,36 @@ internal class QRScannerActivity : AppCompatActivity() {
   private fun startCamera() {
     val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
-    cameraProviderFuture.addListener(
-      { setupUseCases(cameraProviderFuture.get()) },
-      ContextCompat.getMainExecutor(this)
-    )
-  }
+    cameraProviderFuture.addListener({
+      val cameraProvider = cameraProviderFuture.get()
 
-  private fun setupUseCases(cameraProvider: ProcessCameraProvider) {
-    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-    val imageAnalysis = ImageAnalysis.Builder()
-      .setTargetResolution(Size(1280, 720))
-      .build()
-      .apply {
-        setAnalyzer(
-          cameraExecutor,
-          QRCodeAnalyzer(
-            {
-              clearAnalyzer()
-              onSuccess(it)
-            },
-            {
-              clearAnalyzer()
-              onFailure(it)
-            }
+      val preview = Preview.Builder().build().also { it.setSurfaceProvider(binding.previewView.surfaceProvider) }
+      val imageAnalysis = ImageAnalysis.Builder()
+        .setTargetResolution(Size(1280, 720))
+        .build()
+        .also {
+          it.setAnalyzer(cameraExecutor,
+            QRCodeAnalyzer(
+              barcodeFormats,
+              { barcode ->
+                it.clearAnalyzer()
+                onSuccess(barcode)
+              }, { exception ->
+                it.clearAnalyzer()
+                onFailure(exception)
+              }
+            )
           )
-        )
-      }
-    val preview = Preview.Builder().build()
+        }
 
-    cameraProvider.unbindAll()
-    try {
-      cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
-      preview.setSurfaceProvider(binding.previewView.surfaceProvider)
-      binding.overlayView.visibility = View.VISIBLE
-    } catch (e: Exception) {
-      onFailure(e)
-    }
+      cameraProvider.unbindAll()
+      try {
+        cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalysis)
+        binding.overlayView.visibility = View.VISIBLE
+      } catch (e: Exception) {
+        onFailure(e)
+      }
+    }, ContextCompat.getMainExecutor(this))
   }
 
   private fun onSuccess(result: Barcode) {
@@ -123,26 +121,19 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   private fun setupEdgeToEdgeUI() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-      window.setDecorFitsSystemWindows(false)
-    } else {
-      window.decorView.let {
-        @Suppress("DEPRECATION")
-        it.systemUiVisibility.let { flags ->
-          it.systemUiVisibility = (
-            flags
-              or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-              or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-              or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            )
-        }
-      }
-    }
+    WindowCompat.setDecorFitsSystemWindows(window, false)
     ViewCompat.setOnApplyWindowInsetsListener(binding.overlayView) { v, insets ->
-      insets.systemWindowInsets.let {
+      insets.getInsets(WindowInsetsCompat.Type.systemBars()).let {
         v.setPadding(it.left, it.top, it.right, it.bottom)
       }
-      insets
+      WindowInsetsCompat.CONSUMED
+    }
+  }
+
+  private fun applyScannerConfig() {
+    intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
+      barcodeFormats = it.formats
+      binding.overlayView.setCustomTextAndIcon(it.stringRes, it.drawableRes)
     }
   }
 
@@ -158,6 +149,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   companion object {
+    const val EXTRA_CONFIG = "quickie-config"
     const val EXTRA_RESULT_VALUE = "quickie-value"
     const val EXTRA_RESULT_TYPE = "quickie-type"
     const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"

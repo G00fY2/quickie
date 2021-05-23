@@ -5,13 +5,10 @@ object Versions {
   const val androidTargetSdk = 30
   const val androidBuildTools = "30.0.3"
 
-  const val androidGradle = "4.2.0"
+  const val androidGradle = "4.2.1"
   const val kotlin = "1.5.0"
 
-  const val activity = "1.2.3"
-  const val fragment = "1.3.3"
-  const val appcompat = "1.2.0"
-  const val core = "1.3.2"
+  const val appcompat = "1.3.0"
 
   const val cameraX = "1.0.0"
   const val cameraView = "1.0.0-alpha24"
@@ -21,9 +18,11 @@ object Versions {
   const val barcodeScanning = "16.1.1"
   const val barcodeScanningGms = "16.1.4"
 
-  const val detekt = "1.17.0-RC2"
+  const val detekt = "1.17.1"
   const val gradleVersions = "0.38.0"
   const val dokka = "1.4.32"
+
+  const val junit = "5.7.2"
 
   fun maturityLevel(version: String): Int {
     val levels = listOf("alpha", "beta", "m", "rc")

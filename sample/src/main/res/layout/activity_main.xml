@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity"
     >
 
   <Button
-      android:id="@+id/button_qr_scanner"
-      android:layout_width="wrap_content"
+      android:id="@+id/qr_scanner_button"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_gravity="center"
       android:layout_marginBottom="16dp"
+      android:layout_marginEnd="64dp"
+      android:layout_marginStart="64dp"
       android:text="@string/qr_button"
       />
 
-</FrameLayout>
+  <Button
+      android:id="@+id/custom_scanner_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="4dp"
+      android:layout_marginEnd="64dp"
+      android:layout_marginStart="64dp"
+      android:layout_marginTop="16dp"
+      android:text="@string/custom_button"
+      />
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/barcode_formats_text_input_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:hint="@string/barcode_format"
+      style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+      >
+
+    <AutoCompleteTextView
+        android:id="@+id/barcode_formats_auto_complete_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        tools:ignore="LabelFor"
+        />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

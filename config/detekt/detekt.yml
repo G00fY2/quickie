@@ -17,6 +17,10 @@ formatting:
   ParameterListWrapping:
     indentSize: 2
 
+performance:
+  SpreadOperator:
+    active: false
+
 style:
   MagicNumber:
     active: false
