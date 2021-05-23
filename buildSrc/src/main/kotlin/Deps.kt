@@ -17,4 +17,9 @@ object Deps {
     const val barcodeScanningGms =
       "com.google.android.gms:play-services-mlkit-barcode-scanning:${Versions.barcodeScanningGms}"
   }
+
+  object Test {
+    const val junitApi = "org.junit.jupiter:junit-jupiter-api:${Versions.junit}"
+    const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
+  }
 }

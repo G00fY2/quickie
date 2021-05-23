@@ -61,7 +61,49 @@ Currently, supported subtypes are:
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
 ### Customization
-The library is designed to behave and look as generic as possible (your app theme gets applied) while matching Material Design guidelines. Currently, it's not possible to change the UI, but there are plans to add customizations in future releases.
+Use the `ScanCustomCode()` ActivityResultContract to create a configurable barcode scan. When launching the ActivityResultLauncher pass in a `ScannerConfig` object. You can set the supported `BarcodeFormat` list, `overlayStringRes` and `overlayDrawableRes` resource ID.
+
+<details>
+  <summary>BarcodeFormat options</summary>
+
+```kotlin
+BarcodeFormat.FORMAT_ALL_FORMATS
+BarcodeFormat.FORMAT_CODE_128
+BarcodeFormat.FORMAT_CODE_39
+BarcodeFormat.FORMAT_CODE_93
+BarcodeFormat.FORMAT_CODABAR
+BarcodeFormat.FORMAT_DATA_MATRIX
+BarcodeFormat.FORMAT_EAN_13
+BarcodeFormat.FORMAT_EAN_8
+BarcodeFormat.FORMAT_ITF
+BarcodeFormat.FORMAT_QR_CODE
+BarcodeFormat.FORMAT_UPC_A
+BarcodeFormat.FORMAT_UPC_E
+BarcodeFormat.FORMAT_PDF417
+BarcodeFormat.FORMAT_AZTEC
+```
+</details>
+
+```kotlin
+val scanCustomCode = registerForActivityResult(ScanCustomCode(), ::handleResult)
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    …
+    binding.button.setOnClickListener {
+      scanCustomCode.launch(
+        ScannerConfig.build {
+          setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
+          setOverlayStringRes(R.string.scan_barcode)
+          setOverlayDrawableRes(R.drawable.ic_scan_barcode)
+        }
+      )
+    }
+}
+
+fun handleResult(result: QRResult) {
+    …
+```
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.

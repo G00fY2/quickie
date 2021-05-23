@@ -21,6 +21,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.mlkit.vision.barcode.Barcode
+import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
 import io.github.g00fy2.quickie.utils.PlayServicesValidator
@@ -32,6 +33,7 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var cameraExecutor: ExecutorService
+  private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ internal class QRScannerActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     setupEdgeToEdgeUI()
+    applyScannerConfig()
 
     cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -73,6 +76,7 @@ internal class QRScannerActivity : AppCompatActivity() {
         .also {
           it.setAnalyzer(cameraExecutor,
             QRCodeAnalyzer(
+              barcodeFormats,
               { barcode ->
                 it.clearAnalyzer()
                 onSuccess(barcode)
@@ -126,6 +130,13 @@ internal class QRScannerActivity : AppCompatActivity() {
     }
   }
 
+  private fun applyScannerConfig() {
+    intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
+      barcodeFormats = it.formats
+      binding.overlayView.setCustomTextAndIcon(it.stringRes, it.drawableRes)
+    }
+  }
+
   private fun requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
       onResult(true)
@@ -138,6 +149,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   companion object {
+    const val EXTRA_CONFIG = "quickie-config"
     const val EXTRA_RESULT_VALUE = "quickie-value"
     const val EXTRA_RESULT_TYPE = "quickie-type"
     const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"
