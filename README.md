@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 | V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.0.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.1.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.0.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.1.0")
 ```
 
 ## Quick Start

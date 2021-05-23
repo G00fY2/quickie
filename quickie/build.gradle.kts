@@ -43,7 +43,7 @@ dependencies {
 }
 
 group = "io.github.g00fy2.quickie"
-version = "1.0.0"
+version = "1.1.0"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
