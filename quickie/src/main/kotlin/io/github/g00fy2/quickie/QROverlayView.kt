@@ -88,12 +88,9 @@ internal class QROverlayView @JvmOverloads constructor(
     }
     if (drawableRes != 0) {
       try {
-        titleTextView.setCompoundDrawables(
-          null,
-          ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize(ICON_DP_MAX_HEIGHT),
-          null,
-          null,
-        )
+        ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize(ICON_DP_MAX_HEIGHT)?.let {
+          titleTextView.setCompoundDrawables(null, it, null, null)
+        }
       } catch (ignore: NotFoundException) {
         // drawable resource not found
       }
