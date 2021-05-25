@@ -15,8 +15,8 @@ object Versions {
 
   const val materialDesign = "1.3.0"
 
-  const val barcodeScanning = "16.1.1"
-  const val barcodeScanningGms = "16.1.4"
+  const val barcodeScanning = "16.1.2"
+  const val barcodeScanningGms = "16.1.5"
 
   const val detekt = "1.17.1"
   const val gradleVersions = "0.38.0"
