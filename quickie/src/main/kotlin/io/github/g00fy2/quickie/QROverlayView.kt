@@ -137,8 +137,11 @@ internal class QROverlayView @JvmOverloads constructor(
 
   private fun Drawable.limitDrawableSize(maxDpHeight: Int): Drawable {
     val scale = (maxDpHeight * resources.displayMetrics.density) / minimumHeight
-    if (scale < 1) setBounds(0, 0, (minimumWidth * scale).roundToInt(), (minimumHeight * scale).roundToInt())
-    else setBounds(0, 0, minimumWidth, minimumHeight)
+    if (scale < 1) {
+      setBounds(0, 0, (minimumWidth * scale).roundToInt(), (minimumHeight * scale).roundToInt())
+    } else {
+      setBounds(0, 0, minimumWidth, minimumHeight)
+    }
     return this
   }
 
