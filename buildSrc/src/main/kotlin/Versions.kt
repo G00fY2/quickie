@@ -19,7 +19,7 @@ object Versions {
   const val barcodeScanningGms = "16.1.5"
 
   const val detekt = "1.17.1"
-  const val gradleVersions = "0.38.0"
+  const val gradleVersions = "0.39.0"
   const val dokka = "1.4.32"
 
   const val junit = "5.7.2"
