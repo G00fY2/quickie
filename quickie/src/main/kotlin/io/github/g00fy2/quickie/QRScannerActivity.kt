@@ -32,7 +32,7 @@ import java.util.concurrent.Executors
 internal class QRScannerActivity : AppCompatActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
-  private lateinit var cameraExecutor: ExecutorService
+  private lateinit var analysisExecutor: ExecutorService
   private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ internal class QRScannerActivity : AppCompatActivity() {
     setupEdgeToEdgeUI()
     applyScannerConfig()
 
-    cameraExecutor = Executors.newSingleThreadExecutor()
+    analysisExecutor = Executors.newSingleThreadExecutor()
 
     requestCameraPermissionIfMissing { granted ->
       if (granted) {
@@ -60,7 +60,7 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    cameraExecutor.shutdown()
+    analysisExecutor.shutdown()
   }
 
   private fun startCamera() {
@@ -74,7 +74,7 @@ internal class QRScannerActivity : AppCompatActivity() {
         .setTargetResolution(Size(1280, 720))
         .build()
         .also {
-          it.setAnalyzer(cameraExecutor,
+          it.setAnalyzer(analysisExecutor,
             QRCodeAnalyzer(
               barcodeFormats,
               { barcode ->
