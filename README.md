@@ -40,7 +40,7 @@ fun handleResult(result: QRResult) {
 ```
 ⚠️ **You can't register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code gets executed after the onCreate lifecycle!**
 
-Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
+Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the official [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
 ### Responses
 The callback you add to the `registerForActivityResult` will receive a subclass of the sealed `QRResult` class: 
@@ -112,7 +112,7 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 
 ## Requirements
 * AndroidX
-* Min SDK 21+
+* Min SDK 21+ (required by CameraX)
 * (Google Play Services available on the end device if using `quickie-unbundled`)
 
 ## License
