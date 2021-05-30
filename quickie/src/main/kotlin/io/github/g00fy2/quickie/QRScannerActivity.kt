@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
-import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -28,7 +27,6 @@ import io.github.g00fy2.quickie.utils.PlayServicesValidator
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-@ExperimentalGetImage
 internal class QRScannerActivity : AppCompatActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
@@ -80,7 +78,8 @@ internal class QRScannerActivity : AppCompatActivity() {
               { barcode ->
                 it.clearAnalyzer()
                 onSuccess(barcode)
-              }, { exception ->
+              },
+              { exception ->
                 it.clearAnalyzer()
                 onFailure(exception)
               }

@@ -8,7 +8,6 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
-@ExperimentalGetImage
 internal class QRCodeAnalyzer(
   private val barcodeFormats: IntArray,
   private val onSuccess: ((Barcode) -> Unit),
@@ -24,6 +23,7 @@ internal class QRCodeAnalyzer(
     BarcodeScanning.getClient(optionsBuilder.build())
   }
 
+  @ExperimentalGetImage
   override fun analyze(imageProxy: ImageProxy) {
     if (imageProxy.image == null) return
 
@@ -33,5 +33,6 @@ internal class QRCodeAnalyzer(
       .addOnCompleteListener { imageProxy.close() }
   }
 
+  @ExperimentalGetImage
   private fun ImageProxy.toInputImage() = InputImage.fromMediaImage(image!!, imageInfo.rotationDegrees)
 }
