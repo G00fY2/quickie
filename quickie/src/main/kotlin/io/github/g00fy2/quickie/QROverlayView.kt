@@ -88,7 +88,7 @@ internal class QROverlayView @JvmOverloads constructor(
     }
     if (drawableRes != 0) {
       try {
-        ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize(ICON_DP_MAX_HEIGHT)?.let {
+        ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
           titleTextView.setCompoundDrawables(null, it, null, null)
         }
       } catch (ignore: NotFoundException) {
@@ -135,8 +135,9 @@ internal class QROverlayView @JvmOverloads constructor(
     layoutParams = params
   }
 
-  private fun Drawable.limitDrawableSize(maxDpHeight: Int): Drawable {
-    val scale = (maxDpHeight * resources.displayMetrics.density) / minimumHeight
+  private fun Drawable.limitDrawableSize(): Drawable {
+    val heightLimit = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ICON_MAX_HEIGHT, resources.displayMetrics)
+    val scale = heightLimit / minimumHeight
     if (scale < 1) {
       setBounds(0, 0, (minimumWidth * scale).roundToInt(), (minimumHeight * scale).roundToInt())
     } else {
@@ -150,6 +151,6 @@ internal class QROverlayView @JvmOverloads constructor(
     private const val STROKE_WIDTH = 4f
     private const val OUT_RADIUS = 16f
     private const val FRAME_MARGIN_RATIO = 1f / 4
-    private const val ICON_DP_MAX_HEIGHT = 56
+    private const val ICON_MAX_HEIGHT = 56f
   }
 }
