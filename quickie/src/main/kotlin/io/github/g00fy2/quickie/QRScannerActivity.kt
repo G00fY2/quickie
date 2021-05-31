@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
-import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -28,11 +27,10 @@ import io.github.g00fy2.quickie.utils.PlayServicesValidator
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-@ExperimentalGetImage
 internal class QRScannerActivity : AppCompatActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
-  private lateinit var cameraExecutor: ExecutorService
+  private lateinit var analysisExecutor: ExecutorService
   private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +44,7 @@ internal class QRScannerActivity : AppCompatActivity() {
     setupEdgeToEdgeUI()
     applyScannerConfig()
 
-    cameraExecutor = Executors.newSingleThreadExecutor()
+    analysisExecutor = Executors.newSingleThreadExecutor()
 
     requestCameraPermissionIfMissing { granted ->
       if (granted) {
@@ -60,7 +58,7 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    cameraExecutor.shutdown()
+    analysisExecutor.shutdown()
   }
 
   private fun startCamera() {
@@ -74,13 +72,14 @@ internal class QRScannerActivity : AppCompatActivity() {
         .setTargetResolution(Size(1280, 720))
         .build()
         .also {
-          it.setAnalyzer(cameraExecutor,
+          it.setAnalyzer(analysisExecutor,
             QRCodeAnalyzer(
               barcodeFormats,
               { barcode ->
                 it.clearAnalyzer()
                 onSuccess(barcode)
-              }, { exception ->
+              },
+              { exception ->
                 it.clearAnalyzer()
                 onFailure(exception)
               }

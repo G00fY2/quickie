@@ -23,7 +23,6 @@ import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityMainBinding
-  private var snackbar: Snackbar? = null
   private var selectedBarcodeFormat = BarcodeFormat.FORMAT_ALL_FORMATS
 
   private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
@@ -33,16 +32,13 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
-
-    setupBarcodeFormatDropdown()
+    setBarcodeFormatDropdown()
 
     binding.qrScannerButton.setOnClickListener {
-      snackbar?.dismiss()
       scanQrCode.launch(null)
     }
 
     binding.customScannerButton.setOnClickListener {
-      snackbar?.dismiss()
       scanCustomCode.launch(
         ScannerConfig.build {
           setBarcodeFormats(listOf(selectedBarcodeFormat))
@@ -53,13 +49,13 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun setupBarcodeFormatDropdown() {
+  private fun setBarcodeFormatDropdown() {
     ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.values().map { it.name }).let {
       binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
       binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
-      binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-        selectedBarcodeFormat = BarcodeFormat.values()[position]
-      }
+    }
+    binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+      selectedBarcodeFormat = BarcodeFormat.values()[position]
     }
   }
 
@@ -71,15 +67,14 @@ class MainActivity : AppCompatActivity() {
       is QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
     }
 
-    snackbar = Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
+    Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
       view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = 5
       if (result is QRSuccess && result.content is QRContent.Url) {
         setAction(R.string.open_action) { openUrl(result.content.rawValue) }
       } else {
         setAction(R.string.ok_action) { }
       }
-    }
-    snackbar?.show()
+    }.show()
   }
 
   private fun openUrl(url: String) {

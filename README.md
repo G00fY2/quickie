@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 | V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.1.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.1.1")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.1.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.1.1")
 ```
 
 ## Quick Start
@@ -40,7 +40,7 @@ fun handleResult(result: QRResult) {
 ```
 ⚠️ **You can't register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code gets executed after the onCreate lifecycle!**
 
-Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
+Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the official [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
 ### Responses
 The callback you add to the `registerForActivityResult` will receive a subclass of the sealed `QRResult` class: 
@@ -104,6 +104,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 fun handleResult(result: QRResult) {
     …
 ```
+:bulb: You can optionally [pass in an ActivityOptionsCompat object](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I,%20androidx.core.app.ActivityOptionsCompat)) when launching the ActivityResultLauncher to control the scanner launch animation.
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
@@ -112,7 +113,7 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 
 ## Requirements
 * AndroidX
-* Min SDK 21+
+* Min SDK 21+ (required by CameraX)
 * (Google Play Services available on the end device if using `quickie-unbundled`)
 
 ## License

@@ -8,7 +8,7 @@ object Deps {
     const val cameraPreview = "androidx.camera:camera-view:${Versions.cameraView}"
   }
 
-  object Mdc {
+  object UI {
     const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
   }
 
