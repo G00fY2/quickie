@@ -11,7 +11,7 @@ object Versions {
   const val appcompat = "1.3.0"
 
   const val cameraX = "1.0.0"
-  const val cameraView = "1.0.0-alpha24"
+  const val cameraView = "1.0.0-alpha25"
 
   const val materialDesign = "1.3.0"
 
