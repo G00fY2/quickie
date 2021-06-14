@@ -4,4 +4,9 @@ import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.config.ScannerConfig
 
 internal fun ScannerConfig.toParcelableConfig() =
-  ParcelableScannerConfig(formats = formats, stringRes = stringRes, drawableRes = drawableRes)
+  ParcelableScannerConfig(
+    formats = formats,
+    stringRes = stringRes,
+    drawableRes = drawableRes,
+    hapticFeedback = hapticFeedback
+  )

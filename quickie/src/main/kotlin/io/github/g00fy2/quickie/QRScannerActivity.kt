@@ -1,6 +1,6 @@
 package io.github.g00fy2.quickie
 
-import android.Manifest
+import android.Manifest.permission.CAMERA
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -32,6 +32,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var analysisExecutor: ExecutorService
   private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
+  private var hapticFeedback = true
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -99,10 +100,12 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private fun onSuccess(result: Barcode) {
     binding.overlayView.isHighlighted = true
-    binding.overlayView.performHapticFeedback(
-      HapticFeedbackConstants.KEYBOARD_TAP,
-      HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
-    )
+    if (hapticFeedback) {
+      binding.overlayView.performHapticFeedback(
+        HapticFeedbackConstants.KEYBOARD_TAP,
+        HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+      )
+    }
     setResult(
       Activity.RESULT_OK,
       Intent().apply {
@@ -122,9 +125,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private fun setupEdgeToEdgeUI() {
     WindowCompat.setDecorFitsSystemWindows(window, false)
     ViewCompat.setOnApplyWindowInsetsListener(binding.overlayView) { v, insets ->
-      insets.getInsets(WindowInsetsCompat.Type.systemBars()).let {
-        v.setPadding(it.left, it.top, it.right, it.bottom)
-      }
+      insets.getInsets(WindowInsetsCompat.Type.systemBars()).let { v.setPadding(it.left, it.top, it.right, it.bottom) }
       WindowInsetsCompat.CONSUMED
     }
   }
@@ -133,17 +134,15 @@ internal class QRScannerActivity : AppCompatActivity() {
     intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
       barcodeFormats = it.formats
       binding.overlayView.setCustomTextAndIcon(it.stringRes, it.drawableRes)
+      hapticFeedback = it.hapticFeedback
     }
   }
 
   private fun requestCameraPermissionIfMissing(onResult: ((Boolean) -> Unit)) {
-    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+    if (ContextCompat.checkSelfPermission(this, CAMERA) == PackageManager.PERMISSION_GRANTED) {
       onResult(true)
     } else {
-      // register the activity result here is allowed since we call this in onCreate only
-      registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        onResult(it)
-      }.launch(Manifest.permission.CAMERA)
+      registerForActivityResult(ActivityResultContracts.RequestPermission()) { onResult(it) }.launch(CAMERA)
     }
   }
 

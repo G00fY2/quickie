@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
           setBarcodeFormats(listOf(selectedBarcodeFormat))
           setOverlayStringRes(R.string.scan_barcode)
           setOverlayDrawableRes(R.drawable.ic_scan_barcode)
+          setHapticSuccessFeedback(false)
         }
       )
     }

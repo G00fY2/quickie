@@ -9,13 +9,15 @@ import androidx.annotation.StringRes
 public class ScannerConfig internal constructor(
   internal val formats: IntArray,
   internal val stringRes: Int,
-  internal val drawableRes: Int
+  internal val drawableRes: Int,
+  internal val hapticFeedback: Boolean,
 ) {
 
   public class Builder {
     private var barcodeFormats: List<BarcodeFormat> = listOf(BarcodeFormat.FORMAT_ALL_FORMATS)
     private var overlayStringRes: Int = 0
     private var overlayDrawableRes: Int = 0
+    private var hapticSuccessFeedback: Boolean = true
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -35,10 +37,20 @@ public class ScannerConfig internal constructor(
       apply { overlayDrawableRes = drawableRes }
 
     /**
+     * Enable (default) or disable haptic feedback when a barcode code was detected.
+     */
+    public fun setHapticSuccessFeedback(enable: Boolean): Builder = apply { hapticSuccessFeedback = enable }
+
+    /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
     public fun build(): ScannerConfig =
-      ScannerConfig(barcodeFormats.map { it.value }.toIntArray(), overlayStringRes, overlayDrawableRes)
+      ScannerConfig(
+        barcodeFormats.map { it.value }.toIntArray(),
+        overlayStringRes,
+        overlayDrawableRes,
+        hapticSuccessFeedback
+      )
   }
 
   public companion object {
