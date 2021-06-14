@@ -61,7 +61,7 @@ Currently, supported subtypes are:
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
 ### Customization
-Use the `ScanCustomCode()` ActivityResultContract to create a configurable barcode scan. When launching the ActivityResultLauncher pass in a `ScannerConfig` object. You can set the supported `BarcodeFormat` list, `overlayStringRes` and `overlayDrawableRes` resource ID.
+Use the `ScanCustomCode()` ActivityResultContract to create a configurable barcode scan. When launching the ActivityResultLauncher pass in a `ScannerConfig` object. You can set the supported `BarcodeFormat` list, `overlayStringRes` and `overlayDrawableRes` resource ID and control the `hapticSuccessFeedback`.
 
 <details>
   <summary>BarcodeFormat options</summary>
@@ -96,6 +96,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
           setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
           setOverlayStringRes(R.string.scan_barcode)
           setOverlayDrawableRes(R.drawable.ic_scan_barcode)
+          setHapticSuccessFeedback(false)
         }
       )
     }
