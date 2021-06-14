@@ -3,7 +3,6 @@ package io.github.g00fy2.quickie
 import android.content.Context
 import android.content.res.Resources.NotFoundException
 import android.graphics.Bitmap
-import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -16,7 +15,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
@@ -39,14 +37,14 @@ internal class QROverlayView @JvmOverloads constructor(
     color = Color.TRANSPARENT
     xfermode = PorterDuffXfermode(CLEAR)
   }
-  private val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS, resources.displayMetrics)
-  private val innerRadius =
-    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUT_RADIUS - STROKE_WIDTH, resources.displayMetrics)
-  private val titleTextView: AppCompatTextView
+  private val outerRadius = OUT_RADIUS.toPx()
+  private val innerRadius = (OUT_RADIUS - STROKE_WIDTH).toPx()
+  private val titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
+  private val outerFrame = RectF()
+  private val innerFrame = RectF()
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
-  private var outerFrame = RectF()
-  private var innerFrame = RectF()
+
   var isHighlighted = false
     set(value) {
       field = value
@@ -55,16 +53,13 @@ internal class QROverlayView @JvmOverloads constructor(
 
   init {
     setWillNotDraw(false)
-    titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
     super.onLayout(changed, left, top, right, bottom)
 
     if (maskBitmap == null && width > 0 && height > 0) {
-      maskBitmap = Bitmap.createBitmap(width, height, ARGB_8888).apply {
-        maskCanvas = Canvas(this)
-      }
+      maskBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply { maskCanvas = Canvas(this) }
       calculateFrameAndTitlePos()
     }
   }
@@ -72,7 +67,7 @@ internal class QROverlayView @JvmOverloads constructor(
   override fun onDraw(canvas: Canvas) {
     strokePaint.color = if (isHighlighted) highlightedStrokeColor else strokeColor
     maskCanvas!!.drawColor(backgroundColor)
-    maskCanvas!!.drawRoundRect(outerFrame, radius, radius, strokePaint)
+    maskCanvas!!.drawRoundRect(outerFrame, outerRadius, outerRadius, strokePaint)
     maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, transparentPaint)
     canvas.drawBitmap(maskBitmap!!, 0f, 0f, alphaPaint)
     super.onDraw(canvas)
@@ -102,7 +97,7 @@ internal class QROverlayView @JvmOverloads constructor(
     val centralY = height / 2
     val minLength = min(centralX, centralY)
     val strokeLength = minLength - (minLength * FRAME_MARGIN_RATIO)
-    val strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, STROKE_WIDTH, resources.displayMetrics)
+    val strokeWidth = STROKE_WIDTH.toPx()
     outerFrame.set(
       centralX - strokeLength,
       centralY - strokeLength,
@@ -136,7 +131,7 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   private fun Drawable.limitDrawableSize(): Drawable {
-    val heightLimit = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ICON_MAX_HEIGHT, resources.displayMetrics)
+    val heightLimit = ICON_MAX_HEIGHT.toPx()
     val scale = heightLimit / minimumHeight
     if (scale < 1) {
       setBounds(0, 0, (minimumWidth * scale).roundToInt(), (minimumHeight * scale).roundToInt())
@@ -145,6 +140,8 @@ internal class QROverlayView @JvmOverloads constructor(
     }
     return this
   }
+
+  private fun Float.toPx() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
 
   companion object {
     private const val BACKGROUND_ALPHA = 0.77 * 255
