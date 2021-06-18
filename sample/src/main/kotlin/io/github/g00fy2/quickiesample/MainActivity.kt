@@ -50,16 +50,6 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun setBarcodeFormatDropdown() {
-    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.values().map { it.name }).let {
-      binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
-      binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
-    }
-    binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-      selectedBarcodeFormat = BarcodeFormat.values()[position]
-    }
-  }
-
   private fun showSnackbar(result: QRResult) {
     val text = when (result) {
       is QRSuccess -> result.content.rawValue
@@ -83,6 +73,16 @@ class MainActivity : AppCompatActivity() {
       startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     } catch (ignored: ActivityNotFoundException) {
       // no Activity found to run the given Intent
+    }
+  }
+
+  private fun setBarcodeFormatDropdown() {
+    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.values().map { it.name }).let {
+      binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
+      binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
+    }
+    binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+      selectedBarcodeFormat = BarcodeFormat.values()[position]
     }
   }
 }

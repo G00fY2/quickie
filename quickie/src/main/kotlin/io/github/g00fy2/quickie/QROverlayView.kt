@@ -39,12 +39,11 @@ internal class QROverlayView @JvmOverloads constructor(
   }
   private val outerRadius = OUT_RADIUS.toPx()
   private val innerRadius = (OUT_RADIUS - STROKE_WIDTH).toPx()
-  private val titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
   private val outerFrame = RectF()
   private val innerFrame = RectF()
+  private val titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
-
   var isHighlighted = false
     set(value) {
       field = value

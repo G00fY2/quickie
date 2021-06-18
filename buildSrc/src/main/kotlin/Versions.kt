@@ -13,10 +13,10 @@ object Versions {
   const val cameraX = "1.0.0"
   const val cameraView = "1.0.0-alpha25"
 
-  const val materialDesign = "1.3.0"
-
   const val barcodeScanning = "16.1.2"
   const val barcodeScanningGms = "16.1.5"
+
+  const val materialDesign = "1.3.0"
 
   const val detekt = "1.17.1"
   const val gradleVersions = "0.39.0"
