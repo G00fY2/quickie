@@ -16,8 +16,10 @@
      limitations under the License.
 
      This file has been modified by Thomas Wirth to only keep the
-     wifi_dpp_scan_qr_code wording form the aosp settings app strings.
+     wifi_dpp_scan_qr_code and master_clear_progress_text wording form the
+     aosp settings app strings.
  -->
- <resources>
+<resources>
   <string name="quickie_scan_qr_code">"Skenirajte QR kôd"</string>
+  <string name="quickie_please_wait">"Pričekajte…"</string>
 </resources>

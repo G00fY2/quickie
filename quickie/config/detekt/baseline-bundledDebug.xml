@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>FunctionOnlyReturningConstant:PlayServicesValidator.kt$PlayServicesValidator$@Suppress("UNUSED_PARAMETER") fun handleGooglePlayServicesError(activity: Activity, exception: Exception)</ID>
+    <ID>FunctionOnlyReturningConstant:MlKitErrorHandler.kt$MlKitErrorHandler$@Suppress("UNUSED_PARAMETER") fun isResolvableError(activity: Activity, exception: Exception)</ID>
     <ID>LongMethod:IntentExtensions.kt$private fun Intent.toQuickieContentType(rawValue: String): QRContent?</ID>
     <ID>UnsafeCallOnNullableType:QRCodeAnalyzer.kt$QRCodeAnalyzer$image!!</ID>
     <ID>UnsafeCallOnNullableType:QROverlayView.kt$QROverlayView$maskBitmap!!</ID>

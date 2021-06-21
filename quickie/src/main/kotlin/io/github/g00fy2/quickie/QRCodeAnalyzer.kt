@@ -11,7 +11,8 @@ import com.google.mlkit.vision.common.InputImage
 internal class QRCodeAnalyzer(
   private val barcodeFormats: IntArray,
   private val onSuccess: ((Barcode) -> Unit),
-  private val onFailure: ((Exception) -> Unit)
+  private val onFailure: ((Exception) -> Unit),
+  private val onImageAnalyzed: ((Boolean) -> Unit)
 ) : ImageAnalysis.Analyzer {
 
   private val barcodeScanner by lazy {
@@ -22,17 +23,37 @@ internal class QRCodeAnalyzer(
     }
     BarcodeScanning.getClient(optionsBuilder.build())
   }
+  private var throttleAnalysis = false
+  private var lastAnalysisTime = 0L
 
   @ExperimentalGetImage
   override fun analyze(imageProxy: ImageProxy) {
     if (imageProxy.image == null) return
 
+    if (throttleAnalysis && System.currentTimeMillis() - lastAnalysisTime < THROTTLE_RATE_MS) {
+      imageProxy.close()
+      return
+    }
+
+    var errorOccured = false
     barcodeScanner.process(imageProxy.toInputImage())
       .addOnSuccessListener { codes -> codes.mapNotNull { it }.firstOrNull()?.let { onSuccess(it) } }
-      .addOnFailureListener { onFailure(it) }
-      .addOnCompleteListener { imageProxy.close() }
+      .addOnFailureListener {
+        errorOccured = true
+        onFailure(it)
+      }
+      .addOnCompleteListener {
+        lastAnalysisTime = System.currentTimeMillis()
+        throttleAnalysis = errorOccured
+        onImageAnalyzed(errorOccured)
+        imageProxy.close()
+      }
   }
 
   @ExperimentalGetImage
   private fun ImageProxy.toInputImage() = InputImage.fromMediaImage(image!!, imageInfo.rotationDegrees)
+
+  companion object {
+    private const val THROTTLE_RATE_MS = 1000L
+  }
 }

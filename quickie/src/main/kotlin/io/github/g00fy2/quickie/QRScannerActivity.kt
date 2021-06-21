@@ -23,7 +23,7 @@ import com.google.mlkit.vision.barcode.Barcode
 import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
-import io.github.g00fy2.quickie.utils.PlayServicesValidator
+import io.github.g00fy2.quickie.utils.MlKitErrorHandler
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -75,15 +75,13 @@ internal class QRScannerActivity : AppCompatActivity() {
         .also {
           it.setAnalyzer(analysisExecutor,
             QRCodeAnalyzer(
-              barcodeFormats,
-              { barcode ->
+              barcodeFormats = barcodeFormats,
+              onSuccess = { barcode ->
                 it.clearAnalyzer()
                 onSuccess(barcode)
               },
-              { exception ->
-                it.clearAnalyzer()
-                onFailure(exception)
-              }
+              onFailure = { exception -> onFailure(exception) },
+              onImageAnalyzed = { errorOccured -> onImageAnalyzed(errorOccured) }
             )
           )
         }
@@ -119,7 +117,11 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private fun onFailure(exception: Exception) {
     setResult(RESULT_ERROR, Intent().putExtra(EXTRA_RESULT_EXCEPTION, exception))
-    if (!PlayServicesValidator.handleGooglePlayServicesError(this, exception)) finish()
+    if (!MlKitErrorHandler.isResolvableError(this, exception)) finish()
+  }
+
+  private fun onImageAnalyzed(errorOccured: Boolean) {
+    if (!isFinishing) binding.overlayView.isLoading = errorOccured
   }
 
   private fun setupEdgeToEdgeUI() {

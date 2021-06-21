@@ -18,6 +18,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import io.github.g00fy2.quickie.databinding.QuickieProgressViewBinding
 import io.github.g00fy2.quickie.databinding.QuickieTextviewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -33,6 +34,7 @@ internal class QROverlayView @JvmOverloads constructor(
   private val backgroundColor = ColorUtils.setAlphaComponent(Color.BLACK, BACKGROUND_ALPHA.roundToInt())
   private val alphaPaint = Paint().apply { alpha = BACKGROUND_ALPHA.roundToInt() }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+  private val loadingBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = backgroundColor }
   private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
     color = Color.TRANSPARENT
     xfermode = PorterDuffXfermode(CLEAR)
@@ -42,12 +44,22 @@ internal class QROverlayView @JvmOverloads constructor(
   private val outerFrame = RectF()
   private val innerFrame = RectF()
   private val titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
+  private val progressLinearLayout = QuickieProgressViewBinding.inflate(LayoutInflater.from(context), this, true).root
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
   var isHighlighted = false
     set(value) {
-      field = value
-      invalidate()
+      if (field != value) {
+        field = value
+        invalidate()
+      }
+    }
+  var isLoading = false
+    set(value) {
+      if (field != value) {
+        field = value
+        progressLinearLayout.visibility = if (value) View.VISIBLE else View.GONE
+      }
     }
 
   init {
@@ -68,6 +80,7 @@ internal class QROverlayView @JvmOverloads constructor(
     maskCanvas!!.drawColor(backgroundColor)
     maskCanvas!!.drawRoundRect(outerFrame, outerRadius, outerRadius, strokePaint)
     maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, transparentPaint)
+    if (isLoading) maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, loadingBackgroundPaint)
     canvas.drawBitmap(maskBitmap!!, 0f, 0f, alphaPaint)
     super.onDraw(canvas)
   }
