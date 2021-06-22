@@ -35,7 +35,6 @@ internal class QRScannerActivity : AppCompatActivity() {
   private lateinit var analysisExecutor: ExecutorService
   private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
   private var hapticFeedback = true
-
   internal var errorDialog: Dialog? = null
     set(value) {
       field = value
