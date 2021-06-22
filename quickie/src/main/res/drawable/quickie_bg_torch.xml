@@ -6,7 +6,7 @@
       android:right="4dp"
       android:top="4dp">
     <shape android:shape="oval">
-      <solid android:color="@color/quickie_flashlight_color_selector"/>
+      <solid android:color="@color/quickie_bg_torch_color_selector"/>
     </shape>
   </item>
 </layer-list>

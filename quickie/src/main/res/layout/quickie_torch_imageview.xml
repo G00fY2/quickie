@@ -4,8 +4,8 @@
     android:layout_height="48dp"
     android:layout_gravity="top|end"
     android:layout_margin="12dp"
-    android:background="@drawable/quickie_flashlight_background"
+    android:background="@drawable/quickie_bg_torch"
     android:padding="12dp"
-    android:src="@drawable/quickie_ic_flashlight"
+    android:src="@drawable/quickie_ic_torch"
     android:visibility="invisible"
     />
