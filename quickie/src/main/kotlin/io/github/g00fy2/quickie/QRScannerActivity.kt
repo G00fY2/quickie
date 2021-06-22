@@ -16,6 +16,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
+import androidx.camera.core.TorchState
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -104,9 +105,16 @@ internal class QRScannerActivity : AppCompatActivity() {
 
       cameraProvider.unbindAll()
       try {
-        cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalysis)
+        val camera = cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalysis)
         binding.overlayView.visibility = View.VISIBLE
+        if (camera.cameraInfo.hasFlashUnit()) {
+          binding.overlayView.setTorchVisibilityAndOnClick(true) { camera.cameraControl.enableTorch(it) }
+          camera.cameraInfo.torchState.observe(this) { binding.overlayView.setTorchState(it == TorchState.ON) }
+        } else {
+          binding.overlayView.setTorchVisibilityAndOnClick(false)
+        }
       } catch (e: Exception) {
+        binding.overlayView.visibility = View.INVISIBLE
         onFailure(e)
       }
     }, ContextCompat.getMainExecutor(this))
