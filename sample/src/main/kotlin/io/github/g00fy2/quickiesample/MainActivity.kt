@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
           setOverlayStringRes(R.string.scan_barcode) // string resource used for the scanner overlay
           setOverlayDrawableRes(R.drawable.ic_scan_barcode) // drawable resource used for the scanner overlay
           setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
-          setShowTorchToggle(true) // show or hide (default) a torch toggle button
+          setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
         }
       )
     }

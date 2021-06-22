@@ -44,7 +44,7 @@ public class ScannerConfig internal constructor(
     public fun setHapticSuccessFeedback(enable: Boolean): Builder = apply { hapticSuccessFeedback = enable }
 
     /**
-     * Show or hide (default) a torch toggle button.
+     * Show or hide (default) torch/flashlight toggle button.
      */
     public fun setShowTorchToggle(enable: Boolean): Builder = apply { showTorchToggle = enable }
 
