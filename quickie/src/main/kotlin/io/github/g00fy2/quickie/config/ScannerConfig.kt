@@ -39,12 +39,12 @@ public class ScannerConfig internal constructor(
       apply { overlayDrawableRes = drawableRes }
 
     /**
-     * Enable (default) or disable haptic feedback when a barcode code was detected.
+     * Enable (default) or disable haptic feedback when a barcode was detected.
      */
     public fun setHapticSuccessFeedback(enable: Boolean): Builder = apply { hapticSuccessFeedback = enable }
 
     /**
-     * Shows or hides (default) a torch toggle button.
+     * Show or hide (default) a torch toggle button.
      */
     public fun setShowTorchToggle(enable: Boolean): Builder = apply { showTorchToggle = enable }
 
