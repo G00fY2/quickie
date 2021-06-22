@@ -21,5 +21,5 @@
  -->
 <resources>
   <string name="quickie_scan_qr_code">"Branje kode QR"</string>
-  <string name="quickie_please_wait">"Počakajte …"</string>
+  <string name="quickie_please_wait">"Počakajte…"</string>
 </resources>
