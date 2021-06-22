@@ -1,9 +1,9 @@
 package io.github.g00fy2.quickie.utils
 
-import android.app.Activity
+import io.github.g00fy2.quickie.QRScannerActivity
 
 internal object MlKitErrorHandler {
 
   @Suppress("UNUSED_PARAMETER")
-  fun isResolvableError(activity: Activity, exception: Exception) = false // always false when bundled
+  fun isResolvableError(activity: QRScannerActivity, exception: Exception) = false // always false when bundled
 }

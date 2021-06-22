@@ -2,11 +2,13 @@ package io.github.g00fy2.quickie
 
 import android.Manifest.permission.CAMERA
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Size
 import android.view.HapticFeedbackConstants
+import android.view.KeyEvent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +35,21 @@ internal class QRScannerActivity : AppCompatActivity() {
   private lateinit var analysisExecutor: ExecutorService
   private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
   private var hapticFeedback = true
+
+  internal var errorDialog: Dialog? = null
+    set(value) {
+      field = value
+      value?.show()
+      value?.setOnKeyListener { dialog, keyCode, _ ->
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+          finish()
+          dialog.dismiss()
+          true
+        } else {
+          false
+        }
+      }
+    }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -122,6 +139,7 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private fun onPassCompleted(failureOccurred: Boolean) {
     if (!isFinishing) binding.overlayView.isLoading = failureOccurred
+    if (!failureOccurred) setResult(Activity.RESULT_CANCELED, null)
   }
 
   private fun setupEdgeToEdgeUI() {
