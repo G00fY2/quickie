@@ -81,7 +81,7 @@ internal class QRScannerActivity : AppCompatActivity() {
                 onSuccess(barcode)
               },
               onFailure = { exception -> onFailure(exception) },
-              onImageAnalyzed = { errorOccured -> onImageAnalyzed(errorOccured) }
+              onPassCompleted = { failureOccurred -> onPassCompleted(failureOccurred) }
             )
           )
         }
@@ -120,8 +120,8 @@ internal class QRScannerActivity : AppCompatActivity() {
     if (!MlKitErrorHandler.isResolvableError(this, exception)) finish()
   }
 
-  private fun onImageAnalyzed(errorOccured: Boolean) {
-    if (!isFinishing) binding.overlayView.isLoading = errorOccured
+  private fun onPassCompleted(failureOccurred: Boolean) {
+    if (!isFinishing) binding.overlayView.isLoading = failureOccurred
   }
 
   private fun setupEdgeToEdgeUI() {

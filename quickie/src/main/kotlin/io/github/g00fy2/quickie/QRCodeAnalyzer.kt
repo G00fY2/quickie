@@ -12,7 +12,7 @@ internal class QRCodeAnalyzer(
   private val barcodeFormats: IntArray,
   private val onSuccess: ((Barcode) -> Unit),
   private val onFailure: ((Exception) -> Unit),
-  private val onImageAnalyzed: ((Boolean) -> Unit)
+  private val onPassCompleted: ((Boolean) -> Unit)
 ) : ImageAnalysis.Analyzer {
 
   private val barcodeScanner by lazy {
@@ -23,37 +23,34 @@ internal class QRCodeAnalyzer(
     }
     BarcodeScanning.getClient(optionsBuilder.build())
   }
-  private var throttleAnalysis = false
-  private var lastAnalysisTime = 0L
+  @Volatile
+  private var failureOccurred = false
+  private var lastCompletedTime = 0L
 
   @ExperimentalGetImage
   override fun analyze(imageProxy: ImageProxy) {
     if (imageProxy.image == null) return
 
-    if (throttleAnalysis && System.currentTimeMillis() - lastAnalysisTime < THROTTLE_RATE_MS) {
+    // throttle analysis if error occurred in previous pass
+    if (failureOccurred && System.currentTimeMillis() - lastCompletedTime < 1000L) {
       imageProxy.close()
       return
     }
 
-    var errorOccured = false
+    failureOccurred = false
     barcodeScanner.process(imageProxy.toInputImage())
       .addOnSuccessListener { codes -> codes.mapNotNull { it }.firstOrNull()?.let { onSuccess(it) } }
       .addOnFailureListener {
-        errorOccured = true
+        failureOccurred = true
         onFailure(it)
       }
       .addOnCompleteListener {
-        lastAnalysisTime = System.currentTimeMillis()
-        throttleAnalysis = errorOccured
-        onImageAnalyzed(errorOccured)
+        lastCompletedTime = System.currentTimeMillis()
+        onPassCompleted(failureOccurred)
         imageProxy.close()
       }
   }
 
   @ExperimentalGetImage
   private fun ImageProxy.toInputImage() = InputImage.fromMediaImage(image!!, imageInfo.rotationDegrees)
-
-  companion object {
-    private const val THROTTLE_RATE_MS = 1000L
-  }
 }
