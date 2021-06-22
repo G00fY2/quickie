@@ -139,7 +139,6 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   private fun onPassCompleted(failureOccurred: Boolean) {
     if (!isFinishing) binding.overlayView.isLoading = failureOccurred
-    if (!failureOccurred) setResult(Activity.RESULT_CANCELED, null)
   }
 
   private fun setupEdgeToEdgeUI() {
