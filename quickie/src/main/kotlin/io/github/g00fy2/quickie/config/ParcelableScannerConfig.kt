@@ -8,5 +8,6 @@ internal class ParcelableScannerConfig(
   val formats: IntArray,
   val stringRes: Int,
   val drawableRes: Int,
-  val hapticFeedback: Boolean
+  val hapticFeedback: Boolean,
+  val showTorchToggle: Boolean,
 ) : Parcelable

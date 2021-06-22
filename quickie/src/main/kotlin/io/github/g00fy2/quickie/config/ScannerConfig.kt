@@ -11,6 +11,7 @@ public class ScannerConfig internal constructor(
   internal val stringRes: Int,
   internal val drawableRes: Int,
   internal val hapticFeedback: Boolean,
+  internal val showTorchToggle: Boolean
 ) {
 
   public class Builder {
@@ -18,6 +19,7 @@ public class ScannerConfig internal constructor(
     private var overlayStringRes: Int = 0
     private var overlayDrawableRes: Int = 0
     private var hapticSuccessFeedback: Boolean = true
+    private var showTorchToggle: Boolean = false
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -42,6 +44,11 @@ public class ScannerConfig internal constructor(
     public fun setHapticSuccessFeedback(enable: Boolean): Builder = apply { hapticSuccessFeedback = enable }
 
     /**
+     * Shows or hides (default) a torch toggle button.
+     */
+    public fun setShowTorchToggle(enable: Boolean): Builder = apply { showTorchToggle = enable }
+
+    /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
     public fun build(): ScannerConfig =
@@ -49,7 +56,8 @@ public class ScannerConfig internal constructor(
         barcodeFormats.map { it.value }.toIntArray(),
         overlayStringRes,
         overlayDrawableRes,
-        hapticSuccessFeedback
+        hapticSuccessFeedback,
+        showTorchToggle
       )
   }
 
