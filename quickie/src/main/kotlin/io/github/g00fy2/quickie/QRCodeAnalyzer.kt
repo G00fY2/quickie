@@ -11,7 +11,8 @@ import com.google.mlkit.vision.common.InputImage
 internal class QRCodeAnalyzer(
   private val barcodeFormats: IntArray,
   private val onSuccess: ((Barcode) -> Unit),
-  private val onFailure: ((Exception) -> Unit)
+  private val onFailure: ((Exception) -> Unit),
+  private val onPassCompleted: ((Boolean) -> Unit)
 ) : ImageAnalysis.Analyzer {
 
   private val barcodeScanner by lazy {
@@ -22,15 +23,32 @@ internal class QRCodeAnalyzer(
     }
     BarcodeScanning.getClient(optionsBuilder.build())
   }
+  @Volatile
+  private var failureOccurred = false
+  private var lastCompletedTime = 0L
 
   @ExperimentalGetImage
   override fun analyze(imageProxy: ImageProxy) {
     if (imageProxy.image == null) return
 
+    // throttle analysis if error occurred in previous pass
+    if (failureOccurred && System.currentTimeMillis() - lastCompletedTime < 1000L) {
+      imageProxy.close()
+      return
+    }
+
+    failureOccurred = false
     barcodeScanner.process(imageProxy.toInputImage())
       .addOnSuccessListener { codes -> codes.mapNotNull { it }.firstOrNull()?.let { onSuccess(it) } }
-      .addOnFailureListener { onFailure(it) }
-      .addOnCompleteListener { imageProxy.close() }
+      .addOnFailureListener {
+        failureOccurred = true
+        onFailure(it)
+      }
+      .addOnCompleteListener {
+        lastCompletedTime = System.currentTimeMillis()
+        onPassCompleted(failureOccurred)
+        imageProxy.close()
+      }
   }
 
   @ExperimentalGetImage
