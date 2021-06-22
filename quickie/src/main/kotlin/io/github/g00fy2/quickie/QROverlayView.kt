@@ -20,6 +20,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import io.github.g00fy2.quickie.databinding.QuickieProgressViewBinding
 import io.github.g00fy2.quickie.databinding.QuickieTextviewBinding
+import io.github.g00fy2.quickie.databinding.QuickieTorchImageviewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -45,6 +46,7 @@ internal class QROverlayView @JvmOverloads constructor(
   private val innerFrame = RectF()
   private val titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
   private val progressLinearLayout = QuickieProgressViewBinding.inflate(LayoutInflater.from(context), this, true).root
+  private val torchImageView = QuickieTorchImageviewBinding.inflate(LayoutInflater.from(context), this, true).root
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
   var isHighlighted = false
@@ -102,6 +104,15 @@ internal class QROverlayView @JvmOverloads constructor(
         // drawable resource not found
       }
     }
+  }
+
+  fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
+    torchImageView.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+    torchImageView.setOnClickListener { action(!it.isSelected) }
+  }
+
+  fun setTorchState(on: Boolean) {
+    torchImageView.isSelected = on
   }
 
   private fun calculateFrameAndTitlePos() {

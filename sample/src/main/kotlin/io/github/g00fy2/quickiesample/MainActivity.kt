@@ -41,10 +41,11 @@ class MainActivity : AppCompatActivity() {
     binding.customScannerButton.setOnClickListener {
       scanCustomCode.launch(
         ScannerConfig.build {
-          setBarcodeFormats(listOf(selectedBarcodeFormat))
-          setOverlayStringRes(R.string.scan_barcode)
-          setOverlayDrawableRes(R.drawable.ic_scan_barcode)
-          setHapticSuccessFeedback(false)
+          setBarcodeFormats(listOf(selectedBarcodeFormat)) // set interested barcode formats
+          setOverlayStringRes(R.string.scan_barcode) // string resource used for the scanner overlay
+          setOverlayDrawableRes(R.drawable.ic_scan_barcode) // drawable resource used for the scanner overlay
+          setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
+          setShowTorchToggle(true) // show or hide (default) a torch toggle button
         }
       )
     }

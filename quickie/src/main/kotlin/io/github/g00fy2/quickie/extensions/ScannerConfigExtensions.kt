@@ -8,5 +8,6 @@ internal fun ScannerConfig.toParcelableConfig() =
     formats = formats,
     stringRes = stringRes,
     drawableRes = drawableRes,
-    hapticFeedback = hapticFeedback
+    hapticFeedback = hapticFeedback,
+    showTorchToggle = showTorchToggle,
   )

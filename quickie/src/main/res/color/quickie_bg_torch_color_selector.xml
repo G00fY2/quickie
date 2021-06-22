@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:alpha="0.6" android:color="@color/quickie_torch_unselected" android:state_pressed="true" android:state_selected="true"/>
+  <item android:alpha="0.6" android:color="@color/quickie_torch_selected" android:state_pressed="true" android:state_selected="false"/>
+  <item android:alpha="0.6" android:color="@color/quickie_torch_selected" android:state_pressed="false" android:state_selected="true"/>
+  <item android:alpha="0.6" android:color="@color/quickie_torch_unselected"/>
+</selector>

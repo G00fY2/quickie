@@ -3,4 +3,6 @@
   <color name="quickie_stroke">#dadce0</color>
   <color name="quickie_white">#ffffff</color>
   <color name="quickie_transparent">#00000000</color>
+  <color name="quickie_torch_selected">?attr/colorAccent</color>
+  <color name="quickie_torch_unselected">@color/quickie_stroke</color>
 </resources>
