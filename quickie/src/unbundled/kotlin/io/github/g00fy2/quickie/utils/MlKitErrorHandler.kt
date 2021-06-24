@@ -1,30 +1,27 @@
 package io.github.g00fy2.quickie.utils
 
-import android.app.Activity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.mlkit.common.MlKitException
+import io.github.g00fy2.quickie.QRScannerActivity
 
-internal object PlayServicesValidator {
+internal object MlKitErrorHandler {
 
   // version 20.12.14 (as suggested https://github.com/firebase/firebase-android-sdk/issues/407#issuecomment-632288258)
   private const val MIN_SERVICES_VERSION = 201214 * 1000
   private const val REQUEST_CODE = 9000
 
-  internal fun handleGooglePlayServicesError(activity: Activity, exception: Exception): Boolean {
+  internal fun isResolvableError(activity: QRScannerActivity, exception: Exception): Boolean {
     if (exception is MlKitException && exception.errorCode == MlKitException.UNAVAILABLE) {
       // check if Google Play services is available and its version is at least MIN_SERVICES_VERSION
-      val resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity, MIN_SERVICES_VERSION)
+      val gmsCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity, MIN_SERVICES_VERSION)
 
-      if (resultCode != ConnectionResult.SUCCESS &&
-        GoogleApiAvailability.getInstance().isUserResolvableError(resultCode)
+      if (activity.errorDialog?.isShowing != true && gmsCode != ConnectionResult.SUCCESS &&
+        GoogleApiAvailability.getInstance().isUserResolvableError(gmsCode)
       ) {
-        GoogleApiAvailability.getInstance().getErrorDialog(activity, resultCode, REQUEST_CODE)?.let {
-          it.setOnDismissListener { activity.finish() }
-          it.show()
-          return true
-        }
+        activity.errorDialog = GoogleApiAvailability.getInstance().getErrorDialog(activity, gmsCode, REQUEST_CODE)
       }
+      return true
     }
     return false
   }

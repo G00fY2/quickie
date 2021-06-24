@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 | V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.1.2")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.2.0-rc01")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.1.2")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.2.0-rc01")
 ```
 
 ## Quick Start
@@ -61,7 +61,7 @@ Currently, supported subtypes are:
 See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
 
 ### Customization
-Use the `ScanCustomCode()` ActivityResultContract to create a configurable barcode scan. When launching the ActivityResultLauncher pass in a `ScannerConfig` object. You can set the supported `BarcodeFormat` list, `overlayStringRes` and `overlayDrawableRes` resource ID and control the `hapticSuccessFeedback`.
+Use the `ScanCustomCode()` ActivityResultContract to create a configurable barcode scan. When launching the ActivityResultLauncher pass in a `ScannerConfig` object:
 
 <details>
   <summary>BarcodeFormat options</summary>
@@ -93,10 +93,11 @@ override fun onCreate(savedInstanceState: Bundle?) {
     binding.button.setOnClickListener {
       scanCustomCode.launch(
         ScannerConfig.build {
-          setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128))
-          setOverlayStringRes(R.string.scan_barcode)
-          setOverlayDrawableRes(R.drawable.ic_scan_barcode)
-          setHapticSuccessFeedback(false)
+          setBarcodeFormats(listOf(BarcodeFormat.FORMAT_CODE_128)) // set interested barcode formats
+          setOverlayStringRes(R.string.scan_barcode) // string resource used for the scanner overlay
+          setOverlayDrawableRes(R.drawable.ic_scan_barcode) // drawable resource used for the scanner overlay
+          setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
+          setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
         }
       )
     }

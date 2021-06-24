@@ -41,22 +41,13 @@ class MainActivity : AppCompatActivity() {
     binding.customScannerButton.setOnClickListener {
       scanCustomCode.launch(
         ScannerConfig.build {
-          setBarcodeFormats(listOf(selectedBarcodeFormat))
-          setOverlayStringRes(R.string.scan_barcode)
-          setOverlayDrawableRes(R.drawable.ic_scan_barcode)
-          setHapticSuccessFeedback(false)
+          setBarcodeFormats(listOf(selectedBarcodeFormat)) // set interested barcode formats
+          setOverlayStringRes(R.string.scan_barcode) // string resource used for the scanner overlay
+          setOverlayDrawableRes(R.drawable.ic_scan_barcode) // drawable resource used for the scanner overlay
+          setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
+          setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
         }
       )
-    }
-  }
-
-  private fun setBarcodeFormatDropdown() {
-    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.values().map { it.name }).let {
-      binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
-      binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
-    }
-    binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-      selectedBarcodeFormat = BarcodeFormat.values()[position]
     }
   }
 
@@ -83,6 +74,16 @@ class MainActivity : AppCompatActivity() {
       startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     } catch (ignored: ActivityNotFoundException) {
       // no Activity found to run the given Intent
+    }
+  }
+
+  private fun setBarcodeFormatDropdown() {
+    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.values().map { it.name }).let {
+      binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
+      binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
+    }
+    binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+      selectedBarcodeFormat = BarcodeFormat.values()[position]
     }
   }
 }

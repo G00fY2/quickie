@@ -8,14 +8,14 @@ object Deps {
     const val cameraPreview = "androidx.camera:camera-view:${Versions.cameraView}"
   }
 
-  object UI {
-    const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
-  }
-
   object MLKit {
     const val barcodeScanning = "com.google.mlkit:barcode-scanning:${Versions.barcodeScanning}"
     const val barcodeScanningGms =
       "com.google.android.gms:play-services-mlkit-barcode-scanning:${Versions.barcodeScanningGms}"
+  }
+
+  object UI {
+    const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
   }
 
   object Test {
