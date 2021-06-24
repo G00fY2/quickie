@@ -23,16 +23,17 @@ internal class QRCodeAnalyzer(
     }
     BarcodeScanning.getClient(optionsBuilder.build())
   }
+
   @Volatile
   private var failureOccurred = false
-  private var lastCompletedTime = 0L
+  private var failureTimestamp = 0L
 
   @ExperimentalGetImage
   override fun analyze(imageProxy: ImageProxy) {
     if (imageProxy.image == null) return
 
     // throttle analysis if error occurred in previous pass
-    if (failureOccurred && System.currentTimeMillis() - lastCompletedTime < 1000L) {
+    if (failureOccurred && System.currentTimeMillis() - failureTimestamp < 1000L) {
       imageProxy.close()
       return
     }
@@ -42,10 +43,10 @@ internal class QRCodeAnalyzer(
       .addOnSuccessListener { codes -> codes.mapNotNull { it }.firstOrNull()?.let { onSuccess(it) } }
       .addOnFailureListener {
         failureOccurred = true
+        failureTimestamp = System.currentTimeMillis()
         onFailure(it)
       }
       .addOnCompleteListener {
-        lastCompletedTime = System.currentTimeMillis()
         onPassCompleted(failureOccurred)
         imageProxy.close()
       }
