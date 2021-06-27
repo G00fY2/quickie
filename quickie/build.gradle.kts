@@ -43,7 +43,7 @@ dependencies {
 }
 
 group = "io.github.g00fy2.quickie"
-version = "1.2.0-rc01"
+version = "1.2.0-rc02"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
@@ -51,9 +51,14 @@ tasks.register<Jar>("androidJavadocJar") {
   dependsOn("dokkaJavadoc")
 }
 
-tasks.register<Jar>("androidSourcesJar") {
+tasks.register<Jar>("androidBundledSourcesJar") {
   archiveClassifier.set("sources")
-  from(android.sourceSets.getByName("main").java.srcDirs)
+  from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("bundled").java.srcDirs)
+}
+
+tasks.register<Jar>("androidUnbundledSourcesJar") {
+  archiveClassifier.set("sources")
+  from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("unbundled").java.srcDirs)
 }
 
 afterEvaluate {
@@ -65,14 +70,8 @@ afterEvaluate {
 
   publishing {
     publications {
-      create<MavenPublication>("bundledRelease") {
-        from(components["bundledRelease"])
-        commonConfig("quickie-bundled")
-      }
-      create<MavenPublication>("unbundledRelease") {
-        from(components["unbundledRelease"])
-        commonConfig("quickie-unbundled")
-      }
+      create<MavenPublication>("bundledRelease") { commonConfig("bundled") }
+      create<MavenPublication>("unbundledRelease") { commonConfig("unbundled") }
     }
     repositories {
       maven {
@@ -94,12 +93,13 @@ signing {
   sign(publishing.publications)
 }
 
-fun MavenPublication.commonConfig(artifactName: String) {
-  artifactId = artifactName
+fun MavenPublication.commonConfig(flavor: String) {
+  from(components["${flavor}Release"])
+  artifactId = "quickie-$flavor"
   artifact(tasks.named("androidJavadocJar"))
-  artifact(tasks.named("androidSourcesJar"))
+  artifact(tasks.named("android${flavor.capitalize()}SourcesJar"))
   pom {
-    name.set(artifactName)
+    name.set("quickie-$flavor")
     description.set("Android QR code scanning library")
     url.set("https://github.com/G00fY2/quickie")
     licenses {
