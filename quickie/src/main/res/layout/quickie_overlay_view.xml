@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="match_parent"
+    tools:layout_width="match_parent"
+    tools:parentTag="android.widget.FrameLayout"
+    >
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/title_text_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top|center_horizontal"
+      android:drawablePadding="16dp"
+      android:ellipsize="end"
+      android:gravity="center"
+      android:maxLines="2"
+      android:paddingBottom="8dp"
+      android:paddingEnd="24dp"
+      android:paddingStart="24dp"
+      android:paddingTop="8dp"
+      android:text="@string/quickie_scan_qr_code"
+      android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+      android:textColor="@color/quickie_white"
+      app:drawableTopCompat="@drawable/quickie_ic_qrcode"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/torch_image_view"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_gravity="top|end"
+      android:layout_margin="12dp"
+      android:background="@drawable/quickie_bg_torch"
+      android:padding="12dp"
+      android:visibility="invisible"
+      app:srcCompat="@drawable/quickie_ic_torch"
+      tools:visibility="visible"
+      />
+
+  <LinearLayout
+      android:id="@+id/progress_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
+
+    <ProgressBar
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/quickie_stroke"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="4dp"
+        android:text="@string/quickie_please_wait"
+        android:textColor="@color/quickie_stroke"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        />
+  </LinearLayout>
+
+</merge>

@@ -18,9 +18,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
-import io.github.g00fy2.quickie.databinding.QuickieProgressViewBinding
-import io.github.g00fy2.quickie.databinding.QuickieTextviewBinding
-import io.github.g00fy2.quickie.databinding.QuickieTorchImageviewBinding
+import io.github.g00fy2.quickie.databinding.QuickieOverlayViewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -30,6 +28,7 @@ internal class QROverlayView @JvmOverloads constructor(
   defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+  private val binding = QuickieOverlayViewBinding.inflate(LayoutInflater.from(context), this)
   private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke)
   private val highlightedStrokeColor = getAccentColor()
   private val backgroundColor = ColorUtils.setAlphaComponent(Color.BLACK, BACKGROUND_ALPHA.roundToInt())
@@ -44,9 +43,6 @@ internal class QROverlayView @JvmOverloads constructor(
   private val innerRadius = (OUT_RADIUS - STROKE_WIDTH).toPx()
   private val outerFrame = RectF()
   private val innerFrame = RectF()
-  private val titleTextView = QuickieTextviewBinding.inflate(LayoutInflater.from(context), this, true).root
-  private val progressLinearLayout = QuickieProgressViewBinding.inflate(LayoutInflater.from(context), this, true).root
-  private val torchImageView = QuickieTorchImageviewBinding.inflate(LayoutInflater.from(context), this, true).root
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
   var isHighlighted = false
@@ -60,7 +56,7 @@ internal class QROverlayView @JvmOverloads constructor(
     set(value) {
       if (field != value) {
         field = value
-        progressLinearLayout.visibility = if (value) View.VISIBLE else View.GONE
+        binding.progressView.visibility = if (value) View.VISIBLE else View.GONE
       }
     }
 
@@ -90,7 +86,7 @@ internal class QROverlayView @JvmOverloads constructor(
   fun setCustomTextAndIcon(stringRes: Int, drawableRes: Int) {
     if (stringRes != 0) {
       try {
-        titleTextView.setText(stringRes)
+        binding.titleTextView.setText(stringRes)
       } catch (ignore: NotFoundException) {
         // string resource not found
       }
@@ -98,7 +94,7 @@ internal class QROverlayView @JvmOverloads constructor(
     if (drawableRes != 0) {
       try {
         ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
-          titleTextView.setCompoundDrawables(null, it, null, null)
+          binding.titleTextView.setCompoundDrawables(null, it, null, null)
         }
       } catch (ignore: NotFoundException) {
         // drawable resource not found
@@ -107,12 +103,12 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
-    torchImageView.visibility = if (visible) View.VISIBLE else View.INVISIBLE
-    torchImageView.setOnClickListener { action(!it.isSelected) }
+    binding.torchImageView.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+    binding.torchImageView.setOnClickListener { action(!it.isSelected) }
   }
 
   fun setTorchState(on: Boolean) {
-    torchImageView.isSelected = on
+    binding.torchImageView.isSelected = on
   }
 
   private fun calculateFrameAndTitlePos() {
@@ -135,10 +131,11 @@ internal class QROverlayView @JvmOverloads constructor(
     )
 
     val topInsetsToOuterFrame = (-paddingTop + centralY - strokeLength).roundToInt()
-    val titleCenter = (topInsetsToOuterFrame - titleTextView.height) / 2
-    titleTextView.updateTopMargin(titleCenter)
+    val titleCenter = (topInsetsToOuterFrame - binding.titleTextView.height) / 2
+    binding.titleTextView.updateTopMargin(titleCenter)
     // hide title text if not enough vertical space
-    titleTextView.visibility = if (topInsetsToOuterFrame < titleTextView.height) View.INVISIBLE else View.VISIBLE
+    binding.titleTextView.visibility =
+      if (topInsetsToOuterFrame < binding.titleTextView.height) View.INVISIBLE else View.VISIBLE
   }
 
   private fun getAccentColor(): Int {
