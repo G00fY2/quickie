@@ -52,7 +52,7 @@ The callback you add to the `registerForActivityResult` will receive a subclass 
 1. `QRError` when CameraX or ML Kit threw an exception
    * wraps the `exception`
 
-### Content
+#### Content
 The content type of the QR code detected by ML Kit is wrapped inside a subclass of the sealed `QRContent` class which always provides a `rawValue`.
 
 Currently, supported subtypes are:
