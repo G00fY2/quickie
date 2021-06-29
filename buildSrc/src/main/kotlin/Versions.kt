@@ -13,8 +13,8 @@ object Versions {
   const val cameraX = "1.0.0"
   const val cameraView = "1.0.0-alpha25"
 
-  const val barcodeScanning = "16.1.2"
-  const val barcodeScanningGms = "16.1.5"
+  const val barcodeScanning = "16.2.0"
+  const val barcodeScanningGms = "16.2.0"
 
   const val materialDesign = "1.3.0"
 
