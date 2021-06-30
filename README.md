@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 | V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.2.0-rc02")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.2.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.2.0-rc02")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.2.0")
 ```
 
 ## Quick Start
@@ -52,7 +52,7 @@ The callback you add to the `registerForActivityResult` will receive a subclass 
 1. `QRError` when CameraX or ML Kit threw an exception
    * wraps the `exception`
 
-### Content
+#### Content
 The content type of the QR code detected by ML Kit is wrapped inside a subclass of the sealed `QRContent` class which always provides a `rawValue`.
 
 Currently, supported subtypes are:
