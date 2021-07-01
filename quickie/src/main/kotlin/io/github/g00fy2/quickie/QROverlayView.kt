@@ -103,7 +103,7 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
-    binding.torchImageView.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+    binding.torchImageView.visibility = if (visible) View.VISIBLE else View.GONE
     binding.torchImageView.setOnClickListener { action(!it.isSelected) }
   }
 
