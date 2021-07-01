@@ -6,5 +6,6 @@
     <ID>UnsafeCallOnNullableType:QRCodeAnalyzer.kt$QRCodeAnalyzer$image!!</ID>
     <ID>UnsafeCallOnNullableType:QROverlayView.kt$QROverlayView$maskBitmap!!</ID>
     <ID>UnsafeCallOnNullableType:QROverlayView.kt$QROverlayView$maskCanvas!!</ID>
+    <ID>TooManyFunctions:QROverlayView.kt$QROverlayView : FrameLayout</ID>
   </CurrentIssues>
 </SmellBaseline>
