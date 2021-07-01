@@ -1,6 +1,7 @@
 package io.github.g00fy2.quickie
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Resources.NotFoundException
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -18,6 +19,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import io.github.g00fy2.quickie.databinding.QuickieOverlayViewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -29,8 +31,8 @@ internal class QROverlayView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
   private val binding = QuickieOverlayViewBinding.inflate(LayoutInflater.from(context), this)
-  private val strokeColor = ContextCompat.getColor(context, R.color.quickie_stroke)
-  private val highlightedStrokeColor = getAccentColor()
+  private val grayColor = ContextCompat.getColor(context, R.color.quickie_gray)
+  private val accentColor = getAccentColor()
   private val backgroundColor = ColorUtils.setAlphaComponent(Color.BLACK, BACKGROUND_ALPHA.roundToInt())
   private val alphaPaint = Paint().apply { alpha = BACKGROUND_ALPHA.roundToInt() }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -74,7 +76,7 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   override fun onDraw(canvas: Canvas) {
-    strokePaint.color = if (isHighlighted) highlightedStrokeColor else strokeColor
+    strokePaint.color = if (isHighlighted) accentColor else grayColor
     maskCanvas!!.drawColor(backgroundColor)
     maskCanvas!!.drawRoundRect(outerFrame, outerRadius, outerRadius, strokePaint)
     maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, transparentPaint)
@@ -105,6 +107,7 @@ internal class QROverlayView @JvmOverloads constructor(
   fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
     binding.torchImageView.visibility = if (visible) View.VISIBLE else View.GONE
     binding.torchImageView.setOnClickListener { action(!it.isSelected) }
+    if (visible) binding.torchImageView.setTintAndStateAwareBackground()
   }
 
   fun setTorchState(on: Boolean) {
@@ -140,7 +143,11 @@ internal class QROverlayView @JvmOverloads constructor(
 
   private fun getAccentColor(): Int {
     return TypedValue().let {
-      if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) it.data else Color.WHITE
+      if (context.theme.resolveAttribute(android.R.attr.colorAccent, it, true)) {
+        it.data
+      } else {
+        ContextCompat.getColor(context, R.color.quickie_accent_fallback)
+      }
     }
   }
 
@@ -161,10 +168,29 @@ internal class QROverlayView @JvmOverloads constructor(
     return this
   }
 
+  private fun View.setTintAndStateAwareBackground() {
+    background?.let { drawable ->
+      val wrappedDrawable = DrawableCompat.wrap(drawable)
+
+      val states = arrayOf(
+        intArrayOf(android.R.attr.state_pressed, android.R.attr.state_selected),
+        intArrayOf(android.R.attr.state_pressed, -android.R.attr.state_selected),
+        intArrayOf(-android.R.attr.state_pressed, android.R.attr.state_selected),
+        intArrayOf()
+      )
+      val stateColors = intArrayOf(grayColor, accentColor, accentColor, grayColor)
+      val colotStateList = ColorStateList(states, stateColors).withAlpha(BUTTON_BACKGROUND_ALPHA.roundToInt())
+
+      DrawableCompat.setTintList(wrappedDrawable, colotStateList)
+      background = wrappedDrawable
+    }
+  }
+
   private fun Float.toPx() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
 
   companion object {
     private const val BACKGROUND_ALPHA = 0.77 * 255
+    private const val BUTTON_BACKGROUND_ALPHA = 0.6 * 255
     private const val STROKE_WIDTH = 4f
     private const val OUT_RADIUS = 16f
     private const val FRAME_MARGIN_RATIO = 1f / 4

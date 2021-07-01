@@ -54,7 +54,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:indeterminate="true"
-        android:indeterminateTint="@color/quickie_stroke"
+        android:indeterminateTint="@color/quickie_gray"
         />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -68,7 +68,7 @@
         android:paddingStart="24dp"
         android:paddingTop="4dp"
         android:text="@string/quickie_please_wait"
-        android:textColor="@color/quickie_stroke"
+        android:textColor="@color/quickie_gray"
         style="@style/TextAppearance.AppCompat.Subhead"
         />
   </LinearLayout>
