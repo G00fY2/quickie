@@ -5,13 +5,13 @@ object Versions {
   const val androidTargetSdk = 30
   const val androidBuildTools = "30.0.3"
 
-  const val androidGradle = "4.2.1"
+  const val androidGradle = "4.2.2"
   const val kotlin = "1.5.20"
 
   const val appcompat = "1.3.0"
 
   const val cameraX = "1.0.0"
-  const val cameraView = "1.0.0-alpha25"
+  const val cameraView = "1.0.0-alpha26"
 
   const val barcodeScanning = "16.2.0"
   const val barcodeScanningGms = "16.2.0"
