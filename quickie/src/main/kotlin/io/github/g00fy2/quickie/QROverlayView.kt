@@ -85,7 +85,7 @@ internal class QROverlayView @JvmOverloads constructor(
     super.onDraw(canvas)
   }
 
-  fun setCustomTextAndIcon(stringRes: Int, drawableRes: Int) {
+  fun setCustomText(stringRes: Int) {
     if (stringRes != 0) {
       try {
         binding.titleTextView.setText(stringRes)
@@ -93,15 +93,26 @@ internal class QROverlayView @JvmOverloads constructor(
         // string resource not found
       }
     }
+  }
+
+  fun setCustomIcon(drawableRes: Int?) {
     if (drawableRes != 0) {
       try {
-        ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
-          binding.titleTextView.setCompoundDrawables(null, it, null, null)
+        if (drawableRes != null) {
+          ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
+            setDrawableToTextView(it)
+          }
+        } else {
+          setDrawableToTextView(null)
         }
       } catch (ignore: NotFoundException) {
         // drawable resource not found
       }
     }
+  }
+
+  private fun setDrawableToTextView(drawable: Drawable?) {
+    binding.titleTextView.setCompoundDrawables(null, drawable, null, null)
   }
 
   fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
