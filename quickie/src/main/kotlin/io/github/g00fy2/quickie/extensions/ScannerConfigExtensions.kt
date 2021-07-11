@@ -10,4 +10,6 @@ internal fun ScannerConfig.toParcelableConfig() =
     drawableRes = drawableRes,
     hapticFeedback = hapticFeedback,
     showTorchToggle = showTorchToggle,
+    borderColor = borderColor,
+    successBorderColor = successBorderColor
   )

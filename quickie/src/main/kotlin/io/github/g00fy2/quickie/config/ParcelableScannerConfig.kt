@@ -10,4 +10,6 @@ internal class ParcelableScannerConfig(
   val drawableRes: Int,
   val hapticFeedback: Boolean,
   val showTorchToggle: Boolean,
+  val borderColor: Int,
+  val successBorderColor: Int
 ) : Parcelable

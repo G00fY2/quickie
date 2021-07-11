@@ -1,5 +1,6 @@
 package io.github.g00fy2.quickie.config
 
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
@@ -11,7 +12,9 @@ public class ScannerConfig internal constructor(
   internal val stringRes: Int,
   internal val drawableRes: Int,
   internal val hapticFeedback: Boolean,
-  internal val showTorchToggle: Boolean
+  internal val showTorchToggle: Boolean,
+  internal val borderColor: Int,
+  internal val successBorderColor: Int
 ) {
 
   public class Builder {
@@ -20,6 +23,8 @@ public class ScannerConfig internal constructor(
     private var overlayDrawableRes: Int = 0
     private var hapticSuccessFeedback: Boolean = true
     private var showTorchToggle: Boolean = false
+    private var borderColor: Int = 0
+    private var successBorderColor: Int = 0
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -49,6 +54,19 @@ public class ScannerConfig internal constructor(
     public fun setShowTorchToggle(enable: Boolean): Builder = apply { showTorchToggle = enable }
 
     /**
+     * Set border color
+     */
+    public fun setBorderColor(@ColorRes borderColor: Int): Builder = apply { this.borderColor = borderColor }
+
+    /**
+     * Set border color in success mode
+     */
+    public fun setBorderSuccessColor(@ColorRes successBorderColor: Int): Builder =
+      apply {
+        this.successBorderColor = successBorderColor
+      }
+
+    /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
     public fun build(): ScannerConfig =
@@ -57,7 +75,9 @@ public class ScannerConfig internal constructor(
         overlayStringRes,
         overlayDrawableRes,
         hapticSuccessFeedback,
-        showTorchToggle
+        showTorchToggle,
+        borderColor,
+        successBorderColor
       )
   }
 

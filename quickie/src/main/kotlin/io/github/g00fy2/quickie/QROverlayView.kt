@@ -33,6 +33,8 @@ internal class QROverlayView @JvmOverloads constructor(
   private val binding = QuickieOverlayViewBinding.inflate(LayoutInflater.from(context), this)
   private val grayColor = ContextCompat.getColor(context, R.color.quickie_gray)
   private val accentColor = getAccentColor()
+  private var borderColor = grayColor
+  private var borderSuccessColor = accentColor
   private val backgroundColor = ColorUtils.setAlphaComponent(Color.BLACK, BACKGROUND_ALPHA.roundToInt())
   private val alphaPaint = Paint().apply { alpha = BACKGROUND_ALPHA.roundToInt() }
   private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -76,7 +78,7 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   override fun onDraw(canvas: Canvas) {
-    strokePaint.color = if (isHighlighted) accentColor else grayColor
+    strokePaint.color = if (isHighlighted) borderSuccessColor else borderColor
     maskCanvas!!.drawColor(backgroundColor)
     maskCanvas!!.drawRoundRect(outerFrame, outerRadius, outerRadius, strokePaint)
     maskCanvas!!.drawRoundRect(innerFrame, innerRadius, innerRadius, transparentPaint)
@@ -187,6 +189,14 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   private fun Float.toPx() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
+
+  fun setBorderColor(borderColor: Int) {
+    this.borderColor = ContextCompat.getColor(context, borderColor)
+  }
+
+  fun setSuccessBorderColor(successBorderColor: Int) {
+    this.borderSuccessColor = ContextCompat.getColor(context, successBorderColor)
+  }
 
   companion object {
     private const val BACKGROUND_ALPHA = 0.77 * 255

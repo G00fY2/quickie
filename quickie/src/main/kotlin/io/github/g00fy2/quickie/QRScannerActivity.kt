@@ -163,6 +163,8 @@ internal class QRScannerActivity : AppCompatActivity() {
       binding.overlayView.setCustomTextAndIcon(it.stringRes, it.drawableRes)
       hapticFeedback = it.hapticFeedback
       showTorchToggle = it.showTorchToggle
+      binding.overlayView.setBorderColor(it.borderColor)
+      binding.overlayView.setSuccessBorderColor(it.successBorderColor)
     }
   }
 
