@@ -96,23 +96,17 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   fun setCustomIcon(drawableRes: Int?) {
-    if (drawableRes != 0) {
-      try {
-        if (drawableRes != null) {
-          ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
-            setDrawableToTextView(it)
-          }
-        } else {
-          setDrawableToTextView(null)
+    try {
+      if (drawableRes == null) {
+        binding.titleTextView.setCompoundDrawables(null, null, null, null)
+      } else if (drawableRes != 0) {
+        ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
+          binding.titleTextView.setCompoundDrawables(null, it, null, null)
         }
-      } catch (ignore: NotFoundException) {
-        // drawable resource not found
       }
+    } catch (ignore: NotFoundException) {
+      // drawable resource not found
     }
-  }
-
-  private fun setDrawableToTextView(drawable: Drawable?) {
-    binding.titleTextView.setCompoundDrawables(null, drawable, null, null)
   }
 
   fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
@@ -197,7 +191,8 @@ internal class QROverlayView @JvmOverloads constructor(
     }
   }
 
-  private fun Float.toPx() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
+  private fun Float.toPx() =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
 
   companion object {
     private const val BACKGROUND_ALPHA = 0.77 * 255

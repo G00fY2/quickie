@@ -34,7 +34,7 @@ public class ScannerConfig internal constructor(
 
     /**
      * Set a drawable resource used for the scanner overlay.
-     * If pass the null parameter it's not show the icon
+     * If null is passed, no icon will be shown.
      */
     public fun setOverlayDrawableRes(@DrawableRes drawableRes: Int?): Builder =
       apply { overlayDrawableRes = drawableRes }
