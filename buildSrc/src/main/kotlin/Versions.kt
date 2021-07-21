@@ -6,12 +6,12 @@ object Versions {
   const val androidBuildTools = "30.0.3"
 
   const val androidGradle = "4.2.2"
-  const val kotlin = "1.5.20"
+  const val kotlin = "1.5.21"
 
-  const val appcompat = "1.3.0"
+  const val appcompat = "1.3.1"
 
-  const val cameraX = "1.0.0"
-  const val cameraView = "1.0.0-alpha26"
+  const val cameraX = "1.0.1"
+  const val cameraView = "1.0.0-alpha27"
 
   const val barcodeScanning = "16.2.0"
   const val barcodeScanningGms = "16.2.0"
