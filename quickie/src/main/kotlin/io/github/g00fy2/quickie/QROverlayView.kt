@@ -85,7 +85,7 @@ internal class QROverlayView @JvmOverloads constructor(
     super.onDraw(canvas)
   }
 
-  fun setCustomTextAndIcon(stringRes: Int, drawableRes: Int) {
+  fun setCustomText(stringRes: Int) {
     if (stringRes != 0) {
       try {
         binding.titleTextView.setText(stringRes)
@@ -93,14 +93,19 @@ internal class QROverlayView @JvmOverloads constructor(
         // string resource not found
       }
     }
-    if (drawableRes != 0) {
-      try {
+  }
+
+  fun setCustomIcon(drawableRes: Int?) {
+    try {
+      if (drawableRes == null) {
+        binding.titleTextView.setCompoundDrawables(null, null, null, null)
+      } else if (drawableRes != 0) {
         ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
           binding.titleTextView.setCompoundDrawables(null, it, null, null)
         }
-      } catch (ignore: NotFoundException) {
-        // drawable resource not found
       }
+    } catch (ignore: NotFoundException) {
+      // drawable resource not found
     }
   }
 
@@ -186,7 +191,8 @@ internal class QROverlayView @JvmOverloads constructor(
     }
   }
 
-  private fun Float.toPx() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
+  private fun Float.toPx() =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
 
   companion object {
     private const val BACKGROUND_ALPHA = 0.77 * 255

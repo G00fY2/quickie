@@ -160,7 +160,8 @@ internal class QRScannerActivity : AppCompatActivity() {
   private fun applyScannerConfig() {
     intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
       barcodeFormats = it.formats
-      binding.overlayView.setCustomTextAndIcon(it.stringRes, it.drawableRes)
+      binding.overlayView.setCustomText(it.stringRes)
+      binding.overlayView.setCustomIcon(it.drawableRes)
       hapticFeedback = it.hapticFeedback
       showTorchToggle = it.showTorchToggle
     }
