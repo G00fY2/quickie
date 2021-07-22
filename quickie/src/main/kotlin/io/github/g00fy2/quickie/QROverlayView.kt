@@ -96,16 +96,16 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   fun setCustomIcon(drawableRes: Int?) {
-    try {
-      if (drawableRes == null) {
-        binding.titleTextView.setCompoundDrawables(null, null, null, null)
-      } else if (drawableRes != 0) {
+    if (drawableRes == null) {
+      binding.titleTextView.setCompoundDrawables(null, null, null, null)
+    } else if (drawableRes != 0) {
+      try {
         ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
           binding.titleTextView.setCompoundDrawables(null, it, null, null)
         }
+      } catch (ignore: NotFoundException) {
+        // drawable resource not found
       }
-    } catch (ignore: NotFoundException) {
-      // drawable resource not found
     }
   }
 
@@ -184,9 +184,9 @@ internal class QROverlayView @JvmOverloads constructor(
         intArrayOf()
       )
       val stateColors = intArrayOf(grayColor, accentColor, accentColor, grayColor)
-      val colotStateList = ColorStateList(states, stateColors).withAlpha(BUTTON_BACKGROUND_ALPHA.roundToInt())
+      val colorStateList = ColorStateList(states, stateColors).withAlpha(BUTTON_BACKGROUND_ALPHA.roundToInt())
 
-      DrawableCompat.setTintList(wrappedDrawable, colotStateList)
+      DrawableCompat.setTintList(wrappedDrawable, colorStateList)
       background = wrappedDrawable
     }
   }
