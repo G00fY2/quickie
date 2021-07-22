@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 public class ScannerConfig internal constructor(
   internal val formats: IntArray,
   internal val stringRes: Int,
-  internal val drawableRes: Int,
+  internal val drawableRes: Int?,
   internal val hapticFeedback: Boolean,
   internal val showTorchToggle: Boolean
 ) {
@@ -17,7 +17,7 @@ public class ScannerConfig internal constructor(
   public class Builder {
     private var barcodeFormats: List<BarcodeFormat> = listOf(BarcodeFormat.FORMAT_ALL_FORMATS)
     private var overlayStringRes: Int = 0
-    private var overlayDrawableRes: Int = 0
+    private var overlayDrawableRes: Int? = 0
     private var hapticSuccessFeedback: Boolean = true
     private var showTorchToggle: Boolean = false
 
@@ -34,8 +34,9 @@ public class ScannerConfig internal constructor(
 
     /**
      * Set a drawable resource used for the scanner overlay.
+     * If null is passed, no icon will be shown.
      */
-    public fun setOverlayDrawableRes(@DrawableRes drawableRes: Int): Builder =
+    public fun setOverlayDrawableRes(@DrawableRes drawableRes: Int?): Builder =
       apply { overlayDrawableRes = drawableRes }
 
     /**

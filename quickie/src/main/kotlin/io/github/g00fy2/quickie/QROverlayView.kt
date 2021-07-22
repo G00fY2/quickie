@@ -85,7 +85,7 @@ internal class QROverlayView @JvmOverloads constructor(
     super.onDraw(canvas)
   }
 
-  fun setCustomTextAndIcon(stringRes: Int, drawableRes: Int) {
+  fun setCustomText(stringRes: Int) {
     if (stringRes != 0) {
       try {
         binding.titleTextView.setText(stringRes)
@@ -93,7 +93,12 @@ internal class QROverlayView @JvmOverloads constructor(
         // string resource not found
       }
     }
-    if (drawableRes != 0) {
+  }
+
+  fun setCustomIcon(drawableRes: Int?) {
+    if (drawableRes == null) {
+      binding.titleTextView.setCompoundDrawables(null, null, null, null)
+    } else if (drawableRes != 0) {
       try {
         ResourcesCompat.getDrawable(resources, drawableRes, null)?.limitDrawableSize()?.let {
           binding.titleTextView.setCompoundDrawables(null, it, null, null)
@@ -179,14 +184,15 @@ internal class QROverlayView @JvmOverloads constructor(
         intArrayOf()
       )
       val stateColors = intArrayOf(grayColor, accentColor, accentColor, grayColor)
-      val colotStateList = ColorStateList(states, stateColors).withAlpha(BUTTON_BACKGROUND_ALPHA.roundToInt())
+      val colorStateList = ColorStateList(states, stateColors).withAlpha(BUTTON_BACKGROUND_ALPHA.roundToInt())
 
-      DrawableCompat.setTintList(wrappedDrawable, colotStateList)
+      DrawableCompat.setTintList(wrappedDrawable, colorStateList)
       background = wrappedDrawable
     }
   }
 
-  private fun Float.toPx() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
+  private fun Float.toPx() =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
 
   companion object {
     private const val BACKGROUND_ALPHA = 0.77 * 255

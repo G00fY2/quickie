@@ -54,6 +54,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:indeterminate="true"
+        android:indeterminateTintMode="src_in"
         android:indeterminateTint="@color/quickie_gray"
         />
 
