@@ -36,6 +36,8 @@ proguard/
 *.log
 
 # Android Studio
+/*/bundled/
+/*/unbundled/
 /*/build/
 /*/local.properties
 /*/out
