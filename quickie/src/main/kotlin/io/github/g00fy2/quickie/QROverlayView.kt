@@ -24,6 +24,7 @@ import io.github.g00fy2.quickie.databinding.QuickieOverlayViewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+@Suppress("TooManyFunctions")
 internal class QROverlayView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
@@ -75,6 +76,7 @@ internal class QROverlayView @JvmOverloads constructor(
     }
   }
 
+  @Suppress("UnsafeCallOnNullableType")
   override fun onDraw(canvas: Canvas) {
     strokePaint.color = if (isHighlighted) accentColor else grayColor
     maskCanvas!!.drawColor(backgroundColor)
