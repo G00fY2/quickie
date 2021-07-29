@@ -8,17 +8,17 @@ plugins {
 }
 
 android {
-  compileSdkVersion(Versions.androidCompileSdk)
-  defaultConfig.minSdkVersion(Versions.androidMinSdk)
+  compileSdk = Versions.androidCompileSdk
+  defaultConfig.minSdk = Versions.androidMinSdk
   resourcePrefix = "quickie"
   buildFeatures {
     viewBinding = true
     buildConfig = false
   }
-  flavorDimensions("mlkit")
+  flavorDimensions += "mlkit"
   productFlavors {
-    create("bundled").dimension("mlkit")
-    create("unbundled").dimension("mlkit")
+    create("bundled").dimension = "mlkit"
+    create("unbundled").dimension = "mlkit"
   }
   sourceSets {
     getByName("main").java.srcDirs("src/main/kotlin")

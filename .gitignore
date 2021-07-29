@@ -61,8 +61,6 @@ captures/
 *.iml
 *.iws
 .idea/*
-!.idea/codeStyles/Project.xml
-!.idea/codeStyles/codeStyleConfig.xml
 
 # Keystore files
 *.jks
