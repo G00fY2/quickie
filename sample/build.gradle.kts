@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-  compileSdk = Versions.androidCompileSdk
-  buildToolsVersion = Versions.androidBuildTools
+  compileSdk = Versions.Preview.androidCompileSdk
+  buildToolsVersion = Versions.Preview.androidBuildTools
   defaultConfig {
     applicationId = "io.github.g00fy2.quickiesample"
     minSdk = Versions.androidMinSdk
-    targetSdk = Versions.androidTargetSdk
+    targetSdk = Versions.Preview.androidTargetSdk
     versionCode = 1
     versionName = "1.0"
   }
