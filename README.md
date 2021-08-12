@@ -14,8 +14,8 @@ There are two different flavors available on `mavenCentral()`:
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
 | ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (once after app install) |
-| additional 1.1 MB per ABI (you should use App Bundle or ABI splitting) | smaller app size |
-| V2 model is used (possibly faster, more accurate) | currently V1 model will be downloaded
+| 2.2 MB app size increase per ABI (you should use App Bundle or ABI splitting) | 550 KB app size increase |
+| V3 model is used (faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
 implementation("io.github.g00fy2.quickie:quickie-bundled:1.2.4")
