@@ -5,7 +5,13 @@ object Versions {
   const val androidTargetSdk = 30
   const val androidBuildTools = "30.0.3"
 
-  const val androidGradle = "4.2.2"
+  object Preview {
+    const val androidCompileSdk = 31
+    const val androidTargetSdk = 31
+    const val androidBuildTools = "31.0.0"
+  }
+
+  const val androidGradle = "7.0.0"
   const val kotlin = "1.5.21"
 
   const val appcompat = "1.3.1"
@@ -13,8 +19,8 @@ object Versions {
   const val cameraX = "1.0.1"
   const val cameraView = "1.0.0-alpha27"
 
-  const val barcodeScanning = "16.2.0"
-  const val barcodeScanningGms = "16.2.0"
+  const val barcodeScanning = "17.0.0"
+  const val barcodeScanningGms = "16.2.1"
 
   const val materialDesign = "1.4.0"
 

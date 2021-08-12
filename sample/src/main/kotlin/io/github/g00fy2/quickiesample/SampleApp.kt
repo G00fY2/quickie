@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.StrictMode
 import androidx.viewbinding.BuildConfig
 
+@Suppress("unused")
 class SampleApp : Application() {
 
   override fun onCreate() {

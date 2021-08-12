@@ -53,5 +53,6 @@ internal class QRCodeAnalyzer(
   }
 
   @ExperimentalGetImage
+  @Suppress("UnsafeCallOnNullableType")
   private fun ImageProxy.toInputImage() = InputImage.fromMediaImage(image!!, imageInfo.rotationDegrees)
 }

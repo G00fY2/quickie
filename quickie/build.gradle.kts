@@ -8,17 +8,17 @@ plugins {
 }
 
 android {
-  compileSdkVersion(Versions.androidCompileSdk)
-  defaultConfig.minSdkVersion(Versions.androidMinSdk)
+  compileSdk = Versions.androidCompileSdk
+  defaultConfig.minSdk = Versions.androidMinSdk
   resourcePrefix = "quickie"
   buildFeatures {
     viewBinding = true
     buildConfig = false
   }
-  flavorDimensions("mlkit")
+  flavorDimensions += "mlkit"
   productFlavors {
-    create("bundled").dimension("mlkit")
-    create("unbundled").dimension("mlkit")
+    create("bundled").dimension = "mlkit"
+    create("unbundled").dimension = "mlkit"
   }
   sourceSets {
     getByName("main").java.srcDirs("src/main/kotlin")
@@ -43,7 +43,7 @@ dependencies {
 }
 
 group = "io.github.g00fy2.quickie"
-version = "1.2.3"
+version = "1.2.4"
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")

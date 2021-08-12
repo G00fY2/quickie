@@ -36,6 +36,7 @@ internal fun Intent?.toQuickieContentType(): QRContent {
   return this?.toQuickieContentType(rawValue) ?: Plain(rawValue)
 }
 
+@Suppress("LongMethod")
 private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
   return when (getIntExtra(QRScannerActivity.EXTRA_RESULT_TYPE, Barcode.TYPE_UNKNOWN)) {
     Barcode.TYPE_CONTACT_INFO -> {
