@@ -12,7 +12,7 @@ object Versions {
   }
 
   const val androidGradle = "7.0.1"
-  const val kotlin = "1.5.21"
+  const val kotlin = "1.5.30"
 
   const val appcompat = "1.3.1"
 
