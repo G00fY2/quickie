@@ -28,7 +28,7 @@ object Versions {
   const val gradleVersions = "0.39.0"
   const val dokka = "1.5.0"
 
-  const val junit = "5.7.2"
+  const val junit = "5.8.0"
 
   fun maturityLevel(version: String): Int {
     val levels = listOf("alpha", "beta", "m", "rc")
