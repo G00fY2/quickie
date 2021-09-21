@@ -12,7 +12,7 @@ object Versions {
   }
 
   const val androidGradle = "7.0.2"
-  const val kotlin = "1.5.30"
+  const val kotlin = "1.5.31"
 
   const val appcompat = "1.3.1"
 
@@ -26,7 +26,7 @@ object Versions {
 
   const val detekt = "1.18.1"
   const val gradleVersions = "0.39.0"
-  const val dokka = "1.5.0"
+  const val dokka = "1.5.30"
 
   const val junit = "5.8.0"
 
