@@ -8,6 +8,7 @@
     <!--api 27-->
     <item name="android:windowLightNavigationBar">false</item>
     <item name="android:navigationBarDividerColor">@color/quickie_transparent</item>
+    <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     <!--api 29-->
     <item name="android:enforceNavigationBarContrast">false</item>
     <item name="android:enforceStatusBarContrast">false</item>
