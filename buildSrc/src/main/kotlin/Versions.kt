@@ -26,7 +26,7 @@ object Versions {
 
   const val detekt = "1.18.1"
   const val gradleVersions = "0.39.0"
-  const val dokka = "1.5.30"
+  const val dokka = "1.5.31"
 
   const val junit = "5.8.1"
 
