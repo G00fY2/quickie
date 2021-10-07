@@ -60,7 +60,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
-      view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = 5
+      view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.run {
+        maxLines = 5
+        setTextIsSelectable(true)
+      }
       if (result is QRSuccess && result.content is QRContent.Url) {
         setAction(R.string.open_action) { openUrl(result.content.rawValue) }
       } else {
