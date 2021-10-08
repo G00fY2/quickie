@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         }
       )
     }
+
+    if (intent.extras?.getBoolean(OPEN_SCANNER) == true) scanQrCode.launch(null)
   }
 
   private fun showSnackbar(result: QRResult) {
@@ -88,5 +90,9 @@ class MainActivity : AppCompatActivity() {
     binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
       selectedBarcodeFormat = BarcodeFormat.values()[position]
     }
+  }
+
+  companion object {
+    const val OPEN_SCANNER = "open_scanner"
   }
 }
