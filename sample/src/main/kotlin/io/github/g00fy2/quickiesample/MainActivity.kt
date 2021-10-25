@@ -46,9 +46,12 @@ class MainActivity : AppCompatActivity() {
           setOverlayDrawableRes(R.drawable.ic_scan_barcode) // drawable resource used for the scanner overlay
           setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
           setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
+          sethHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
         }
       )
     }
+
+    if (intent.extras?.getBoolean(OPEN_SCANNER) == true) scanQrCode.launch(null)
   }
 
   private fun showSnackbar(result: QRResult) {
@@ -60,7 +63,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
-      view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = 5
+      view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.run {
+        maxLines = 5
+        setTextIsSelectable(true)
+      }
       if (result is QRSuccess && result.content is QRContent.Url) {
         setAction(R.string.open_action) { openUrl(result.content.rawValue) }
       } else {
@@ -85,5 +91,9 @@ class MainActivity : AppCompatActivity() {
     binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
       selectedBarcodeFormat = BarcodeFormat.values()[position]
     }
+  }
+
+  companion object {
+    const val OPEN_SCANNER = "open_scanner"
   }
 }

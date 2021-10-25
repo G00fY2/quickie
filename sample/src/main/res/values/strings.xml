@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name" translatable="false">Quickie Activity Sample</string>
+  <string name="app_name" translatable="false">Quickie Sample</string>
 
   <string name="qr_button" translatable="false">QR-Code Scanner</string>
   <string name="custom_button" translatable="false">Custom Scanner</string>

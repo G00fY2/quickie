@@ -19,6 +19,23 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <!--optional service to allow launching the sample app from the quick settings -->
+    <service
+        android:name=".quicksettingstile.QuickieTileService"
+        android:icon="@drawable/ic_qs_qrcode"
+        android:label="@string/app_name"
+        android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+        android:exported="true">
+      <intent-filter>
+        <action
+            android:name="android.service.quicksettings.action.QS_TILE"/>
+      </intent-filter>
+      <meta-data
+          android:name="android.service.quicksettings.ACTIVE_TILE"
+          android:value="true" />
+    </service>
+
   </application>
 
 </manifest>
