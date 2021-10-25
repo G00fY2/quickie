@@ -162,6 +162,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       barcodeFormats = it.formats
       binding.overlayView.setCustomText(it.stringRes)
       binding.overlayView.setCustomIcon(it.drawableRes)
+      binding.overlayView.setHorizontalFrameRatio(it.horizontalFrameRatio)
       hapticFeedback = it.hapticFeedback
       showTorchToggle = it.showTorchToggle
     }

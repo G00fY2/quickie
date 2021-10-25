@@ -11,7 +11,8 @@ public class ScannerConfig internal constructor(
   internal val stringRes: Int,
   internal val drawableRes: Int?,
   internal val hapticFeedback: Boolean,
-  internal val showTorchToggle: Boolean
+  internal val showTorchToggle: Boolean,
+  internal val horizontalFrameRatio: Float,
 ) {
 
   public class Builder {
@@ -20,6 +21,7 @@ public class ScannerConfig internal constructor(
     private var overlayDrawableRes: Int? = 0
     private var hapticSuccessFeedback: Boolean = true
     private var showTorchToggle: Boolean = false
+    private var horizontalFrameRatio: Float = 1f
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -40,6 +42,11 @@ public class ScannerConfig internal constructor(
       apply { overlayDrawableRes = drawableRes }
 
     /**
+     * Set the horizontal overlay ratio (default is 1 / square frame).
+     */
+    public fun sethHorizontalFrameRatio(ratio: Float): Builder = apply { horizontalFrameRatio = ratio }
+
+    /**
      * Enable (default) or disable haptic feedback when a barcode was detected.
      */
     public fun setHapticSuccessFeedback(enable: Boolean): Builder = apply { hapticSuccessFeedback = enable }
@@ -58,7 +65,8 @@ public class ScannerConfig internal constructor(
         overlayStringRes,
         overlayDrawableRes,
         hapticSuccessFeedback,
-        showTorchToggle
+        showTorchToggle,
+        horizontalFrameRatio,
       )
   }
 

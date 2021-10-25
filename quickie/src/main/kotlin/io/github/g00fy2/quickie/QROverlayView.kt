@@ -48,6 +48,7 @@ internal class QROverlayView @JvmOverloads constructor(
   private val innerFrame = RectF()
   private var maskBitmap: Bitmap? = null
   private var maskCanvas: Canvas? = null
+  private var horizontalFrameRatio = 1f
   var isHighlighted = false
     set(value) {
       if (field != value) {
@@ -111,6 +112,13 @@ internal class QROverlayView @JvmOverloads constructor(
     }
   }
 
+  fun setHorizontalFrameRatio(ratio: Float) {
+    if (ratio > 1f) {
+      horizontalFrameRatio = ratio
+      calculateFrameAndTitlePos()
+    }
+  }
+
   fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
     binding.torchImageView.visibility = if (visible) View.VISIBLE else View.GONE
     binding.torchImageView.setOnClickListener { action(!it.isSelected) }
@@ -125,13 +133,18 @@ internal class QROverlayView @JvmOverloads constructor(
     val centralX = width / 2
     val centralY = height / 2
     val minLength = min(centralX, centralY)
-    val strokeLength = minLength - (minLength * FRAME_MARGIN_RATIO)
+    val marginRatio = if (horizontalFrameRatio > 1f) {
+      FRAME_MARGIN_RATIO * ((1f / horizontalFrameRatio) * 1.5f)
+    } else {
+      FRAME_MARGIN_RATIO
+    }
+    val strokeLength = minLength - (minLength * marginRatio)
     val strokeWidth = STROKE_WIDTH.toPx()
     outerFrame.set(
       centralX - strokeLength,
-      centralY - strokeLength,
+      centralY - strokeLength / horizontalFrameRatio,
       centralX + strokeLength,
-      centralY + strokeLength
+      centralY + strokeLength / horizontalFrameRatio
     )
     innerFrame.set(
       outerFrame.left + strokeWidth,
