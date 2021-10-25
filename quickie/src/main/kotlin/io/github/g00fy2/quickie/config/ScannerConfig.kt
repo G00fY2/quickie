@@ -44,7 +44,7 @@ public class ScannerConfig internal constructor(
     /**
      * Set the horizontal overlay ratio (default is 1 / square frame).
      */
-    public fun sethHorizontalFrameRatio(ratio: Float): Builder = apply { horizontalFrameRatio = ratio }
+    public fun setHorizontalFrameRatio(ratio: Float): Builder = apply { horizontalFrameRatio = ratio }
 
     /**
      * Enable (default) or disable haptic feedback when a barcode was detected.

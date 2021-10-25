@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 | V3 model is used (faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.3.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.3.1")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.3.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.3.1")
 ```
 
 ## Quick Start
@@ -98,7 +98,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
           setOverlayDrawableRes(R.drawable.ic_scan_barcode) // drawable resource used for the scanner overlay
           setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
           setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
-          sethHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
+          setHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
         }
       )
     }
