@@ -98,7 +98,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
           setOverlayDrawableRes(R.drawable.ic_scan_barcode) // drawable resource used for the scanner overlay
           setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
           setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
-          sethHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
+          setHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
         }
       )
     }
