@@ -20,7 +20,7 @@ object Versions {
 
   const val materialDesign = "1.4.0"
 
-  const val detekt = "1.18.1"
+  const val detekt = "1.19.0-RC1"
   const val gradleVersions = "0.39.0"
   const val dokka = "1.5.31"
 
