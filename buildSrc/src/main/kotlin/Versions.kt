@@ -20,11 +20,11 @@ object Versions {
 
   const val materialDesign = "1.4.0"
 
-  const val detekt = "1.19.0-RC2"
+  const val detekt = "1.19.0"
   const val gradleVersions = "0.39.0"
   const val dokka = "1.6.0"
 
-  const val junit = "5.8.1"
+  const val junit = "5.8.2"
 
   fun maturityLevel(version: String): Int {
     val levels = listOf("alpha", "beta", "m", "rc")
