@@ -1,6 +1,6 @@
 object Versions {
 
-  const val quickie = "1.3.1"
+  const val quickie = "1.3.2"
 
   const val androidMinSdk = 21
   const val androidCompileSdk = 31
