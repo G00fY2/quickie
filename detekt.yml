@@ -10,8 +10,8 @@ exceptions:
 
 formatting:
   android: true
-  ImportOrdering:
-    active: true
+  Indentation:
+    active: false
   FinalNewline:
     insertFinalNewLine: false
   ParameterListWrapping:
