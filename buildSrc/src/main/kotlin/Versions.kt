@@ -13,7 +13,7 @@ object Versions {
   const val appcompat = "1.4.0"
 
   const val cameraX = "1.0.2"
-  const val cameraView = "1.0.0-alpha31"
+  const val cameraView = "1.0.0-alpha32"
 
   const val barcodeScanning = "17.0.0"
   const val barcodeScanningGms = "16.2.1"
