@@ -1,6 +1,6 @@
 package io.github.g00fy2.quickie
 
-import com.google.mlkit.vision.barcode.Barcode
+import com.google.mlkit.vision.barcode.common.Barcode
 import io.github.g00fy2.quickie.config.BarcodeFormat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
