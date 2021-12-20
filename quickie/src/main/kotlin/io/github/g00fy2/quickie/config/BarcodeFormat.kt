@@ -1,6 +1,6 @@
 package io.github.g00fy2.quickie.config
 
-import com.google.mlkit.vision.barcode.Barcode
+import com.google.mlkit.vision.barcode.common.Barcode
 
 /**
  * Wrapper class to access the ML Kit BarcodeFormat constants.

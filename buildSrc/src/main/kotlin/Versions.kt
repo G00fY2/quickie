@@ -1,6 +1,6 @@
 object Versions {
 
-  const val quickie = "1.3.2"
+  const val quickie = "1.3.3"
 
   const val androidMinSdk = 21
   const val androidCompileSdk = 31
@@ -13,10 +13,10 @@ object Versions {
   const val appcompat = "1.4.0"
 
   const val cameraX = "1.0.2"
-  const val cameraView = "1.0.0-alpha31"
+  const val cameraView = "1.0.0-alpha32"
 
-  const val barcodeScanning = "17.0.0"
-  const val barcodeScanningGms = "16.2.1"
+  const val barcodeScanning = "17.0.1"
+  const val barcodeScanningGms = "17.0.0"
 
   const val materialDesign = "1.4.0"
 

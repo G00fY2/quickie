@@ -1,7 +1,7 @@
 package io.github.g00fy2.quickie.extensions
 
 import android.os.Parcelable
-import com.google.mlkit.vision.barcode.Barcode
+import com.google.mlkit.vision.barcode.common.Barcode
 import io.github.g00fy2.quickie.content.AddressParcelable
 import io.github.g00fy2.quickie.content.CalendarDateTimeParcelable
 import io.github.g00fy2.quickie.content.CalendarEventParcelable
