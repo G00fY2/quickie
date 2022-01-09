@@ -3,6 +3,7 @@ complexity:
     ignoreSingleWhenExpression: true
   LongParameterList:
     ignoreAnnotated: ['Parcelize']
+    constructorThreshold: 8
 
 exceptions:
   TooGenericExceptionCaught:
