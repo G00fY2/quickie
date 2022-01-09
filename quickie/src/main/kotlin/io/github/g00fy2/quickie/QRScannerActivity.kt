@@ -37,6 +37,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
   private var hapticFeedback = true
   private var showTorchToggle = false
+  private var useFrontCamera = false
   internal var errorDialog: Dialog? = null
     set(value) {
       field = value
@@ -106,7 +107,12 @@ internal class QRScannerActivity : AppCompatActivity() {
 
       cameraProvider.unbindAll()
       try {
-        val camera = cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalysis)
+        val cameraSelector = if (useFrontCamera) {
+          CameraSelector.DEFAULT_FRONT_CAMERA
+        } else {
+          CameraSelector.DEFAULT_BACK_CAMERA
+        }
+        val camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
         binding.overlayView.visibility = View.VISIBLE
         if (showTorchToggle && camera.cameraInfo.hasFlashUnit()) {
           binding.overlayView.setTorchVisibilityAndOnClick(true) { camera.cameraControl.enableTorch(it) }
@@ -165,6 +171,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       binding.overlayView.setHorizontalFrameRatio(it.horizontalFrameRatio)
       hapticFeedback = it.hapticFeedback
       showTorchToggle = it.showTorchToggle
+      useFrontCamera = it.useFrontCamera
     }
   }
 

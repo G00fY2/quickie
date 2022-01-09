@@ -11,4 +11,5 @@ internal fun ScannerConfig.toParcelableConfig() =
     hapticFeedback = hapticFeedback,
     showTorchToggle = showTorchToggle,
     horizontalFrameRatio = horizontalFrameRatio,
+    useFrontCamera = useFrontCamera,
   )

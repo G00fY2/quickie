@@ -13,6 +13,7 @@ public class ScannerConfig internal constructor(
   internal val hapticFeedback: Boolean,
   internal val showTorchToggle: Boolean,
   internal val horizontalFrameRatio: Float,
+  internal val useFrontCamera: Boolean,
 ) {
 
   public class Builder {
@@ -22,6 +23,7 @@ public class ScannerConfig internal constructor(
     private var hapticSuccessFeedback: Boolean = true
     private var showTorchToggle: Boolean = false
     private var horizontalFrameRatio: Float = 1f
+    private var useFrontCamera: Boolean = false
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -57,6 +59,11 @@ public class ScannerConfig internal constructor(
     public fun setShowTorchToggle(enable: Boolean): Builder = apply { showTorchToggle = enable }
 
     /**
+     * Use the front camera.
+     */
+    public fun setUseFrontCamera(enable: Boolean): Builder = apply { useFrontCamera = enable }
+
+    /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
     public fun build(): ScannerConfig =
@@ -67,6 +74,7 @@ public class ScannerConfig internal constructor(
         hapticSuccessFeedback,
         showTorchToggle,
         horizontalFrameRatio,
+        useFrontCamera,
       )
   }
 
