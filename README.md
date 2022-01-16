@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 | V3 model is used (faster, more accurate) | currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.3.3")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.4.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.3.3")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.4.0")
 ```
 
 ## Quick Start
@@ -99,6 +99,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
           setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
           setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
           setHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
+          setUseFrontCamera(true) // use the front camera
         }
       )
     }
@@ -118,6 +119,11 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 * AndroidX
 * Min SDK 21+ (required by CameraX)
 * (Google Play Services available on the end device if using `quickie-unbundled`)
+
+## Contributing
+See [CONTRIBUTING](CONTRIBUTING.md)
+
+Thanks to everyone who contributed to quickie!
 
 ## License
     The MIT License (MIT)
