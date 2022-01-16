@@ -11,4 +11,5 @@ internal class ParcelableScannerConfig(
   val hapticFeedback: Boolean,
   val showTorchToggle: Boolean,
   val horizontalFrameRatio: Float,
+  val useFrontCamera: Boolean,
 ) : Parcelable

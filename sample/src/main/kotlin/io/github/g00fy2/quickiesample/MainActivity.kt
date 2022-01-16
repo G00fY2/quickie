@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
           setHapticSuccessFeedback(false) // enable (default) or disable haptic feedback when a barcode was detected
           setShowTorchToggle(true) // show or hide (default) torch/flashlight toggle button
           setHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
+          setUseFrontCamera(true) // use the front camera
         }
       )
     }
