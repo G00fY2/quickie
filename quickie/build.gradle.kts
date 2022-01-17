@@ -21,10 +21,8 @@ android {
     create("unbundled").dimension = "mlkit"
   }
   sourceSets {
-    getByName("main").java.srcDirs("src/main/kotlin")
     getByName("bundled").java.srcDirs("src/bundled/kotlin")
     getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
-    getByName("test").java.srcDirs("src/test/kotlin")
   }
 }
 
