@@ -1,0 +1,54 @@
+[versions]
+quickie = "1.4.0"
+
+androidconfig-minSdk = "21"
+androidconfig-compileSdk = "31"
+androidconfig-targetSdk = "31"
+androidconfig-buildTools = "31.0.0"
+
+androidGradle = "7.1.1"
+kotlin = "1.6.10"
+
+appcompat = "1.4.1"
+
+cameraX = "1.0.2"
+cameraView = "1.0.0-alpha32"
+
+barcodeScanning = "17.0.2"
+barcodeScanningGms = "18.0.0"
+
+materialDesign = "1.5.0"
+
+detekt = "1.19.0"
+gradleVersions = "0.42.0"
+dokka = "1.6.10"
+
+junit = "5.8.2"
+
+[libraries]
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-camera = { module = "androidx.camera:camera-camera2", version.ref = "cameraX" }
+androidx-cameraLifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraX" }
+androidx-cameraPreview = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
+
+mlkit-barcodeScanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
+mlkit-barcodeScanningGms = { module = "com.google.android.gms:play-services-mlkit-barcode-scanning", version.ref = "barcodeScanningGms" }
+
+google-materialDesign = { module = "com.google.android.material:material", version.ref = "materialDesign" }
+
+test-junitApi = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+test-junitEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+
+misc-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradle" }
+android-library = { id = "com.android.library", version.ref = "androidGradle" }
+
+kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
+kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+
+misc-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+misc-gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersions" }

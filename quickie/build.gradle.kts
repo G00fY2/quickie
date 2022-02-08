@@ -1,15 +1,14 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  id(Plugins.Android.library)
-  id(Plugins.Kotlin.android)
-  id(Plugins.Kotlin.parcelize)
-  id(Plugins.Kotlin.dokka) version Versions.dokka
+  id(libs.plugins.android.library.get().pluginId)
+  id(libs.plugins.kotlin.android.get().pluginId)
+  id(libs.plugins.kotlin.parcelize.get().pluginId)
+  alias(libs.plugins.kotlin.dokka)
   `maven-publish`
   signing
 }
 
 android {
-  compileSdk = Versions.androidCompileSdk
-  defaultConfig.minSdk = Versions.androidMinSdk
   resourcePrefix = "quickie"
   buildFeatures {
     viewBinding = true
@@ -27,21 +26,21 @@ android {
 }
 
 dependencies {
-  implementation(Deps.AndroidX.appcompat)
+  implementation(libs.androidx.appcompat)
 
-  implementation(Deps.AndroidX.camera)
-  implementation(Deps.AndroidX.cameraLifecycle)
-  implementation(Deps.AndroidX.cameraPreview)
+  implementation(libs.androidx.camera)
+  implementation(libs.androidx.cameraLifecycle)
+  implementation(libs.androidx.cameraPreview)
 
-  "bundledImplementation"(Deps.MLKit.barcodeScanning)
-  "unbundledImplementation"(Deps.MLKit.barcodeScanningGms)
+  add("bundledImplementation", libs.mlkit.barcodeScanning)
+  add("unbundledImplementation", libs.mlkit.barcodeScanningGms)
 
-  testImplementation(Deps.Test.junitApi)
-  testRuntimeOnly(Deps.Test.junitEngine)
+  testImplementation(libs.test.junitApi)
+  testRuntimeOnly(libs.test.junitEngine)
 }
 
 group = "io.github.g00fy2.quickie"
-version = Versions.quickie
+version = libs.versions.quickie
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
