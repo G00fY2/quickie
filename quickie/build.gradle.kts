@@ -23,6 +23,10 @@ android {
     getByName("bundled").java.srcDirs("src/bundled/kotlin")
     getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
   }
+  publishing {
+    singleVariant("bundledRelease")
+    singleVariant("unbundledRelease")
+  }
 }
 
 dependencies {
@@ -40,7 +44,7 @@ dependencies {
 }
 
 group = "io.github.g00fy2.quickie"
-version = libs.versions.quickie
+version = libs.versions.quickie.get()
 
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier.set("javadoc")
