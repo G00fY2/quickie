@@ -3,23 +3,24 @@ import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  id(Plugins.Android.application) version Versions.androidGradle apply false
-  kotlin(Plugins.Kotlin.androidGradle) version Versions.kotlin apply false
-  id(Plugins.Misc.detekt) version Versions.detekt apply false
-  id(Plugins.Misc.gradleVersions) version Versions.gradleVersions
+  alias(libs.plugins.android.application) apply false
+  alias(libs.plugins.kotlin.androidGradle) apply false
+  alias(libs.plugins.misc.detekt) apply false
+  alias(libs.plugins.misc.gradleVersions)
 }
 
 subprojects {
-  apply(plugin = Plugins.Misc.detekt)
+  apply(plugin = rootProject.libs.plugins.misc.detekt.get().pluginId)
   extensions.configure<DetektExtension> {
-    toolVersion = Versions.detekt
+    toolVersion = rootProject.libs.versions.detekt.get()
     config = files("$rootDir/detekt.yml")
     buildUponDefaultConfig = true
     ignoredBuildTypes = listOf("release")
   }
   dependencies {
-    "detektPlugins"(Plugins.Misc.detektFormatting)
+    add("detektPlugins", rootProject.libs.misc.detektFormatting)
   }
   tasks.withType<Detekt>().configureEach {
     jvmTarget = "1.8"
@@ -36,6 +37,12 @@ subprojects {
   }
   afterEvaluate {
     extensions.configure<BaseExtension> {
+      compileSdkVersion(libs.versions.androidconfig.compileSdk.get().toInt())
+      buildToolsVersion(libs.versions.androidconfig.buildTools.get())
+      defaultConfig {
+        minSdk = libs.versions.androidconfig.minSdk.get().toInt()
+        targetSdk = libs.versions.androidconfig.targetSdk.get().toInt()
+      }
       compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -46,7 +53,14 @@ subprojects {
 
 tasks.dependencyUpdates.configure {
   gradleReleaseChannel = "current"
-  rejectVersionIf { Versions.maturityLevel(candidate.version) < Versions.maturityLevel(currentVersion) }
+
+  fun releaseType(version: String): Int {
+    val qualifiers = listOf("alpha", "beta", "m", "rc")
+    val index = qualifiers.indexOfFirst { version.matches(".*[.\\-]$it[.\\-\\d]*".toRegex(RegexOption.IGNORE_CASE)) }
+    return if (index < 0) qualifiers.size else index
+  }
+
+  rejectVersionIf { releaseType(candidate.version) < releaseType(currentVersion) }
 }
 
 tasks.register<Delete>("clean") {

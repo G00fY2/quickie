@@ -1,15 +1,12 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  id(Plugins.Android.application)
-  id(Plugins.Kotlin.android)
+  id(libs.plugins.android.application.get().pluginId)
+  id(libs.plugins.kotlin.android.get().pluginId)
 }
 
 android {
-  compileSdk = Versions.androidCompileSdk
-  buildToolsVersion = Versions.androidBuildTools
   defaultConfig {
     applicationId = "io.github.g00fy2.quickiesample"
-    minSdk = Versions.androidMinSdk
-    targetSdk = Versions.androidTargetSdk
     versionCode = 1
     versionName = "1.0"
   }
@@ -36,11 +33,10 @@ android {
   buildFeatures {
     viewBinding = true
   }
-  sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
 }
 
 dependencies {
   implementation(project(":quickie"))
 
-  implementation(Deps.UI.materialDesign)
+  implementation(libs.google.materialDesign)
 }
