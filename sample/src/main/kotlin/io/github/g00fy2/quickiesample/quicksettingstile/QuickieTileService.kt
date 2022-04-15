@@ -28,9 +28,11 @@ class QuickieTileService : TileService() {
 
   override fun onClick() {
     super.onClick()
-    startActivityAndCollapse(Intent(this, MainActivity::class.java).apply {
-      addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-      putExtra(MainActivity.OPEN_SCANNER, true)
-    })
+    startActivityAndCollapse(
+      Intent(this, MainActivity::class.java).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        putExtra(MainActivity.OPEN_SCANNER, true)
+      }
+    )
   }
 }
