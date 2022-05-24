@@ -92,7 +92,8 @@ internal class QRScannerActivity : AppCompatActivity() {
         .setTargetResolution(Size(1280, 720))
         .build()
         .also {
-          it.setAnalyzer(analysisExecutor,
+          it.setAnalyzer(
+            analysisExecutor,
             QRCodeAnalyzer(
               barcodeFormats = barcodeFormats,
               onSuccess = { barcode ->

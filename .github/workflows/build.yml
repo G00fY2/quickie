@@ -1,4 +1,4 @@
-name: Android CI
+name: Build
 
 on:
   push:
@@ -13,36 +13,52 @@ on:
 jobs:
   detekt:
     name: Run detekt
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
       - name: Run detekt with ktlint
         run: ./gradlew detektBundledDebug detektUnbundledDebug
 
   unit_tests:
     name: Run unit tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
       - name: Run bundled and unbundled unit tests
         run: ./gradlew test
 
   build_bundled:
     name: Build bundled debug
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
       - name: Build debug bundled sample app
         run: ./gradlew :sample:assembleBundledDebug
 
   build_unbundled:
     name: Build unbundled debug
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
       - name: Build debug unbundled sample app
         run: ./gradlew :sample:assembleUnbundledDebug

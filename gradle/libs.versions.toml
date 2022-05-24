@@ -1,13 +1,13 @@
 [versions]
-quickie = "1.4.1"
+quickie = "1.4.2"
 
 androidconfig-minSdk = "21"
-androidconfig-compileSdk = "31"
-androidconfig-targetSdk = "31"
-androidconfig-buildTools = "31.0.0"
+androidconfig-compileSdk = "32"
+androidconfig-targetSdk = "32"
+androidconfig-buildTools = "32.0.0"
 
-androidGradle = "7.1.2"
-kotlin = "1.6.20"
+androidGradle = "7.2.0"
+kotlin = "1.6.21"
 
 appcompat = "1.4.1"
 
@@ -17,11 +17,11 @@ cameraView = "1.0.0-alpha32"
 barcodeScanning = "17.0.2"
 barcodeScanningGms = "18.0.0"
 
-materialDesign = "1.5.0"
+materialDesign = "1.6.0"
 
-detekt = "1.19.0"
+detekt = "1.20.0"
 gradleVersions = "0.42.0"
-dokka = "1.6.10"
+dokka = "1.6.21"
 
 junit = "5.8.2"
 
