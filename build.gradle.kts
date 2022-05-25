@@ -7,6 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   alias(libs.plugins.android.application) apply false
   alias(libs.plugins.kotlin.androidGradle) apply false
+  alias(libs.plugins.kotlin.dokka) apply false
   alias(libs.plugins.misc.detekt) apply false
   alias(libs.plugins.misc.gradleVersions)
 }
