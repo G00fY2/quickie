@@ -31,7 +31,7 @@ subprojects {
       allWarningsAsErrors = true
       freeCompilerArgs = freeCompilerArgs + listOfNotNull(
         "-progressive",
-        if (this@subprojects.name != "sample") "-Xexplicit-api=strict" else null,
+        "-Xexplicit-api=strict".takeIf { (this@subprojects.name != "sample") },
       )
       jvmTarget = "1.8"
     }
