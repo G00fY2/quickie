@@ -19,7 +19,7 @@ barcodeScanningGms = "18.0.0"
 
 materialDesign = "1.6.1"
 
-detekt = "1.20.0"
+detekt = "1.21.0-RC1"
 gradleVersions = "0.42.0"
 dokka = "1.6.21"
 
