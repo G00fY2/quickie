@@ -24,7 +24,7 @@ subprojects {
     add("detektPlugins", rootProject.libs.misc.detektFormatting)
   }
   tasks.withType<Detekt>().configureEach {
-    jvmTarget = "1.8"
+    jvmTarget = "11"
   }
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
@@ -33,7 +33,7 @@ subprojects {
         "-progressive",
         "-Xexplicit-api=strict".takeIf { (this@subprojects.name != "sample") },
       )
-      jvmTarget = "1.8"
+      jvmTarget = "11"
     }
   }
   afterEvaluate {
@@ -45,8 +45,8 @@ subprojects {
         targetSdk = libs.versions.androidconfig.targetSdk.get().toInt()
       }
       compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
       }
     }
   }
