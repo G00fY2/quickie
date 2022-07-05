@@ -18,43 +18,43 @@ internal fun Barcode.toParcelableContentType(): Parcelable? {
   return when (valueType) {
     Barcode.TYPE_CONTACT_INFO -> {
       ContactInfoParcelable(
-        addressParcelables = contactInfo?.addresses?.map { it.toParcelableAddress() } ?: emptyList(),
-        emailParcelables = contactInfo?.emails?.map { it.toParcelableEmail() } ?: emptyList(),
+        addressParcelables = contactInfo?.addresses?.map { it.toParcelableAddress() }.orEmpty(),
+        emailParcelables = contactInfo?.emails?.map { it.toParcelableEmail() }.orEmpty(),
         nameParcelable = contactInfo?.name.toParcelablePersonName(),
-        organization = contactInfo?.organization ?: "",
-        phoneParcelables = contactInfo?.phones?.map { it.toParcelablePhone() } ?: emptyList(),
-        title = contactInfo?.title ?: "",
-        urls = contactInfo?.urls?.mapNotNull { it } ?: emptyList()
+        organization = contactInfo?.organization.orEmpty(),
+        phoneParcelables = contactInfo?.phones?.map { it.toParcelablePhone() }.orEmpty(),
+        title = contactInfo?.title.orEmpty(),
+        urls = contactInfo?.urls?.mapNotNull { it }.orEmpty()
       )
     }
     Barcode.TYPE_EMAIL -> {
       EmailParcelable(
-        address = email?.address ?: "",
-        body = email?.body ?: "",
-        subject = email?.subject ?: "",
+        address = email?.address.orEmpty(),
+        body = email?.body.orEmpty(),
+        subject = email?.subject.orEmpty(),
         type = email?.type ?: 0
       )
     }
-    Barcode.TYPE_PHONE -> PhoneParcelable(number = phone?.number ?: "", type = phone?.type ?: 0)
-    Barcode.TYPE_SMS -> SmsParcelable(message = sms?.message ?: "", phoneNumber = sms?.phoneNumber ?: "")
-    Barcode.TYPE_URL -> UrlBookmarkParcelable(title = url?.title ?: "", url = url?.url ?: "")
+    Barcode.TYPE_PHONE -> PhoneParcelable(number = phone?.number.orEmpty(), type = phone?.type ?: 0)
+    Barcode.TYPE_SMS -> SmsParcelable(message = sms?.message.orEmpty(), phoneNumber = sms?.phoneNumber.orEmpty())
+    Barcode.TYPE_URL -> UrlBookmarkParcelable(title = url?.title.orEmpty(), url = url?.url.orEmpty())
     Barcode.TYPE_WIFI -> {
       WifiParcelable(
         encryptionType = wifi?.encryptionType ?: 0,
-        password = wifi?.password ?: "",
-        ssid = wifi?.ssid ?: ""
+        password = wifi?.password.orEmpty(),
+        ssid = wifi?.ssid.orEmpty()
       )
     }
     Barcode.TYPE_GEO -> GeoPointParcelable(lat = geoPoint?.lat ?: 0.0, lng = geoPoint?.lng ?: 0.0)
     Barcode.TYPE_CALENDAR_EVENT -> {
       CalendarEventParcelable(
-        description = calendarEvent?.description ?: "",
+        description = calendarEvent?.description.orEmpty(),
         end = calendarEvent?.end.toParcelableCalendarEvent(),
-        location = calendarEvent?.location ?: "",
-        organizer = calendarEvent?.organizer ?: "",
+        location = calendarEvent?.location.orEmpty(),
+        organizer = calendarEvent?.organizer.orEmpty(),
         start = calendarEvent?.start.toParcelableCalendarEvent(),
-        status = calendarEvent?.status ?: "",
-        summary = calendarEvent?.summary ?: ""
+        status = calendarEvent?.status.orEmpty(),
+        summary = calendarEvent?.summary.orEmpty()
       )
     }
     else -> null // TYPE_TEXT, TYPE_ISBN, TYPE_PRODUCT, TYPE_DRIVER_LICENSE, TYPE_UNKNOWN
@@ -63,28 +63,29 @@ internal fun Barcode.toParcelableContentType(): Parcelable? {
 
 private fun Barcode.Address?.toParcelableAddress() =
   AddressParcelable(
-    addressLines = this?.addressLines?.toList()?.mapNotNull { it } ?: emptyList(),
+    addressLines = this?.addressLines?.toList()?.mapNotNull { it }.orEmpty(),
     type = this?.type ?: 0
   )
 
-private fun Barcode.Phone?.toParcelablePhone() = PhoneParcelable(number = this?.number ?: "", type = this?.type ?: 0)
+private fun Barcode.Phone?.toParcelablePhone() =
+  PhoneParcelable(number = this?.number.orEmpty(), type = this?.type ?: 0)
 
 private fun Barcode.PersonName?.toParcelablePersonName() =
   PersonNameParcelable(
-    first = this?.first ?: "",
-    formattedName = this?.formattedName ?: "",
-    last = this?.last ?: "",
-    middle = this?.middle ?: "",
-    prefix = this?.prefix ?: "",
-    pronunciation = this?.pronunciation ?: "",
-    suffix = this?.suffix ?: ""
+    first = this?.first.orEmpty(),
+    formattedName = this?.formattedName.orEmpty(),
+    last = this?.last.orEmpty(),
+    middle = this?.middle.orEmpty(),
+    prefix = this?.prefix.orEmpty(),
+    pronunciation = this?.pronunciation.orEmpty(),
+    suffix = this?.suffix.orEmpty()
   )
 
 private fun Barcode.Email?.toParcelableEmail() =
   EmailParcelable(
-    address = this?.address ?: "",
-    body = this?.body ?: "",
-    subject = this?.subject ?: "",
+    address = this?.address.orEmpty(),
+    body = this?.body.orEmpty(),
+    subject = this?.subject.orEmpty(),
     type = this?.type ?: 0
   )
 
