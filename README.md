@@ -13,9 +13,9 @@ There are two different flavors available on `mavenCentral()`:
 
 | Bundled                             | Unbundled                                         |
 | ----------------------------------- | ------------------------------------------------- |
-| ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (once while app install) |
-| 2.3 MB app size increase per ABI (you should use App Bundle or ABI splitting) | 550 KB app size increase |
-| V3 model is used (faster, more accurate) | currently V1 model will be downloaded
+| ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (once while installing/updating the app) |
+| About 2.5 MB app size increase per ABI (you should use App Bundle or ABI splitting) | About 550 KB app size increase |
+| V3 model is used (faster, more accurate) | Currently V1 model will be downloaded
 ```kotlin
 // bundled:  
 implementation("io.github.g00fy2.quickie:quickie-bundled:1.4.2")
@@ -58,7 +58,7 @@ The content type of the QR code detected by ML Kit is wrapped inside a subclass 
 Currently, supported subtypes are:
 `Plain`, `Wifi`, `Url`, `Sms`, `GeoPoint`, `Email`, `Phone`, `ContactInfo`, `CalendarEvent`
 
-See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode#nested-class-summary) for further details.
+See the ML Kit [Barcode documentation](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/common/Barcode#nested-class-summary) for further details.
 
 ### Customization
 Use the `ScanCustomCode()` ActivityResultContract to create a configurable barcode scan. When launching the ActivityResultLauncher pass in a `ScannerConfig` object:
