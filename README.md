@@ -38,7 +38,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 fun handleResult(result: QRResult) {
     …
 ```
-⚠️ **You can't register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code gets executed after the onCreate lifecycle!**
+> **Note**: You can not register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code gets executed after the onCreate lifecycle.
 
 Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the official [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
