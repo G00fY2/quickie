@@ -9,7 +9,7 @@ androidconfig-buildTools = "32.0.0"
 androidGradle = "7.2.2"
 kotlin = "1.7.10"
 
-appcompat = "1.4.2"
+appcompat = "1.5.0"
 
 cameraX = "1.1.0"
 
