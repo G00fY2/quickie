@@ -16,6 +16,6 @@ ij_kotlin_name_count_to_use_star_import_for_members=2147483647
 ij_kotlin_imports_layout=*,java.**,javax.**,kotlin.**,^
 
 [*.xml]
-ij_continuation_indent_size = 4
-ij_xml_keep_line_breaks = true
-ij_xml_space_inside_empty_tag = false
+ij_continuation_indent_size=4
+ij_xml_keep_line_breaks=true
+ij_xml_space_inside_empty_tag=false

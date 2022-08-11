@@ -8,6 +8,8 @@
 - Android Jetpack CameraX for communicating with the camera and showing the preview
 - ML Kit Vision API for best, fully on-device barcode recognition and decoding
 
+> **Note**: On Google I/O 2022 the [Google code scanner](https://developers.google.com/ml-kit/code-scanner) was announced. You should consider using it instead of quickie unbundled. If you don't have access to the Play Services or want to ship the latest ML Kit model then quickie bundled should still be preferred.
+
 ## Download [![Maven Central](https://img.shields.io/maven-central/v/io.github.g00fy2.quickie/quickie-unbundled)](https://search.maven.org/search?q=g:io.github.g00fy2.quickie)
 There are two different flavors available on `mavenCentral()`:
 
@@ -18,32 +20,47 @@ There are two different flavors available on `mavenCentral()`:
 | V3 model is used (faster, more accurate) | Currently V1 model will be downloaded
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.1")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.5.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.5.1")
 ```
 
 ## Quick Start
+
+#### View-based
 To use the QR scanner simply register the `ScanQRCode()` ActivityResultContract together with a callback during `init` or `onCreate()` lifecycle of your Activity/Fragment and use the returned ActivityResultLauncher to launch the QR scanner Activity.
 ```kotlin
-val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
+val scanQrCodeLauncher = registerForActivityResult(ScanQRCode()) { result ->
+    // handle QRResult
+}
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     …
-    binding.button.setOnClickListener { scanQrCode.launch(null) }
+    binding.button.setOnClickListener { scanQrCodeLauncher.launch(null) }
 }
-
-fun handleResult(result: QRResult) {
-    …
 ```
-⚠️ **You can't register the ActivityResultContract inside the OnClickListener lambda. This will fail since the code gets executed after the onCreate lifecycle!**
 
 Check out the [sample](https://github.com/G00fY2/quickie/tree/develop/sample) inside this repo or visit the official [Activity Result API documentation](https://developer.android.com/training/basics/intents/result) for more information.
 
+#### Jetpack Compose
+Use the `rememberLauncherForActivityResult()` API to register the `ScanQRCode()` ActivityResultContract together with a callback in your composable:
+```kotlin
+@Composable
+fun GetQRCodeExample() {
+    val scanQrCodeLauncher = rememberLauncherForActivityResult(ScanQRCode()) { result ->
+        // handle QRResult
+    }
+    
+    Button(onClick = { scanQrCodeLauncher.launch(null) }) {
+    …
+}
+```
+Check out the official [Compose Activity Result documentation](https://developer.android.com/jetpack/compose/libraries#activity_result) for more information.
+
 ### Responses
-The callback you add to the `registerForActivityResult` will receive a subclass of the sealed `QRResult` class: 
+The activity result is a subclass of the sealed `QRResult` class: 
 
 1. `QRSuccess` when ML Kit successfully detected a QR code
    * wraps a `QRContent` object
@@ -128,7 +145,7 @@ Thanks to everyone who contributed to quickie!
 ## License
     The MIT License (MIT)
 
-    Copyright (C) 2021 Thomas Wirth
+    Copyright (C) 2022 Thomas Wirth
 
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
     associated documentation files (the "Software"), to deal in the Software without restriction,
