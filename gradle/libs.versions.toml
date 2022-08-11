@@ -1,5 +1,5 @@
 [versions]
-quickie = "1.5.0"
+quickie = "1.5.1"
 
 androidconfig-minSdk = "21"
 androidconfig-compileSdk = "32"
