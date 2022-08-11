@@ -8,7 +8,7 @@
 - Android Jetpack CameraX for communicating with the camera and showing the preview
 - ML Kit Vision API for best, fully on-device barcode recognition and decoding
 
-> **Note**: On Google I/O 2022 the [Google code scanner](https://developers.google.com/ml-kit/code-scanner) was announced. You should consider using it instead of quickie unbundled. If you don't have access to the Play Services or want to ship the latest ML Kit model then quickie bundled should still be preferred.
+> **Note**: At Google I/O 2022 the [Google code scanner](https://developers.google.com/ml-kit/code-scanner) was announced. You should consider using it instead of quickie unbundled. If you want to support devices without Play Services or like to ship the latest ML Kit model - use quickie bundled.
 
 ## Download [![Maven Central](https://img.shields.io/maven-central/v/io.github.g00fy2.quickie/quickie-unbundled)](https://search.maven.org/search?q=g:io.github.g00fy2.quickie)
 There are two different flavors available on `mavenCentral()`:
