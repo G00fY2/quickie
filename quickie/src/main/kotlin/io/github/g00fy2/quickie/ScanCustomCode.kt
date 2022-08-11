@@ -19,9 +19,9 @@ import io.github.g00fy2.quickie.extensions.toQuickieContentType
 
 public class ScanCustomCode : ActivityResultContract<ScannerConfig, QRResult>() {
 
-  override fun createIntent(context: Context, input: ScannerConfig?): Intent {
+  override fun createIntent(context: Context, input: ScannerConfig): Intent {
     return Intent(context, QRScannerActivity::class.java).apply {
-      putExtra(EXTRA_CONFIG, input?.toParcelableConfig())
+      putExtra(EXTRA_CONFIG, input.toParcelableConfig())
     }
   }
 
