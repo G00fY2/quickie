@@ -22,7 +22,7 @@ detekt = "1.21.0"
 gradleVersions = "0.42.0"
 dokka = "1.7.10"
 
-junit = "5.9.0"
+junit = "5.9.1"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
