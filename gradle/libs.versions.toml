@@ -6,15 +6,15 @@ androidconfig-compileSdk = "32"
 androidconfig-targetSdk = "32"
 androidconfig-buildTools = "32.0.0"
 
-androidGradle = "7.2.2"
+androidGradle = "7.3.0"
 kotlin = "1.7.10"
 
-appcompat = "1.5.0"
+appcompat = "1.5.1"
 
 cameraX = "1.1.0"
 
 barcodeScanning = "17.0.2"
-barcodeScanningGms = "18.0.0"
+barcodeScanningGms = "18.1.0"
 
 materialDesign = "1.6.1"
 
@@ -22,7 +22,7 @@ detekt = "1.21.0"
 gradleVersions = "0.42.0"
 dokka = "1.7.10"
 
-junit = "5.9.0"
+junit = "5.9.1"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
