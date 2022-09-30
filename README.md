@@ -126,7 +126,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 fun handleResult(result: QRResult) {
     …
 ```
-:bulb: You can optionally [pass in an ActivityOptionsCompat object](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I,%20androidx.core.app.ActivityOptionsCompat)) when launching the ActivityResultLauncher to control the scanner launch animation.
+> **Note**: You can optionally [pass in an ActivityOptionsCompat object](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I,%20androidx.core.app.ActivityOptionsCompat)) when launching the ActivityResultLauncher to control the scanner launch animation.
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
