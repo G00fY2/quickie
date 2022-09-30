@@ -40,7 +40,7 @@ internal class QRCodeAnalyzer(
 
     failureOccurred = false
     barcodeScanner.process(imageProxy.toInputImage())
-      .addOnSuccessListener { codes -> codes.mapNotNull { it }.firstOrNull()?.let { onSuccess(it) } }
+      .addOnSuccessListener { codes -> codes.firstNotNullOfOrNull { it }?.let { onSuccess(it) } }
       .addOnFailureListener {
         failureOccurred = true
         failureTimestamp = System.currentTimeMillis()
