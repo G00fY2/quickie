@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+  namespace = "io.github.g00fy2.quickiesample"
   defaultConfig {
     applicationId = "io.github.g00fy2.quickiesample"
     versionCode = 1

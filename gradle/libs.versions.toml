@@ -44,9 +44,8 @@ misc-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formattin
 android-application = { id = "com.android.application", version.ref = "androidGradle" }
 android-library = { id = "com.android.library", version.ref = "androidGradle" }
 
-kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
-kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
 misc-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
