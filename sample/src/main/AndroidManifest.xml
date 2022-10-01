@@ -21,7 +21,7 @@
       </intent-filter>
     </activity>
 
-    <!--optional service to allow launching the sample app from the quick settings -->
+    <!--optional service to allow launching the sample app from the quick settings-->
     <service
         android:name=".quicksettingstile.QuickieTileService"
         android:icon="@drawable/ic_qs_qrcode"
