@@ -21,10 +21,10 @@ There are two different flavors available on `mavenCentral()`:
 
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.1")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.2")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.5.1")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.5.2")
 ```
 
 ## Quick Start
