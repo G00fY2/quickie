@@ -13,10 +13,10 @@ formatting:
   android: true
   Indentation:
     active: false
-  Filename:
-    active: false
   FinalNewline:
     insertFinalNewLine: false
+  ParameterListWrapping:
+    indentSize: 2
 
 performance:
   SpreadOperator:
