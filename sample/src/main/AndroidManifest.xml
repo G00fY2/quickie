@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.g00fy2.quickiesample">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
   <application
       android:name=".SampleApp"
@@ -8,7 +8,8 @@
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
-      android:theme="@style/Theme.Material3.DayNight">
+      android:theme="@style/Theme.Material3.DayNight"
+      tools:ignore="DataExtractionRules">
 
     <activity
         android:name=".MainActivity"
@@ -20,7 +21,7 @@
       </intent-filter>
     </activity>
 
-    <!--optional service to allow launching the sample app from the quick settings -->
+    <!--optional service to allow launching the sample app from the quick settings-->
     <service
         android:name=".quicksettingstile.QuickieTileService"
         android:icon="@drawable/ic_qs_qrcode"

@@ -13,17 +13,18 @@
 ## Download [![Maven Central](https://img.shields.io/maven-central/v/io.github.g00fy2.quickie/quickie-unbundled)](https://search.maven.org/search?q=g:io.github.g00fy2.quickie)
 There are two different flavors available on `mavenCentral()`:
 
-| Bundled                             | Unbundled                                         |
-| ----------------------------------- | ------------------------------------------------- |
-| ML Kit model is bundled inside app (independent of Google Services) | ML Kit model will be automatically downloaded via Play Services (once while installing/updating the app) |
-| About 2.5 MB app size increase per ABI (you should use App Bundle or ABI splitting) | About 550 KB app size increase |
-| V3 model is used (faster, more accurate) | Currently V1 model will be downloaded
+| Bundled                                                                             | Unbundled                                                                                                |
+|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| ML Kit model is bundled inside app (independent of Google Services)                 | ML Kit model will be automatically downloaded via Play Services (once while installing/updating the app) |
+| About 2.5 MB app size increase per ABI (you should use App Bundle or ABI splitting) | About 550 KB app size increase                                                                           |
+| V3 model is used (faster, more accurate)                                            | Currently V1 model will be downloaded                                                                    |
+
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.1")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.2")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.5.1")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.5.2")
 ```
 
 ## Quick Start
@@ -125,7 +126,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 fun handleResult(result: QRResult) {
     …
 ```
-:bulb: You can optionally [pass in an ActivityOptionsCompat object](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I,%20androidx.core.app.ActivityOptionsCompat)) when launching the ActivityResultLauncher to control the scanner launch animation.
+> **Note**: You can optionally [pass in an ActivityOptionsCompat object](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I,%20androidx.core.app.ActivityOptionsCompat)) when launching the ActivityResultLauncher to control the scanner launch animation.
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.

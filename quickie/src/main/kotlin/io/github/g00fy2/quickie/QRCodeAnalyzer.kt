@@ -21,7 +21,12 @@ internal class QRCodeAnalyzer(
     } else {
       BarcodeScannerOptions.Builder().setBarcodeFormats(barcodeFormats.firstOrNull() ?: Barcode.FORMAT_UNKNOWN)
     }
-    BarcodeScanning.getClient(optionsBuilder.build())
+    try {
+      BarcodeScanning.getClient(optionsBuilder.build())
+    } catch (e: Exception) { // catch if for some reason MlKitContext has not been initialized
+      onFailure(e)
+      null
+    }
   }
 
   @Volatile
@@ -39,17 +44,19 @@ internal class QRCodeAnalyzer(
     }
 
     failureOccurred = false
-    barcodeScanner.process(imageProxy.toInputImage())
-      .addOnSuccessListener { codes -> codes.mapNotNull { it }.firstOrNull()?.let { onSuccess(it) } }
-      .addOnFailureListener {
-        failureOccurred = true
-        failureTimestamp = System.currentTimeMillis()
-        onFailure(it)
-      }
-      .addOnCompleteListener {
-        onPassCompleted(failureOccurred)
-        imageProxy.close()
-      }
+    barcodeScanner?.let { scanner ->
+      scanner.process(imageProxy.toInputImage())
+        .addOnSuccessListener { codes -> codes.firstNotNullOfOrNull { it }?.let { onSuccess(it) } }
+        .addOnFailureListener {
+          failureOccurred = true
+          failureTimestamp = System.currentTimeMillis()
+          onFailure(it)
+        }
+        .addOnCompleteListener {
+          onPassCompleted(failureOccurred)
+          imageProxy.close()
+        }
+    }
   }
 
   @ExperimentalGetImage
