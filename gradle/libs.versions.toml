@@ -16,7 +16,7 @@ cameraX = "1.1.0"
 barcodeScanning = "17.0.2"
 barcodeScanningGms = "18.1.0"
 
-materialDesign = "1.6.1"
+materialDesign = "1.7.0"
 
 detekt = "1.22.0-RC2"
 gradleVersions = "0.43.0"
