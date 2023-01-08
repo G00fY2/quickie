@@ -27,12 +27,25 @@
       />
 
   <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/close_image_view"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_gravity="top|start"
+      android:layout_margin="12dp"
+      android:background="@drawable/quickie_bg_round"
+      android:padding="12dp"
+      android:visibility="gone"
+      app:srcCompat="@drawable/quickie_ic_close"
+      tools:visibility="visible"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/torch_image_view"
       android:layout_width="48dp"
       android:layout_height="48dp"
       android:layout_gravity="top|end"
       android:layout_margin="12dp"
-      android:background="@drawable/quickie_bg_torch"
+      android:background="@drawable/quickie_bg_round"
       android:padding="12dp"
       android:visibility="gone"
       app:srcCompat="@drawable/quickie_ic_torch"

@@ -12,4 +12,5 @@ internal class ParcelableScannerConfig(
   val showTorchToggle: Boolean,
   val horizontalFrameRatio: Float,
   val useFrontCamera: Boolean,
+  val showCloseButton: Boolean,
 ) : Parcelable
