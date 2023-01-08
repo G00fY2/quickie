@@ -82,10 +82,20 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   private fun startCamera() {
-    val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+    val cameraProviderFuture = try {
+      ProcessCameraProvider.getInstance(this)
+    } catch (e: Exception) {
+      onFailure(e)
+      return
+    }
 
     cameraProviderFuture.addListener({
-      val cameraProvider = cameraProviderFuture.get()
+      val cameraProvider = try {
+        cameraProviderFuture.get()
+      } catch (e: Exception) {
+        onFailure(e)
+        return@addListener
+      }
 
       val preview = Preview.Builder().build().also { it.setSurfaceProvider(binding.previewView.surfaceProvider) }
       val imageAnalysis = ImageAnalysis.Builder()
@@ -107,12 +117,11 @@ internal class QRScannerActivity : AppCompatActivity() {
         }
 
       cameraProvider.unbindAll()
+
+      val cameraSelector =
+        if (useFrontCamera) CameraSelector.DEFAULT_FRONT_CAMERA else CameraSelector.DEFAULT_BACK_CAMERA
+
       try {
-        val cameraSelector = if (useFrontCamera) {
-          CameraSelector.DEFAULT_FRONT_CAMERA
-        } else {
-          CameraSelector.DEFAULT_BACK_CAMERA
-        }
         val camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
         binding.overlayView.visibility = View.VISIBLE
         if (showTorchToggle && camera.cameraInfo.hasFlashUnit()) {
