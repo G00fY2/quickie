@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package io.github.g00fy2.quickie.extensions
 
 import android.content.Intent

@@ -131,6 +131,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private fun onSuccess(result: Barcode) {
     binding.overlayView.isHighlighted = true
     if (hapticFeedback) {
+      @Suppress("DEPRECATION")
       binding.overlayView.performHapticFeedback(
         HapticFeedbackConstants.KEYBOARD_TAP,
         HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
@@ -165,6 +166,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   private fun applyScannerConfig() {
+    @Suppress("DEPRECATION")
     intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
       barcodeFormats = it.formats
       binding.overlayView.setCustomText(it.stringRes)
