@@ -12,4 +12,5 @@ internal fun ScannerConfig.toParcelableConfig() =
     showTorchToggle = showTorchToggle,
     horizontalFrameRatio = horizontalFrameRatio,
     useFrontCamera = useFrontCamera,
+    showCloseButton = showCloseButton,
   )

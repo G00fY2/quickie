@@ -37,6 +37,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var barcodeFormats = intArrayOf(Barcode.FORMAT_QR_CODE)
   private var hapticFeedback = true
   private var showTorchToggle = false
+  private var showCloseButton = false
   private var useFrontCamera = false
   internal var errorDialog: Dialog? = null
     set(value) {
@@ -82,10 +83,20 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   private fun startCamera() {
-    val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+    val cameraProviderFuture = try {
+      ProcessCameraProvider.getInstance(this)
+    } catch (e: Exception) {
+      onFailure(e)
+      return
+    }
 
     cameraProviderFuture.addListener({
-      val cameraProvider = cameraProviderFuture.get()
+      val cameraProvider = try {
+        cameraProviderFuture.get()
+      } catch (e: Exception) {
+        onFailure(e)
+        return@addListener
+      }
 
       val preview = Preview.Builder().build().also { it.setSurfaceProvider(binding.previewView.surfaceProvider) }
       val imageAnalysis = ImageAnalysis.Builder()
@@ -107,14 +118,14 @@ internal class QRScannerActivity : AppCompatActivity() {
         }
 
       cameraProvider.unbindAll()
+
+      val cameraSelector =
+        if (useFrontCamera) CameraSelector.DEFAULT_FRONT_CAMERA else CameraSelector.DEFAULT_BACK_CAMERA
+
       try {
-        val cameraSelector = if (useFrontCamera) {
-          CameraSelector.DEFAULT_FRONT_CAMERA
-        } else {
-          CameraSelector.DEFAULT_BACK_CAMERA
-        }
         val camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
         binding.overlayView.visibility = View.VISIBLE
+        binding.overlayView.setCloseVisibilityAndOnClick(showCloseButton) { finish() }
         if (showTorchToggle && camera.cameraInfo.hasFlashUnit()) {
           binding.overlayView.setTorchVisibilityAndOnClick(true) { camera.cameraControl.enableTorch(it) }
           camera.cameraInfo.torchState.observe(this) { binding.overlayView.setTorchState(it == TorchState.ON) }
@@ -131,6 +142,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private fun onSuccess(result: Barcode) {
     binding.overlayView.isHighlighted = true
     if (hapticFeedback) {
+      @Suppress("DEPRECATION")
       binding.overlayView.performHapticFeedback(
         HapticFeedbackConstants.KEYBOARD_TAP,
         HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
@@ -165,6 +177,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   private fun applyScannerConfig() {
+    @Suppress("DEPRECATION")
     intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
       barcodeFormats = it.formats
       binding.overlayView.setCustomText(it.stringRes)
@@ -173,6 +186,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       hapticFeedback = it.hapticFeedback
       showTorchToggle = it.showTorchToggle
       useFrontCamera = it.useFrontCamera
+      showCloseButton = it.showCloseButton
     }
   }
 

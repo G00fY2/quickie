@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 /**
  * Builder for ScannerConfig used in ScanBarcode ActivityResultContract.
  */
+@Suppress("LongParameterList")
 public class ScannerConfig internal constructor(
   internal val formats: IntArray,
   internal val stringRes: Int,
@@ -14,6 +15,7 @@ public class ScannerConfig internal constructor(
   internal val showTorchToggle: Boolean,
   internal val horizontalFrameRatio: Float,
   internal val useFrontCamera: Boolean,
+  internal val showCloseButton: Boolean,
 ) {
 
   public class Builder {
@@ -24,6 +26,7 @@ public class ScannerConfig internal constructor(
     private var showTorchToggle: Boolean = false
     private var horizontalFrameRatio: Float = 1f
     private var useFrontCamera: Boolean = false
+    private var showCloseButton: Boolean = false
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -64,6 +67,11 @@ public class ScannerConfig internal constructor(
     public fun setUseFrontCamera(enable: Boolean): Builder = apply { useFrontCamera = enable }
 
     /**
+     * Show or hide (default) close button.
+     */
+    public fun setShowCloseButton(enable: Boolean): Builder = apply { showCloseButton = enable }
+
+    /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
     public fun build(): ScannerConfig =
@@ -75,6 +83,7 @@ public class ScannerConfig internal constructor(
         showTorchToggle,
         horizontalFrameRatio,
         useFrontCamera,
+        showCloseButton,
       )
   }
 
