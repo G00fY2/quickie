@@ -15,8 +15,6 @@ formatting:
     active: false
   FinalNewline:
     insertFinalNewLine: false
-  ParameterListWrapping:
-    indentSize: 2
 
 performance:
   SpreadOperator:
