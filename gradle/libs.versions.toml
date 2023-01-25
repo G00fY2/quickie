@@ -6,12 +6,12 @@ androidconfig-compileSdk = "33"
 androidconfig-targetSdk = "33"
 androidconfig-buildTools = "33.0.1"
 
-androidGradle = "7.3.1"
+androidGradle = "7.4.0"
 kotlin = "1.7.21"
 
 appcompat = "1.6.0"
 
-cameraX = "1.2.0"
+cameraX = "1.2.1"
 
 barcodeScanning = "17.0.3"
 barcodeScanningGms = "18.1.0"
