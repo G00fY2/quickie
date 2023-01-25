@@ -3,6 +3,7 @@ import com.android.build.gradle.BasePlugin
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -30,13 +31,15 @@ subprojects {
     jvmTarget = "11"
   }
   tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-      allWarningsAsErrors = true
-      freeCompilerArgs = freeCompilerArgs + listOfNotNull(
-        "-progressive",
-        "-Xexplicit-api=strict".takeIf { (this@subprojects.name != "sample") },
+    compilerOptions {
+      allWarningsAsErrors.set(true)
+      freeCompilerArgs.addAll(
+        listOfNotNull(
+          "-progressive",
+          "-Xexplicit-api=strict".takeIf { (this@subprojects.name != "sample") },
+        )
       )
-      jvmTarget = JavaVersion.VERSION_11.toString()
+      jvmTarget.set(JvmTarget.JVM_11)
     }
   }
   plugins.withType<BasePlugin>().configureEach {
