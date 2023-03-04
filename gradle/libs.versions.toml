@@ -20,7 +20,7 @@ materialDesign = "1.8.0"
 
 detekt = "1.22.0"
 gradleVersions = "0.46.0"
-dokka = "1.7.20"
+dokka = "1.8.10"
 
 junit = "5.9.2"
 
