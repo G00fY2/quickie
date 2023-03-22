@@ -11,7 +11,7 @@ kotlin = "1.8.10"
 
 appcompat = "1.6.1"
 
-cameraX = "1.2.1"
+cameraX = "1.2.2"
 
 barcodeScanning = "17.0.3"
 barcodeScanningGms = "18.1.0"
