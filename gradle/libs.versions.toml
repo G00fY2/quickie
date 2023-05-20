@@ -13,7 +13,7 @@ appcompat = "1.6.1"
 
 cameraX = "1.2.2"
 
-barcodeScanning = "17.0.3"
+barcodeScanning = "17.1.0"
 barcodeScanningGms = "18.1.0"
 
 materialDesign = "1.9.0"
