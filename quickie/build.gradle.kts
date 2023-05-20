@@ -97,7 +97,7 @@ fun MavenPublication.commonConfig(flavor: String) {
   from(components["${flavor}Release"])
   artifactId = "quickie-$flavor"
   artifact(tasks.named("androidJavadocJar"))
-  artifact(tasks.named("android${flavor.capitalize()}SourcesJar"))
+  artifact(tasks.named("android${flavor.replaceFirstChar { it.titlecase() }}SourcesJar"))
   pom {
     name.set("quickie-$flavor")
     description.set("Android QR code scanning library")
