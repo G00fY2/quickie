@@ -1,28 +1,28 @@
 [versions]
-quickie = "1.6.0"
+quickie = "1.7.0"
 
 androidconfig-minSdk = "21"
 androidconfig-compileSdk = "33"
 androidconfig-targetSdk = "33"
-androidconfig-buildTools = "33.0.1"
+androidconfig-buildTools = "33.0.2"
 
-androidGradle = "7.3.1"
-kotlin = "1.7.21"
+androidGradle = "8.0.1"
+kotlin = "1.8.21"
 
-appcompat = "1.5.1"
+appcompat = "1.6.1"
 
-cameraX = "1.2.0"
+cameraX = "1.2.2"
 
 barcodeScanning = "17.0.3"
 barcodeScanningGms = "18.1.0"
 
-materialDesign = "1.7.0"
+materialDesign = "1.9.0"
 
 detekt = "1.22.0"
-gradleVersions = "0.44.0"
-dokka = "1.7.20"
+gradleVersions = "0.46.0"
+dokka = "1.8.10"
 
-junit = "5.9.1"
+junit = "5.9.3"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }

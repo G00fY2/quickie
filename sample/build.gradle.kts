@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
@@ -32,6 +31,7 @@ android {
     create("unbundled").dimension = "mlkit"
   }
   buildFeatures {
+    buildConfig = true
     viewBinding = true
   }
 }
