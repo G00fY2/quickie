@@ -65,9 +65,9 @@ The activity result is a subclass of the sealed `QRResult` class:
 
 1. `QRSuccess` when ML Kit successfully detected a QR code
    * wraps a `QRContent` object
-1. `QRUserCanceled` when the Activity got canceled by the user
-1. `QRMissingPermission` when the user didn't accept the camera permission
-1. `QRError` when CameraX or ML Kit threw an exception
+2. `QRUserCanceled` when the Activity got canceled by the user
+3. `QRMissingPermission` when the user didn't accept the camera permission
+4. `QRError` when CameraX or ML Kit threw an exception
    * wraps the `exception`
 
 #### Content
