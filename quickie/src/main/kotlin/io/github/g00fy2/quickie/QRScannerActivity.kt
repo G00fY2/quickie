@@ -19,6 +19,7 @@ import androidx.camera.core.Preview
 import androidx.camera.core.TorchState
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.os.BundleCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -143,10 +144,8 @@ internal class QRScannerActivity : AppCompatActivity() {
     binding.overlayView.isHighlighted = true
     if (hapticFeedback) {
       @Suppress("DEPRECATION")
-      binding.overlayView.performHapticFeedback(
-        HapticFeedbackConstants.KEYBOARD_TAP,
-        HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
-      )
+      val flags = HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+      binding.overlayView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, flags)
     }
     setResult(
       Activity.RESULT_OK,
@@ -177,8 +176,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   private fun applyScannerConfig() {
-    @Suppress("DEPRECATION")
-    intent?.getParcelableExtra<ParcelableScannerConfig>(EXTRA_CONFIG)?.let {
+    intent?.extras?.let { BundleCompat.getParcelable(it, EXTRA_CONFIG, ParcelableScannerConfig::class.java) }?.let {
       barcodeFormats = it.formats
       binding.overlayView.setCustomText(it.stringRes)
       binding.overlayView.setCustomIcon(it.drawableRes)
