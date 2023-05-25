@@ -19,7 +19,7 @@ import androidx.camera.core.Preview
 import androidx.camera.core.TorchState
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.os.BundleCompat
+import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -176,7 +176,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   }
 
   private fun applyScannerConfig() {
-    intent?.extras?.let { BundleCompat.getParcelable(it, EXTRA_CONFIG, ParcelableScannerConfig::class.java) }?.let {
+    intent?.let { IntentCompat.getParcelableExtra(it, EXTRA_CONFIG, ParcelableScannerConfig::class.java) }?.let {
       barcodeFormats = it.formats
       binding.overlayView.setCustomText(it.stringRes)
       binding.overlayView.setCustomIcon(it.drawableRes)
