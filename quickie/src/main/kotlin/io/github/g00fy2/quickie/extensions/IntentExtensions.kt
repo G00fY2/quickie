@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.core.content.IntentCompat
 import com.google.mlkit.vision.barcode.common.Barcode
 import io.github.g00fy2.quickie.QRScannerActivity
+import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_BYTES
 import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_EXCEPTION
 import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_PARCELABLE
 import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_VALUE
@@ -36,22 +37,24 @@ import io.github.g00fy2.quickie.content.UrlBookmarkParcelable
 import io.github.g00fy2.quickie.content.WifiParcelable
 
 internal fun Intent?.toQuickieContentType(): QRContent {
-  val rawValue = this?.getStringExtra(EXTRA_RESULT_VALUE).orEmpty()
-  return this?.toQuickieContentType(rawValue) ?: Plain(rawValue)
+  val rawBytes = this?.getByteArrayExtra(EXTRA_RESULT_BYTES)
+  val rawValue = this?.getStringExtra(EXTRA_RESULT_VALUE)
+  return this?.toQuickieContentType(rawBytes, rawValue) ?: Plain(rawBytes, rawValue)
 }
 
 @Suppress("LongMethod")
-private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
+private fun Intent.toQuickieContentType(rawBytes: ByteArray?, rawValue: String?): QRContent? {
   return when (extras?.getInt(QRScannerActivity.EXTRA_RESULT_TYPE, Barcode.TYPE_UNKNOWN)) {
     Barcode.TYPE_CONTACT_INFO -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, ContactInfoParcelable::class.java)?.let {
         ContactInfo(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           addresses = it.addressParcelables.map { address -> address.toAddress() },
-          emails = it.emailParcelables.map { mail -> mail.toEmail(rawValue) },
+          emails = it.emailParcelables.map { mail -> mail.toEmail(rawBytes, rawValue) },
           name = it.nameParcelable.toPersonName(),
           organization = it.organization,
-          phones = it.phoneParcelables.map { phone -> phone.toPhone(rawValue) },
+          phones = it.phoneParcelables.map { phone -> phone.toPhone(rawBytes, rawValue) },
           title = it.title,
           urls = it.urls
         )
@@ -60,6 +63,7 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
     Barcode.TYPE_EMAIL -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, EmailParcelable::class.java)?.let {
         Email(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           address = it.address,
           body = it.body,
@@ -71,6 +75,7 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
     Barcode.TYPE_PHONE -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, PhoneParcelable::class.java)?.let {
         Phone(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           number = it.number,
           type = PhoneType.values().getOrElse(it.type) { PhoneType.UNKNOWN }
@@ -80,6 +85,7 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
     Barcode.TYPE_SMS -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, SmsParcelable::class.java)?.let {
         Sms(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           message = it.message,
           phoneNumber = it.phoneNumber
@@ -89,6 +95,7 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
     Barcode.TYPE_URL -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, UrlBookmarkParcelable::class.java)?.let {
         Url(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           title = it.title,
           url = it.url
@@ -98,6 +105,7 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
     Barcode.TYPE_WIFI -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, WifiParcelable::class.java)?.let {
         Wifi(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           encryptionType = it.encryptionType,
           password = it.password,
@@ -108,6 +116,7 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
     Barcode.TYPE_GEO -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, GeoPointParcelable::class.java)?.let {
         GeoPoint(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           lat = it.lat,
           lng = it.lng
@@ -117,6 +126,7 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
     Barcode.TYPE_CALENDAR_EVENT -> {
       IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, CalendarEventParcelable::class.java)?.let {
         CalendarEvent(
+          rawBytes = rawBytes,
           rawValue = rawValue,
           description = it.description,
           end = it.end.toCalendarEvent(),
@@ -137,15 +147,17 @@ internal fun Intent?.getRootException(): Exception {
     ?: IllegalStateException("Could retrieve root exception")
 }
 
-private fun PhoneParcelable.toPhone(rawValue: String) =
+private fun PhoneParcelable.toPhone(rawBytes: ByteArray?, rawValue: String?) =
   Phone(
+    rawBytes = rawBytes,
     rawValue = rawValue,
     number = number,
     type = PhoneType.values().getOrElse(type) { PhoneType.UNKNOWN }
   )
 
-private fun EmailParcelable.toEmail(rawValue: String) =
+private fun EmailParcelable.toEmail(rawBytes: ByteArray?, rawValue: String?) =
   Email(
+    rawBytes = rawBytes,
     rawValue = rawValue,
     address = address,
     body = body,
