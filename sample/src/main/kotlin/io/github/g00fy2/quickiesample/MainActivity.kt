@@ -59,9 +59,9 @@ class MainActivity : AppCompatActivity() {
   private fun showSnackbar(result: QRResult) {
     val text = when (result) {
       is QRSuccess -> {
-        result.content.rawValue ?:
+        result.content.rawValue
         // decoding with default UTF-8 charset when rawValue is null will not result in meaningful output, demo purpose
-        result.content.rawBytes?.let { String(it) }.orEmpty()
+          ?: result.content.rawBytes?.let { String(it) }.orEmpty()
       }
       QRUserCanceled -> "User canceled"
       QRMissingPermission -> "Missing permission"
