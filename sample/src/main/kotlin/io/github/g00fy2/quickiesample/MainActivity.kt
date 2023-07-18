@@ -75,10 +75,10 @@ class MainActivity : AppCompatActivity() {
         val content = result.content
         if (content is QRContent.Url) {
           setAction(R.string.open_action) { openUrl(content.url) }
+          return@apply
         }
-      } else {
-        setAction(R.string.ok_action) { }
       }
+      setAction(R.string.ok_action) { }
     }.show()
   }
 
