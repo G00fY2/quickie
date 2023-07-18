@@ -19,6 +19,7 @@ import io.github.g00fy2.quickie.config.BarcodeFormat
 import io.github.g00fy2.quickie.config.ScannerConfig
 import io.github.g00fy2.quickie.content.QRContent
 import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
+import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,7 +59,9 @@ class MainActivity : AppCompatActivity() {
 
   private fun showSnackbar(result: QRResult) {
     val text = when (result) {
-      is QRSuccess -> result.content.rawValue
+      is QRSuccess -> {
+        result.content.rawValue ?: result.content.rawBytes?.let { String(it, StandardCharsets.UTF_8) }.orEmpty()
+      }
       QRUserCanceled -> "User canceled"
       QRMissingPermission -> "Missing permission"
       is QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
@@ -69,8 +72,11 @@ class MainActivity : AppCompatActivity() {
         maxLines = 5
         setTextIsSelectable(true)
       }
-      if (result is QRSuccess && result.content is QRContent.Url) {
-        setAction(R.string.open_action) { openUrl(result.content.rawValue) }
+      if (result is QRSuccess) {
+        val content = result.content
+        if (content is QRContent.Url) {
+          setAction(R.string.open_action) { openUrl(content.url) }
+        }
       } else {
         setAction(R.string.ok_action) { }
       }
