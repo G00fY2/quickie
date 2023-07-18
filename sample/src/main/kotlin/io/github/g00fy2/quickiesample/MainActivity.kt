@@ -19,7 +19,6 @@ import io.github.g00fy2.quickie.config.BarcodeFormat
 import io.github.g00fy2.quickie.config.ScannerConfig
 import io.github.g00fy2.quickie.content.QRContent
 import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
-import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() {
 
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
   private fun showSnackbar(result: QRResult) {
     val text = when (result) {
       is QRSuccess -> {
-        result.content.rawValue ?: result.content.rawBytes?.let { String(it, StandardCharsets.UTF_8) }.orEmpty()
+        result.content.rawValue ?: result.content.rawBytes?.let { String(it) }.orEmpty()
       }
       QRUserCanceled -> "User canceled"
       QRMissingPermission -> "Missing permission"
