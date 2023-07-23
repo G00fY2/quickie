@@ -68,7 +68,7 @@ private fun Intent.toQuickieContentType(rawBytes: ByteArray?, rawValue: String?)
           address = it.address,
           body = it.body,
           subject = it.subject,
-          type = EmailType.values().getOrElse(it.type) { EmailType.UNKNOWN }
+          type = EmailType.entries.getOrElse(it.type) { EmailType.UNKNOWN }
         )
       }
     }
@@ -78,7 +78,7 @@ private fun Intent.toQuickieContentType(rawBytes: ByteArray?, rawValue: String?)
           rawBytes = rawBytes,
           rawValue = rawValue,
           number = it.number,
-          type = PhoneType.values().getOrElse(it.type) { PhoneType.UNKNOWN }
+          type = PhoneType.entries.getOrElse(it.type) { PhoneType.UNKNOWN }
         )
       }
     }
@@ -152,7 +152,7 @@ private fun PhoneParcelable.toPhone(rawBytes: ByteArray?, rawValue: String?) =
     rawBytes = rawBytes,
     rawValue = rawValue,
     number = number,
-    type = PhoneType.values().getOrElse(type) { PhoneType.UNKNOWN }
+    type = PhoneType.entries.getOrElse(type) { PhoneType.UNKNOWN }
   )
 
 private fun EmailParcelable.toEmail(rawBytes: ByteArray?, rawValue: String?) =
@@ -162,13 +162,13 @@ private fun EmailParcelable.toEmail(rawBytes: ByteArray?, rawValue: String?) =
     address = address,
     body = body,
     subject = subject,
-    type = EmailType.values().getOrElse(type) { EmailType.UNKNOWN }
+    type = EmailType.entries.getOrElse(type) { EmailType.UNKNOWN }
   )
 
 private fun AddressParcelable.toAddress() =
   Address(
     addressLines = addressLines,
-    type = AddressType.values().getOrElse(type) { AddressType.UNKNOWN }
+    type = AddressType.entries.getOrElse(type) { AddressType.UNKNOWN }
   )
 
 private fun PersonNameParcelable.toPersonName() =

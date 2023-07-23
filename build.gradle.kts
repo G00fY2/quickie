@@ -2,6 +2,7 @@ import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.BasePlugin
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -18,13 +19,11 @@ subprojects {
   tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
       allWarningsAsErrors.set(true)
-      freeCompilerArgs.addAll(
-        listOfNotNull(
-          "-progressive",
-          "-Xexplicit-api=strict".takeIf { (this@subprojects.name != "sample") },
-        )
-      )
+      progressiveMode.set(true)
       jvmTarget.set(JvmTarget.JVM_11)
+    }
+    if ((this@subprojects.name != "sample")) {
+      explicitApiMode.set(ExplicitApiMode.Strict)
     }
   }
 

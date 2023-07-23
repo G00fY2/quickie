@@ -93,12 +93,12 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun setBarcodeFormatDropdown() {
-    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.values().map { it.name }).let {
+    ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.entries.map { it.name }).let {
       binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
       binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
     }
     binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-      selectedBarcodeFormat = BarcodeFormat.values()[position]
+      selectedBarcodeFormat = BarcodeFormat.entries[position]
     }
   }
 
