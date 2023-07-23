@@ -71,7 +71,7 @@ The activity result is a subclass of the sealed `QRResult` class:
    * wraps the `exception`
 
 #### Content
-The content type of the QR code detected by ML Kit is wrapped inside a subclass of the sealed `QRContent` class which always provides a `rawValue`.
+The content type of the QR code detected by ML Kit is wrapped inside a subclass of the sealed `QRContent` class which always provides a `rawBytes` and `rawValue` (will only be `null` for non-UTF8 barcodes).
 
 Currently, supported subtypes are:
 `Plain`, `Wifi`, `Url`, `Sms`, `GeoPoint`, `Email`, `Phone`, `ContactInfo`, `CalendarEvent`

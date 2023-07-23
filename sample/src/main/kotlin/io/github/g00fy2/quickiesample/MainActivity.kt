@@ -58,7 +58,11 @@ class MainActivity : AppCompatActivity() {
 
   private fun showSnackbar(result: QRResult) {
     val text = when (result) {
-      is QRSuccess -> result.content.rawValue
+      is QRSuccess -> {
+        result.content.rawValue
+        // decoding with default UTF-8 charset when rawValue is null will not result in meaningful output, demo purpose
+          ?: result.content.rawBytes?.let { String(it) }.orEmpty()
+      }
       QRUserCanceled -> "User canceled"
       QRMissingPermission -> "Missing permission"
       is QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
@@ -69,11 +73,14 @@ class MainActivity : AppCompatActivity() {
         maxLines = 5
         setTextIsSelectable(true)
       }
-      if (result is QRSuccess && result.content is QRContent.Url) {
-        setAction(R.string.open_action) { openUrl(result.content.rawValue) }
-      } else {
-        setAction(R.string.ok_action) { }
+      if (result is QRSuccess) {
+        val content = result.content
+        if (content is QRContent.Url) {
+          setAction(R.string.open_action) { openUrl(content.url) }
+          return@apply
+        }
       }
+      setAction(R.string.ok_action) { }
     }.show()
   }
 
