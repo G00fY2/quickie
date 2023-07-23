@@ -21,10 +21,10 @@ There are two different flavors available on `mavenCentral()`:
 
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.7.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.8.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.7.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.8.0")
 ```
 
 ## Quick Start
@@ -65,13 +65,13 @@ The activity result is a subclass of the sealed `QRResult` class:
 
 1. `QRSuccess` when ML Kit successfully detected a QR code
    * wraps a `QRContent` object
-1. `QRUserCanceled` when the Activity got canceled by the user
-1. `QRMissingPermission` when the user didn't accept the camera permission
-1. `QRError` when CameraX or ML Kit threw an exception
+2. `QRUserCanceled` when the Activity got canceled by the user
+3. `QRMissingPermission` when the user didn't accept the camera permission
+4. `QRError` when CameraX or ML Kit threw an exception
    * wraps the `exception`
 
 #### Content
-The content type of the QR code detected by ML Kit is wrapped inside a subclass of the sealed `QRContent` class which always provides a `rawValue`.
+The content type of the QR code detected by ML Kit is wrapped inside a subclass of the sealed `QRContent` class which always provides a `rawBytes` and `rawValue` (will only be `null` for non-UTF8 barcodes).
 
 Currently, supported subtypes are:
 `Plain`, `Wifi`, `Url`, `Sms`, `GeoPoint`, `Email`, `Phone`, `ContactInfo`, `CalendarEvent`

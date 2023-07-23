@@ -2,6 +2,7 @@ import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.BasePlugin
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -11,36 +12,21 @@ plugins {
   alias(libs.plugins.kotlin.android) apply false
   alias(libs.plugins.kotlin.parcelize) apply false
   alias(libs.plugins.kotlin.dokka) apply false
-  alias(libs.plugins.misc.detekt) apply false
-  alias(libs.plugins.misc.gradleVersions)
+  alias(libs.plugins.detekt) apply false
 }
 
 subprojects {
-  apply(plugin = rootProject.libs.plugins.misc.detekt.get().pluginId)
-  extensions.configure<DetektExtension> {
-    toolVersion = rootProject.libs.versions.detekt.get()
-    config = files("$rootDir/detekt.yml")
-    buildUponDefaultConfig = true
-    ignoredBuildTypes = listOf("release")
-  }
-  dependencies {
-    add("detektPlugins", rootProject.libs.misc.detektFormatting)
-  }
-  tasks.withType<Detekt>().configureEach {
-    jvmTarget = "11"
-  }
   tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
       allWarningsAsErrors.set(true)
-      freeCompilerArgs.addAll(
-        listOfNotNull(
-          "-progressive",
-          "-Xexplicit-api=strict".takeIf { (this@subprojects.name != "sample") },
-        )
-      )
+      progressiveMode.set(true)
       jvmTarget.set(JvmTarget.JVM_11)
     }
+    if ((this@subprojects.name != "sample")) {
+      explicitApiMode.set(ExplicitApiMode.Strict)
+    }
   }
+
   plugins.withType<BasePlugin>().configureEach {
     extensions.configure<BaseExtension> {
       compileSdkVersion(libs.versions.androidconfig.compileSdk.get().toInt())
@@ -55,20 +41,18 @@ subprojects {
       }
     }
   }
-}
 
-tasks.dependencyUpdates.configure {
-  gradleReleaseChannel = "current"
-
-  fun releaseType(version: String): Int {
-    val qualifiers = listOf("alpha", "beta", "m", "rc")
-    val index = qualifiers.indexOfFirst { version.matches(".*[.\\-]$it[.\\-\\d]*".toRegex(RegexOption.IGNORE_CASE)) }
-    return if (index < 0) qualifiers.size else index
+  apply(plugin = rootProject.libs.plugins.detekt.get().pluginId)
+  extensions.configure<DetektExtension> {
+    toolVersion = rootProject.libs.versions.detekt.get()
+    config.setFrom(files("$rootDir/detekt.yml"))
+    buildUponDefaultConfig = true
+    ignoredBuildTypes = listOf("release")
   }
-
-  rejectVersionIf { releaseType(candidate.version) < releaseType(currentVersion) }
-}
-
-tasks.register<Delete>("clean") {
-  delete(buildDir)
+  dependencies {
+    add("detektPlugins", rootProject.libs.detektFormatting)
+  }
+  tasks.withType<Detekt>().configureEach {
+    jvmTarget = JvmTarget.JVM_11.target
+  }
 }

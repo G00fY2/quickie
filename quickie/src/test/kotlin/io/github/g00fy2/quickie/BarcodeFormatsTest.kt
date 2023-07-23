@@ -15,7 +15,7 @@ internal class BarcodeFormatsTest {
       .filter { it.name != "FORMAT_UNKNOWN" }
       .associate { it.name to it.getInt(null) }
 
-    val quickieBarcodeFormats: Map<String, Int> = BarcodeFormat.values().associate { it.name to it.value }
+    val quickieBarcodeFormats: Map<String, Int> = BarcodeFormat.entries.associate { it.name to it.value }
 
     assertEquals(mlKitBarcodeFormats, quickieBarcodeFormats)
   }

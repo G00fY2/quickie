@@ -14,6 +14,7 @@ indent_style=space
 ij_kotlin_name_count_to_use_star_import=2147483647
 ij_kotlin_name_count_to_use_star_import_for_members=2147483647
 ij_kotlin_imports_layout=*,java.**,javax.**,kotlin.**,^
+ij_kotlin_line_break_after_multiline_when_entry=false
 
 [*.xml]
 ij_continuation_indent_size=4

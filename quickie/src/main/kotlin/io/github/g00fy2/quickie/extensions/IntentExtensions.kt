@@ -1,10 +1,13 @@
-@file:Suppress("DEPRECATION")
-
 package io.github.g00fy2.quickie.extensions
 
 import android.content.Intent
+import androidx.core.content.IntentCompat
 import com.google.mlkit.vision.barcode.common.Barcode
 import io.github.g00fy2.quickie.QRScannerActivity
+import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_BYTES
+import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_EXCEPTION
+import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_PARCELABLE
+import io.github.g00fy2.quickie.QRScannerActivity.Companion.EXTRA_RESULT_VALUE
 import io.github.g00fy2.quickie.content.AddressParcelable
 import io.github.g00fy2.quickie.content.CalendarDateTimeParcelable
 import io.github.g00fy2.quickie.content.CalendarEventParcelable
@@ -34,74 +37,104 @@ import io.github.g00fy2.quickie.content.UrlBookmarkParcelable
 import io.github.g00fy2.quickie.content.WifiParcelable
 
 internal fun Intent?.toQuickieContentType(): QRContent {
-  val rawValue = this?.getStringExtra(QRScannerActivity.EXTRA_RESULT_VALUE).orEmpty()
-  return this?.toQuickieContentType(rawValue) ?: Plain(rawValue)
+  val rawBytes = this?.getByteArrayExtra(EXTRA_RESULT_BYTES)
+  val rawValue = this?.getStringExtra(EXTRA_RESULT_VALUE)
+  return this?.toQuickieContentType(rawBytes, rawValue) ?: Plain(rawBytes, rawValue)
 }
 
 @Suppress("LongMethod")
-private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
-  return when (getIntExtra(QRScannerActivity.EXTRA_RESULT_TYPE, Barcode.TYPE_UNKNOWN)) {
+private fun Intent.toQuickieContentType(rawBytes: ByteArray?, rawValue: String?): QRContent? {
+  return when (extras?.getInt(QRScannerActivity.EXTRA_RESULT_TYPE, Barcode.TYPE_UNKNOWN)) {
     Barcode.TYPE_CONTACT_INFO -> {
-      getParcelableExtra<ContactInfoParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, ContactInfoParcelable::class.java)?.let {
         ContactInfo(
+          rawBytes = rawBytes,
           rawValue = rawValue,
-          addresses = addressParcelables.map { it.toAddress() },
-          emails = emailParcelables.map { it.toEmail(rawValue) },
-          name = nameParcelable.toPersonName(),
-          organization = organization,
-          phones = phoneParcelables.map { it.toPhone(rawValue) },
-          title = title,
-          urls = urls
+          addresses = it.addressParcelables.map { address -> address.toAddress() },
+          emails = it.emailParcelables.map { mail -> mail.toEmail(rawBytes, rawValue) },
+          name = it.nameParcelable.toPersonName(),
+          organization = it.organization,
+          phones = it.phoneParcelables.map { phone -> phone.toPhone(rawBytes, rawValue) },
+          title = it.title,
+          urls = it.urls
         )
       }
     }
     Barcode.TYPE_EMAIL -> {
-      getParcelableExtra<EmailParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, EmailParcelable::class.java)?.let {
         Email(
+          rawBytes = rawBytes,
           rawValue = rawValue,
-          address = address,
-          body = body,
-          subject = subject,
-          type = EmailType.values().getOrElse(type) { EmailType.UNKNOWN }
+          address = it.address,
+          body = it.body,
+          subject = it.subject,
+          type = EmailType.entries.getOrElse(it.type) { EmailType.UNKNOWN }
         )
       }
     }
     Barcode.TYPE_PHONE -> {
-      getParcelableExtra<PhoneParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
-        Phone(rawValue = rawValue, number = number, type = PhoneType.values().getOrElse(type) { PhoneType.UNKNOWN })
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, PhoneParcelable::class.java)?.let {
+        Phone(
+          rawBytes = rawBytes,
+          rawValue = rawValue,
+          number = it.number,
+          type = PhoneType.entries.getOrElse(it.type) { PhoneType.UNKNOWN }
+        )
       }
     }
     Barcode.TYPE_SMS -> {
-      getParcelableExtra<SmsParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
-        Sms(rawValue = rawValue, message = message, phoneNumber = phoneNumber)
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, SmsParcelable::class.java)?.let {
+        Sms(
+          rawBytes = rawBytes,
+          rawValue = rawValue,
+          message = it.message,
+          phoneNumber = it.phoneNumber
+        )
       }
     }
     Barcode.TYPE_URL -> {
-      getParcelableExtra<UrlBookmarkParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
-        Url(rawValue = rawValue, title = title, url = url)
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, UrlBookmarkParcelable::class.java)?.let {
+        Url(
+          rawBytes = rawBytes,
+          rawValue = rawValue,
+          title = it.title,
+          url = it.url
+        )
       }
     }
     Barcode.TYPE_WIFI -> {
-      getParcelableExtra<WifiParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
-        Wifi(rawValue = rawValue, encryptionType = encryptionType, password = password, ssid = ssid)
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, WifiParcelable::class.java)?.let {
+        Wifi(
+          rawBytes = rawBytes,
+          rawValue = rawValue,
+          encryptionType = it.encryptionType,
+          password = it.password,
+          ssid = it.ssid
+        )
       }
     }
     Barcode.TYPE_GEO -> {
-      getParcelableExtra<GeoPointParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
-        GeoPoint(rawValue = rawValue, lat = lat, lng = lng)
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, GeoPointParcelable::class.java)?.let {
+        GeoPoint(
+          rawBytes = rawBytes,
+          rawValue = rawValue,
+          lat = it.lat,
+          lng = it.lng
+        )
       }
     }
     Barcode.TYPE_CALENDAR_EVENT -> {
-      getParcelableExtra<CalendarEventParcelable>(QRScannerActivity.EXTRA_RESULT_PARCELABLE)?.run {
+      IntentCompat.getParcelableExtra(this, EXTRA_RESULT_PARCELABLE, CalendarEventParcelable::class.java)?.let {
         CalendarEvent(
+          rawBytes = rawBytes,
           rawValue = rawValue,
-          description = description,
-          end = end.toCalendarEvent(),
-          location = location,
-          organizer = organizer,
-          start = start.toCalendarEvent(),
-          status = status,
-          summary = summary
+          description = it.description,
+          end = it.end.toCalendarEvent(),
+          location = it.location,
+          organizer = it.organizer,
+          start = it.start.toCalendarEvent(),
+          status = it.status,
+          summary = it.summary
         )
       }
     }
@@ -110,25 +143,33 @@ private fun Intent.toQuickieContentType(rawValue: String): QRContent? {
 }
 
 internal fun Intent?.getRootException(): Exception {
-  this?.getSerializableExtra(QRScannerActivity.EXTRA_RESULT_EXCEPTION).let {
-    return if (it is Exception) it else IllegalStateException("Could retrieve root exception")
-  }
+  return this?.let { IntentCompat.getParcelableExtra(it, EXTRA_RESULT_EXCEPTION, Exception::class.java) }
+    ?: IllegalStateException("Could retrieve root exception")
 }
 
-private fun PhoneParcelable.toPhone(rawValue: String) =
-  Phone(rawValue = rawValue, number = number, type = PhoneType.values().getOrElse(type) { PhoneType.UNKNOWN })
+private fun PhoneParcelable.toPhone(rawBytes: ByteArray?, rawValue: String?) =
+  Phone(
+    rawBytes = rawBytes,
+    rawValue = rawValue,
+    number = number,
+    type = PhoneType.entries.getOrElse(type) { PhoneType.UNKNOWN }
+  )
 
-private fun EmailParcelable.toEmail(rawValue: String) =
+private fun EmailParcelable.toEmail(rawBytes: ByteArray?, rawValue: String?) =
   Email(
+    rawBytes = rawBytes,
     rawValue = rawValue,
     address = address,
     body = body,
     subject = subject,
-    type = EmailType.values().getOrElse(type) { EmailType.UNKNOWN }
+    type = EmailType.entries.getOrElse(type) { EmailType.UNKNOWN }
   )
 
 private fun AddressParcelable.toAddress() =
-  Address(addressLines = addressLines, type = AddressType.values().getOrElse(type) { AddressType.UNKNOWN })
+  Address(
+    addressLines = addressLines,
+    type = AddressType.entries.getOrElse(type) { AddressType.UNKNOWN }
+  )
 
 private fun PersonNameParcelable.toPersonName() =
   PersonName(
