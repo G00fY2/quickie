@@ -14,7 +14,7 @@ core = "1.10.1"
 
 cameraX = "1.2.3"
 
-barcodeScanning = "17.1.0"
+barcodeScanning = "17.2.0"
 barcodeScanningGms = "18.2.0"
 
 materialDesign = "1.9.0"
