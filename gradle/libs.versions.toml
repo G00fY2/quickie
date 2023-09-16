@@ -3,7 +3,7 @@ quickie = "1.8.0"
 
 androidconfig-minSdk = "21"
 androidconfig-compileSdk = "34"
-androidconfig-targetSdk = "34"
+androidconfig-targetSdk = "33"
 androidconfig-buildTools = "34.0.0"
 
 androidGradle = "8.1.1"
