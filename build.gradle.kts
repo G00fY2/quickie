@@ -18,12 +18,12 @@ plugins {
 subprojects {
   tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
-      allWarningsAsErrors.set(true)
-      progressiveMode.set(true)
-      jvmTarget.set(JvmTarget.JVM_11)
+      allWarningsAsErrors = true
+      progressiveMode = true
+      jvmTarget = JvmTarget.JVM_11
     }
     if ((this@subprojects.name != "sample")) {
-      explicitApiMode.set(ExplicitApiMode.Strict)
+      explicitApiMode = ExplicitApiMode.Strict
     }
   }
 

@@ -6,8 +6,8 @@ androidconfig-compileSdk = "34"
 androidconfig-targetSdk = "33"
 androidconfig-buildTools = "34.0.0"
 
-androidGradle = "8.1.2"
-kotlin = "1.9.10"
+androidGradle = "8.2.0"
+kotlin = "1.9.21"
 
 appcompat = "1.6.1"
 core = "1.12.0"
@@ -19,10 +19,10 @@ barcodeScanningGms = "18.3.0"
 
 materialDesign = "1.10.0"
 
-detekt = "1.23.1"
+detekt = "1.23.4"
 dokka = "1.9.10"
 
-junit = "5.10.0"
+junit = "5.10.1"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }

@@ -47,18 +47,18 @@ group = "io.github.g00fy2.quickie"
 version = libs.versions.quickie.get()
 
 tasks.register<Jar>("androidJavadocJar") {
-  archiveClassifier.set("javadoc")
-  from("$buildDir/dokka/javadoc")
+  archiveClassifier = "javadoc"
+  from(layout.buildDirectory.dir("dokka/javadoc"))
   dependsOn("dokkaJavadoc")
 }
 
 tasks.register<Jar>("androidBundledSourcesJar") {
-  archiveClassifier.set("sources")
+  archiveClassifier = "sources"
   from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("bundled").java.srcDirs)
 }
 
 tasks.register<Jar>("androidUnbundledSourcesJar") {
-  archiveClassifier.set("sources")
+  archiveClassifier = "sources"
   from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("unbundled").java.srcDirs)
 }
 
@@ -100,26 +100,26 @@ fun MavenPublication.commonConfig(flavor: String) {
   artifact(tasks.named("androidJavadocJar"))
   artifact(tasks.named("android${flavor.replaceFirstChar { it.titlecase() }}SourcesJar"))
   pom {
-    name.set("quickie-$flavor")
-    description.set("Android QR code scanning library")
-    url.set("https://github.com/G00fY2/quickie")
+    name = "quickie-$flavor"
+    description = "Android QR code scanning library"
+    url = "https://github.com/G00fY2/quickie"
     licenses {
       license {
-        name.set("MIT License")
-        url.set("https://opensource.org/licenses/MIT")
+        name = "MIT License"
+        url = "https://opensource.org/licenses/MIT"
       }
     }
     developers {
       developer {
-        id.set("g00fy2")
-        name.set("Thomas Wirth")
-        email.set("twirth.development@gmail.com")
+        id = "g00fy2"
+        name = "Thomas Wirth"
+        email = "twirth.development@gmail.com"
       }
     }
     scm {
-      connection.set("https://github.com/G00fY2/quickie.git")
-      developerConnection.set("https://github.com/G00fY2/quickie.git")
-      url.set("https://github.com/G00fY2/quickie")
+      connection = "https://github.com/G00fY2/quickie.git"
+      developerConnection = "https://github.com/G00fY2/quickie.git"
+      url = "https://github.com/G00fY2/quickie"
     }
   }
 }
