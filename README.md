@@ -140,7 +140,7 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 * (Google Play Services available on the end device if using `quickie-unbundled`)
 
 ## Contributing
-See [CONTRIBUTING](CONTRIBUTING.md)
+See [CONTRIBUTING](.github/CONTRIBUTING.md)
 
 Thanks to everyone who contributed to quickie!
 
