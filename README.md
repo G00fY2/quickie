@@ -8,8 +8,6 @@
 - Android Jetpack CameraX for communicating with the camera and showing the preview
 - ML Kit Vision API for best, fully on-device barcode recognition and decoding
 
-> **Note**: At Google I/O 2022 the [Google code scanner](https://developers.google.com/ml-kit/code-scanner) was announced. You should consider using it instead of quickie unbundled. If you want to support devices without Play Services or like to ship the latest ML Kit model - use quickie bundled.
-
 ## Download [![Maven Central](https://img.shields.io/maven-central/v/io.github.g00fy2.quickie/quickie-unbundled)](https://search.maven.org/search?q=g:io.github.g00fy2.quickie)
 There are two different flavors available on `mavenCentral()`:
 
@@ -127,7 +125,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
 fun handleResult(result: QRResult) {
     …
 ```
-> **Note**: You can optionally [pass in an ActivityOptionsCompat object](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I,%20androidx.core.app.ActivityOptionsCompat)) when launching the ActivityResultLauncher to control the scanner launch animation.
+> [!TIP]
+> You can optionally [pass in an ActivityOptionsCompat object](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I,%20androidx.core.app.ActivityOptionsCompat)) when launching the ActivityResultLauncher to control the scanner launch animation.
 
 ## Screenshots / Sample App
 You can find the sample app APKs inside the [release](https://github.com/G00fY2/quickie/releases) assets.
