@@ -20,7 +20,7 @@ barcodeScanningGms = "18.3.0"
 materialDesign = "1.11.0"
 
 detekt = "1.23.5"
-dokka = "1.9.10"
+dokka = "1.9.20"
 
 junit = "5.10.2"
 
