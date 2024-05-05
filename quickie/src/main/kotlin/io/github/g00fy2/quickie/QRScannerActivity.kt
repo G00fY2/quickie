@@ -10,6 +10,7 @@ import android.util.Size
 import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
@@ -195,6 +196,8 @@ internal class QRScannerActivity : AppCompatActivity() {
       showTorchToggle = it.showTorchToggle
       useFrontCamera = it.useFrontCamera
       showCloseButton = it.showCloseButton
+
+      if (it.keepScreenOn) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
   }
 

@@ -16,6 +16,7 @@ public class ScannerConfig internal constructor(
   internal val horizontalFrameRatio: Float,
   internal val useFrontCamera: Boolean,
   internal val showCloseButton: Boolean,
+  internal val keepScreenOn: Boolean,
 ) {
 
   public class Builder {
@@ -27,6 +28,7 @@ public class ScannerConfig internal constructor(
     private var horizontalFrameRatio: Float = 1f
     private var useFrontCamera: Boolean = false
     private var showCloseButton: Boolean = false
+    private var keepScreenOn: Boolean = false
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -72,18 +74,24 @@ public class ScannerConfig internal constructor(
     public fun setShowCloseButton(enable: Boolean): Builder = apply { showCloseButton = enable }
 
     /**
+     *  Keep the device's screen turned on as long as the scanner is visible.
+     */
+    public fun setKeepScreenOn(enable: Boolean): Builder = apply { keepScreenOn = enable }
+
+    /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
     public fun build(): ScannerConfig =
       ScannerConfig(
-        barcodeFormats.map { it.value }.toIntArray(),
-        overlayStringRes,
-        overlayDrawableRes,
-        hapticSuccessFeedback,
-        showTorchToggle,
-        horizontalFrameRatio,
-        useFrontCamera,
-        showCloseButton,
+        formats = barcodeFormats.map { it.value }.toIntArray(),
+        stringRes = overlayStringRes,
+        drawableRes = overlayDrawableRes,
+        hapticFeedback = hapticSuccessFeedback,
+        showTorchToggle = showTorchToggle,
+        horizontalFrameRatio = horizontalFrameRatio,
+        useFrontCamera = useFrontCamera,
+        showCloseButton = showCloseButton,
+        keepScreenOn = keepScreenOn,
       )
   }
 

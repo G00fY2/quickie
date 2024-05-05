@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
           setShowCloseButton(true) // show or hide (default) close button
           setHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
           setUseFrontCamera(false) // use the front camera
+          setKeepScreenOn(true) // keep the device's screen turned on
         }
       )
     }
