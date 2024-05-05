@@ -13,4 +13,5 @@ internal fun ScannerConfig.toParcelableConfig() =
     horizontalFrameRatio = horizontalFrameRatio,
     useFrontCamera = useFrontCamera,
     showCloseButton = showCloseButton,
+    keepScreenOn = keepScreenOn,
   )

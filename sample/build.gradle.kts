@@ -34,6 +34,12 @@ android {
     buildConfig = true
     viewBinding = true
   }
+  lint {
+    abortOnError = true
+    warningsAsErrors = true
+    checkDependencies = true
+    disable.add("RtlEnabled")
+  }
 }
 
 dependencies {

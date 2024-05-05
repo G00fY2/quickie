@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.9.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.10.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.9.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.10.0")
 ```
 
 ## Quick Start
@@ -116,6 +116,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
           setShowCloseButton(true) // show or hide (default) close button
           setHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
           setUseFrontCamera(true) // use the front camera
+          setKeepScreenOn(true) // keep the device's screen turned on
         }
       )
     }

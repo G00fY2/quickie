@@ -37,6 +37,19 @@ jobs:
       - name: Run bundled and unbundled unit tests
         run: ./gradlew test
 
+  android_lint:
+    name: Android lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - name: Run Android lint
+        run: ./gradlew :sample:lintBundledDebug :sample:lintUnbundledDebug
+
   build_bundled:
     name: Build bundled debug
     runs-on: ubuntu-latest

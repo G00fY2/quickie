@@ -14,12 +14,12 @@ public sealed class QRResult {
   /**
    * Activity got cancelled by the user.
    */
-  public object QRUserCanceled : QRResult()
+  public data object QRUserCanceled : QRResult()
 
   /**
    * Camera permission was not granted.
    */
-  public object QRMissingPermission : QRResult()
+  public data object QRMissingPermission : QRResult()
 
   /**
    * Error while setting up CameraX or while MLKit analysis.

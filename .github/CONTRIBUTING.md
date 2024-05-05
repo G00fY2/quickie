@@ -15,6 +15,8 @@ Make sure to get working code on a personal branch with tests and sanity checks 
 ```shell
 ./gradlew detektBundledDebug detektUnbundledDebug
 ./gradlew test
+./gradlew :sample:lintBundledDebug
+./gradlew :sample:lintUnbundledDebug
 ./gradlew :sample:assembleBundledDebug
 ./gradlew :sample:assembleUnbundledDebug
 ```
