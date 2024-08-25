@@ -7,7 +7,7 @@ import androidx.annotation.StringRes
  * Builder for ScannerConfig used in ScanBarcode ActivityResultContract.
  */
 @Suppress("LongParameterList")
-public class ScannerConfig internal constructor(
+public class ScannerConfig(
   internal val formats: IntArray,
   internal val stringRes: Int,
   internal val drawableRes: Int?,
