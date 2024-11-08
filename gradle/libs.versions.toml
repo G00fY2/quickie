@@ -2,17 +2,17 @@
 quickie = "1.9.0"
 
 androidconfig-minSdk = "21"
-androidconfig-compileSdk = "34"
-androidconfig-targetSdk = "33"
-androidconfig-buildTools = "34.0.0"
+androidconfig-compileSdk = "35"
+androidconfig-targetSdk = "34"
+androidconfig-buildTools = "35.0.0"
 
-androidGradle = "8.7.0"
-kotlin = "2.0.20"
+androidGradle = "8.7.2"
+kotlin = "2.0.21"
 
 appcompat = "1.7.0"
-core = "1.13.1"
+core = "1.15.0"
 
-cameraX = "1.3.4"
+cameraX = "1.4.0"
 
 barcodeScanning = "17.3.0"
 barcodeScanningGms = "18.3.1"
@@ -22,7 +22,7 @@ materialDesign = "1.12.0"
 detekt = "1.23.7"
 dokka = "1.9.20"
 
-junit = "5.11.2"
+junit = "5.11.3"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
