@@ -27,9 +27,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.mlkit.vision.barcode.common.Barcode
+import io.github.g00fy2.quickie.config.ContinuesScanning
 import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
+import io.github.g00fy2.quickie.extensions.toQuickieContentType
 import io.github.g00fy2.quickie.utils.MlKitErrorHandler
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -43,6 +45,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var showTorchToggle = false
   private var showCloseButton = false
   private var useFrontCamera = false
+  private var continuousScanning: ContinuesScanning? = null
   internal var errorDialog: Dialog? = null
     set(value) {
       field = value
@@ -119,8 +122,19 @@ internal class QRScannerActivity : AppCompatActivity() {
             QRCodeAnalyzer(
               barcodeFormats = barcodeFormats,
               onSuccess = { barcode ->
-                it.clearAnalyzer()
-                onSuccess(barcode)
+                if (continuousScanning!=null){
+                   if (continuousScanning?.processResult(
+                    QRResult.QRSuccess(Intent().apply {
+                      putExtra(EXTRA_RESULT_BYTES, barcode.rawBytes)
+                      putExtra(EXTRA_RESULT_VALUE, barcode.rawValue)
+                      putExtra(EXTRA_RESULT_TYPE, barcode.valueType)
+                      putExtra(EXTRA_RESULT_PARCELABLE, barcode.toParcelableContentType())
+                    }.toQuickieContentType()))==true)
+                      onSuccess(barcode)
+                }else{
+                  it.clearAnalyzer()
+                  onSuccess(barcode)
+                }
               },
               onFailure = { exception -> onFailure(exception) },
               onPassCompleted = { failureOccurred -> onPassCompleted(failureOccurred) }
@@ -166,7 +180,7 @@ internal class QRScannerActivity : AppCompatActivity() {
         putExtra(EXTRA_RESULT_PARCELABLE, result.toParcelableContentType())
       }
     )
-    finish()
+    if (continuousScanning == null) finish()
   }
 
   private fun onFailure(exception: Exception) {
@@ -189,6 +203,10 @@ internal class QRScannerActivity : AppCompatActivity() {
   private fun applyScannerConfig() {
     intent?.let { IntentCompat.getParcelableExtra(it, EXTRA_CONFIG, ParcelableScannerConfig::class.java) }?.let {
       barcodeFormats = it.formats
+      if (it.continuousScanningId != -1) {
+        continuousScanning = ParcelableScannerConfig.continuousScanning[it.continuousScanningId]
+        ParcelableScannerConfig.continuousScanning.remove(it.continuousScanningId)
+      }
       binding.overlayView.setCustomText(it.stringRes)
       binding.overlayView.setCustomIcon(it.drawableRes)
       binding.overlayView.setHorizontalFrameRatio(it.horizontalFrameRatio)
