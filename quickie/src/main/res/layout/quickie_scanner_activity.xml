@@ -19,4 +19,15 @@
       android:visibility="invisible"
       tools:visibility="visible"
       />
+  <Button
+      android:id="@+id/selectFromGalleryButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Select from Gallery"
+      android:background="@drawable/quickie_rounded_rectangle_button"
+      android:textColor="@android:color/black"
+      android:padding="16dp"
+      android:layout_gravity="bottom|center_horizontal"
+      android:layout_marginBottom="32dp" />
+
 </FrameLayout>

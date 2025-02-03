@@ -1,10 +1,13 @@
 package io.github.g00fy2.quickie
 
+import android.Manifest
 import android.Manifest.permission.CAMERA
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Size
 import android.view.HapticFeedbackConstants
@@ -26,7 +29,10 @@ import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
 import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
@@ -43,6 +49,9 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var showTorchToggle = false
   private var showCloseButton = false
   private var useFrontCamera = false
+  private val galleryLauncher=registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+    uri?.let { analyzeImageFromGallery(it) }
+  }
   internal var errorDialog: Dialog? = null
     set(value) {
       field = value
@@ -68,6 +77,7 @@ internal class QRScannerActivity : AppCompatActivity() {
 
     setupEdgeToEdgeUI()
     applyScannerConfig()
+    setupGalleryButton()
 
     analysisExecutor = Executors.newSingleThreadExecutor()
 
@@ -78,6 +88,64 @@ internal class QRScannerActivity : AppCompatActivity() {
         setResult(RESULT_MISSING_PERMISSION, null)
         finish()
       }
+    }
+  }
+
+  private fun setupGalleryButton() {
+    binding.selectFromGalleryButton.setOnClickListener {
+      launchGalleryPicker()
+    }
+  }
+  private val storagePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+    if (granted) {
+      galleryLauncher.launch(IMAGE_MIME_TYPE)
+    } else {
+      onFailure(Exception("Storage permission required to select images"))
+    }
+  }
+  private fun launchGalleryPicker() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
+        galleryLauncher.launch(IMAGE_MIME_TYPE)
+      } else {
+        storagePermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+      }
+    } else {
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        galleryLauncher.launch(IMAGE_MIME_TYPE)
+      } else {
+        storagePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+      }
+    }
+  }
+
+  private fun analyzeImageFromGallery(imageUri: Uri) {
+    try {
+      val image = InputImage.fromFilePath(this, imageUri)
+      val options = BarcodeScannerOptions.Builder()
+        .setBarcodeFormats(barcodeFormats.sum())
+        .build()
+
+      val scanner = BarcodeScanning.getClient(options)
+
+      binding.overlayView.isLoading = true
+
+      scanner.process(image)
+        .addOnSuccessListener { barcodes ->
+          binding.overlayView.isLoading = false
+          if (barcodes.isNullOrEmpty()) {
+            onFailure(Exception("No QR code found in the image"))
+          } else {
+            onSuccess(barcodes.first())
+          }
+        }
+        .addOnFailureListener { e ->
+          binding.overlayView.isLoading = false
+          onFailure(e)
+        }
+    } catch (e: Exception) {
+      binding.overlayView.isLoading = false
+      onFailure(e)
     }
   }
 
@@ -216,6 +284,7 @@ internal class QRScannerActivity : AppCompatActivity() {
     const val EXTRA_RESULT_TYPE = "quickie-type"
     const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"
     const val EXTRA_RESULT_EXCEPTION = "quickie-exception"
+    const val IMAGE_MIME_TYPE="image/*"
     const val RESULT_MISSING_PERMISSION = RESULT_FIRST_USER + 1
     const val RESULT_ERROR = RESULT_FIRST_USER + 2
   }
