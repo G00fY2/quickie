@@ -2,6 +2,7 @@ package io.github.g00fy2.quickie
 
 import android.Manifest
 import android.Manifest.permission.CAMERA
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Size
 import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
@@ -49,6 +51,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var showTorchToggle = false
   private var showCloseButton = false
   private var useFrontCamera = false
+  private var showGalleryButton = false
   private val galleryLauncher=registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
     uri?.let { analyzeImageFromGallery(it) }
   }
@@ -74,9 +77,10 @@ internal class QRScannerActivity : AppCompatActivity() {
     }
     binding = QuickieScannerActivityBinding.inflate(appThemeLayoutInflater)
     setContentView(binding.root)
-
+    showGalleryButton = intent.getBooleanExtra(EXTRA_SHOW_GALLERY_BUTTON, false)
     setupEdgeToEdgeUI()
     applyScannerConfig()
+    binding.selectFromGalleryButton.visibility = if (showGalleryButton) View.VISIBLE else View.GONE
     setupGalleryButton()
 
     analysisExecutor = Executors.newSingleThreadExecutor()
@@ -96,55 +100,40 @@ internal class QRScannerActivity : AppCompatActivity() {
       launchGalleryPicker()
     }
   }
-  private val storagePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-    if (granted) {
-      galleryLauncher.launch(IMAGE_MIME_TYPE)
-    } else {
-      onFailure(Exception("Storage permission required to select images"))
-    }
-  }
   private fun launchGalleryPicker() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
-        galleryLauncher.launch(IMAGE_MIME_TYPE)
-      } else {
-        storagePermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-      }
-    } else {
-      if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-        galleryLauncher.launch(IMAGE_MIME_TYPE)
-      } else {
-        storagePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-      }
-    }
+    galleryLauncher.launch(IMAGE_MIME_TYPE)
   }
 
+  @SuppressLint("Range")
   private fun analyzeImageFromGallery(imageUri: Uri) {
     try {
-      val image = InputImage.fromFilePath(this, imageUri)
-      val options = BarcodeScannerOptions.Builder()
-        .setBarcodeFormats(barcodeFormats.sum())
-        .build()
+      val cursor = contentResolver.query(imageUri, null, null, null, null)
+      cursor?.use {
+        if (it.moveToFirst()) {
+          val inputImage = InputImage.fromFilePath(this, imageUri)
 
-      val scanner = BarcodeScanning.getClient(options)
+          val scanner = BarcodeScanning.getClient(
+            BarcodeScannerOptions.Builder()
+              .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+              .build()
+          )
 
-      binding.overlayView.isLoading = true
-
-      scanner.process(image)
-        .addOnSuccessListener { barcodes ->
-          binding.overlayView.isLoading = false
-          if (barcodes.isNullOrEmpty()) {
-            onFailure(Exception("No QR code found in the image"))
-          } else {
-            onSuccess(barcodes.first())
-          }
+          scanner.process(inputImage)
+            .addOnSuccessListener { barcodes ->
+              if (barcodes.isNotEmpty()) {
+                onSuccess(barcodes[0])
+              } else {
+                onFailure(Exception("No barcode found"))
+              }
+            }
+            .addOnFailureListener { e ->
+              onFailure(e)
+            }
+        } else {
+          onFailure(Exception("No metadata found"))
         }
-        .addOnFailureListener { e ->
-          binding.overlayView.isLoading = false
-          onFailure(e)
-        }
+      } ?: onFailure(Exception("Unable to query image metadata"))
     } catch (e: Exception) {
-      binding.overlayView.isLoading = false
       onFailure(e)
     }
   }
@@ -282,6 +271,7 @@ internal class QRScannerActivity : AppCompatActivity() {
     const val EXTRA_RESULT_BYTES = "quickie-bytes"
     const val EXTRA_RESULT_VALUE = "quickie-value"
     const val EXTRA_RESULT_TYPE = "quickie-type"
+    const val EXTRA_SHOW_GALLERY_BUTTON = "show-gallery-button"
     const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"
     const val EXTRA_RESULT_EXCEPTION = "quickie-exception"
     const val IMAGE_MIME_TYPE="image/*"
