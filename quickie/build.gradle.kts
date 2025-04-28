@@ -39,8 +39,8 @@ dependencies {
   add("bundledImplementation", libs.mlkit.barcodeScanning)
   add("unbundledImplementation", libs.mlkit.barcodeScanningGms)
 
-  testImplementation(libs.test.junitApi)
-  testRuntimeOnly(libs.test.junitEngine)
+  testImplementation(libs.test.junit)
+  testRuntimeOnly(libs.test.junit.platformLauncher)
 }
 
 group = "io.github.g00fy2.quickie"

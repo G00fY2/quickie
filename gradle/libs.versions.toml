@@ -36,8 +36,8 @@ mlkit-barcodeScanningGms = { module = "com.google.android.gms:play-services-mlki
 
 google-materialDesign = { module = "com.google.android.material:material", version.ref = "materialDesign" }
 
-test-junitApi = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
-test-junitEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+test-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+test-junit-platformLauncher = { module = "org.junit.platform:junit-platform-launcher" }
 
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
