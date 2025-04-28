@@ -10,6 +10,10 @@ on:
       - develop
       - main
 
+env:
+  JAVA_DISTRO: 'zulu'
+  JAVA_VERSION: '21'
+
 jobs:
   detekt:
     name: Run detekt
@@ -19,8 +23,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
       - name: Run detekt with ktlint
         run: ./gradlew detektBundledDebug detektUnbundledDebug
 
@@ -32,8 +36,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
       - name: Run bundled and unbundled unit tests
         run: ./gradlew test
 
@@ -45,8 +49,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
       - name: Run Android lint
         run: ./gradlew :sample:lintBundledDebug :sample:lintUnbundledDebug
 
@@ -58,8 +62,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
       - name: Build debug bundled sample app
         run: ./gradlew :sample:assembleBundledDebug
 
@@ -71,7 +75,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
       - name: Build debug unbundled sample app
         run: ./gradlew :sample:assembleUnbundledDebug
