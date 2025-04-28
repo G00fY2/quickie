@@ -19,11 +19,11 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.DrawableCompat
 import io.github.g00fy2.quickie.databinding.QuickieOverlayViewBinding
 import kotlin.math.min
 import kotlin.math.roundToInt
-import androidx.core.graphics.createBitmap
 
 @Suppress("TooManyFunctions")
 internal class QROverlayView @JvmOverloads constructor(
