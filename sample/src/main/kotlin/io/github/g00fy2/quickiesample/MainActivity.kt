@@ -2,11 +2,11 @@ package io.github.g00fy2.quickiesample
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.google.android.material.snackbar.Snackbar
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.QRResult.QRError
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun openUrl(url: String) {
     try {
-      startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+      startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
     } catch (ignored: ActivityNotFoundException) {
       // no Activity found to run the given Intent
     }
