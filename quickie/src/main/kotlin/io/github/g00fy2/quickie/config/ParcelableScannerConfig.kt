@@ -14,4 +14,9 @@ internal class ParcelableScannerConfig(
   val useFrontCamera: Boolean,
   val showCloseButton: Boolean,
   val keepScreenOn: Boolean,
-) : Parcelable
+  val continuousScanningId: Int
+): Parcelable {
+  companion object {
+    val continuousScanning = mutableMapOf<Int,ContinuesScanning>()
+  }
+}

@@ -17,6 +17,7 @@ public class ScannerConfig internal constructor(
   internal val useFrontCamera: Boolean,
   internal val showCloseButton: Boolean,
   internal val keepScreenOn: Boolean,
+  internal val continuousScanning: ContinuesScanning?,
 ) {
 
   public class Builder {
@@ -29,6 +30,7 @@ public class ScannerConfig internal constructor(
     private var useFrontCamera: Boolean = false
     private var showCloseButton: Boolean = false
     private var keepScreenOn: Boolean = false
+    private var continuousScanning: ContinuesScanning ? =null
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -79,6 +81,12 @@ public class ScannerConfig internal constructor(
     public fun setKeepScreenOn(enable: Boolean): Builder = apply { keepScreenOn = enable }
 
     /**
+     * Set the continuous scan mode.
+     * `null` to disable continuous scan mode.
+     */
+    public fun setContinuesMode(continuesScanning: ContinuesScanning?): Builder = apply { continuousScanning = continuesScanning }
+
+    /**
      * Build the BarcodeConfig required by the ScanBarcode ActivityResultContract.
      */
     public fun build(): ScannerConfig =
@@ -92,6 +100,7 @@ public class ScannerConfig internal constructor(
         useFrontCamera = useFrontCamera,
         showCloseButton = showCloseButton,
         keepScreenOn = keepScreenOn,
+        continuousScanning = continuousScanning
       )
   }
 
