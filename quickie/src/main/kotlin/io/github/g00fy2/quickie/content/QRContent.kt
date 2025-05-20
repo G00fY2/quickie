@@ -9,7 +9,7 @@ public sealed class QRContent(
   /**
    * Plain text or unknown content QR Code type.
    */
-  public data class Plain internal constructor(
+  public data class Plain(
     override val rawBytes: ByteArray?,
     override val rawValue: String?
   ) : QRContent(rawBytes, rawValue)
@@ -17,7 +17,7 @@ public sealed class QRContent(
   /**
    * Wi-Fi access point details from a 'WIFI:' or similar QR Code type.
    */
-  public data class Wifi internal constructor(
+  public data class Wifi(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val encryptionType: Int,
@@ -28,7 +28,7 @@ public sealed class QRContent(
   /**
    * A URL or URL bookmark from a 'MEBKM:' or similar QR Code type.
    */
-  public data class Url internal constructor(
+  public data class Url(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val title: String,
@@ -38,7 +38,7 @@ public sealed class QRContent(
   /**
    * An SMS message from an 'SMS:' or similar QR Code type.
    */
-  public data class Sms internal constructor(
+  public data class Sms(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val message: String,
@@ -48,7 +48,7 @@ public sealed class QRContent(
   /**
    * GPS coordinates from a 'GEO:' or similar QR Code type.
    */
-  public data class GeoPoint internal constructor(
+  public data class GeoPoint(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val lat: Double,
@@ -58,7 +58,7 @@ public sealed class QRContent(
   /**
    * An email message from a 'MAILTO:' or similar QR Code type.
    */
-  public data class Email internal constructor(
+  public data class Email(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val address: String,
@@ -74,7 +74,7 @@ public sealed class QRContent(
   /**
    * A phone number from a 'TEL:' or similar QR Code type.
    */
-  public data class Phone internal constructor(
+  public data class Phone(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val number: String,
@@ -88,7 +88,7 @@ public sealed class QRContent(
   /**
    * A person's or organization's business card.
    */
-  public data class ContactInfo internal constructor(
+  public data class ContactInfo(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val addresses: List<Address>,
@@ -100,13 +100,13 @@ public sealed class QRContent(
     val urls: List<String>
   ) : QRContent(rawBytes, rawValue) {
 
-    public data class Address internal constructor(val addressLines: List<String>, val type: AddressType) {
+    public data class Address(val addressLines: List<String>, val type: AddressType) {
       public enum class AddressType {
         UNKNOWN, WORK, HOME
       }
     }
 
-    public data class PersonName internal constructor(
+    public data class PersonName(
       val first: String,
       val formattedName: String,
       val last: String,
@@ -120,7 +120,7 @@ public sealed class QRContent(
   /**
    * A calendar event extracted from a QR Code.
    */
-  public data class CalendarEvent internal constructor(
+  public data class CalendarEvent(
     override val rawBytes: ByteArray?,
     override val rawValue: String?,
     val description: String,
@@ -132,7 +132,7 @@ public sealed class QRContent(
     val summary: String
   ) : QRContent(rawBytes, rawValue) {
 
-    public data class CalendarDateTime internal constructor(
+    public data class CalendarDateTime(
       val day: Int,
       val hours: Int,
       val minutes: Int,

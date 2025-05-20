@@ -18,10 +18,10 @@ There are two different flavors available on `mavenCentral()`:
 
 ```kotlin
 // bundled:  
-implementation("io.github.g00fy2.quickie:quickie-bundled:1.10.0")
+implementation("io.github.g00fy2.quickie:quickie-bundled:1.11.0")
 
 // unbundled:
-implementation("io.github.g00fy2.quickie:quickie-unbundled:1.10.0")
+implementation("io.github.g00fy2.quickie:quickie-unbundled:1.11.0")
 ```
 
 ## Quick Start
@@ -137,6 +137,9 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 * AndroidX
 * Min SDK 21+ (required by CameraX)
 * (Google Play Services available on the end device if using `quickie-unbundled`)
+
+## Terms & Privacy
+See [ML Kit Terms & Privacy](https://developers.google.com/ml-kit/terms)
 
 ## Contributing
 See [CONTRIBUTING](.github/CONTRIBUTING.md)

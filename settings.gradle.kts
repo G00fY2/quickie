@@ -1,6 +1,7 @@
 include(":quickie", ":sample")
 
 dependencyResolutionManagement {
+  @Suppress("UnstableApiUsage")
   repositories {
     google()
     mavenCentral()
