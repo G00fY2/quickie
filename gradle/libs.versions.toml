@@ -4,7 +4,7 @@ quickie = "1.9.0"
 androidconfig-minSdk = "21"
 androidconfig-compileSdk = "35"
 androidconfig-targetSdk = "35"
-androidconfig-buildTools = "35.0.0"
+androidconfig-buildTools = "36.0.0"
 
 androidGradle = "8.10.0"
 kotlin = "2.1.21"
