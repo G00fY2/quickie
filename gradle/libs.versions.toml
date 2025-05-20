@@ -6,7 +6,7 @@ androidconfig-compileSdk = "35"
 androidconfig-targetSdk = "35"
 androidconfig-buildTools = "35.0.0"
 
-androidGradle = "8.9.2"
+androidGradle = "8.10.0"
 kotlin = "2.1.21"
 
 appcompat = "1.7.0"
