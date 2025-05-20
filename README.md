@@ -138,6 +138,9 @@ You can find the sample app APKs inside the [release](https://github.com/G00fY2/
 * Min SDK 21+ (required by CameraX)
 * (Google Play Services available on the end device if using `quickie-unbundled`)
 
+## Terms & Privacy
+See [ML Kit Terms & Privacy](https://developers.google.com/ml-kit/terms)
+
 ## Contributing
 See [CONTRIBUTING](.github/CONTRIBUTING.md)
 
