@@ -29,23 +29,22 @@ internal class QRCodeAnalyzer(
     }
   }
 
-  @Volatile
   private var failureOccurred = false
   private var failureTimestamp = 0L
 
   @ExperimentalGetImage
   override fun analyze(imageProxy: ImageProxy) {
-    if (imageProxy.image == null) return
+    val mediaImage = imageProxy.image
 
-    // throttle analysis if error occurred in previous pass
-    if (failureOccurred && System.currentTimeMillis() - failureTimestamp < 1000L) {
+    // skip analysis if no media image or error occurred in previous pass
+    if (mediaImage == null || (failureOccurred && System.currentTimeMillis() - failureTimestamp < 1000L)) {
       imageProxy.close()
       return
     }
 
     failureOccurred = false
     barcodeScanner?.let { scanner ->
-      scanner.process(imageProxy.toInputImage())
+      scanner.process(InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees))
         .addOnSuccessListener { codes -> codes.firstNotNullOfOrNull { it }?.let { onSuccess(it) } }
         .addOnFailureListener {
           failureOccurred = true
@@ -58,8 +57,4 @@ internal class QRCodeAnalyzer(
         }
     }
   }
-
-  @ExperimentalGetImage
-  @Suppress("UnsafeCallOnNullableType")
-  private fun ImageProxy.toInputImage() = InputImage.fromMediaImage(image!!, imageInfo.rotationDegrees)
 }
