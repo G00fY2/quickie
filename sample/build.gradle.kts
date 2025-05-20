@@ -38,7 +38,14 @@ android {
     abortOnError = true
     warningsAsErrors = true
     checkDependencies = true
-    disable.addAll(listOf("RtlEnabled", "GradleDependency", "AndroidGradlePluginVersion"))
+    disable.addAll(
+      listOf(
+        "RtlEnabled",
+        "GradleDependency",
+        "AndroidGradlePluginVersion",
+        "OldTargetApi",
+      )
+    )
   }
 }
 
