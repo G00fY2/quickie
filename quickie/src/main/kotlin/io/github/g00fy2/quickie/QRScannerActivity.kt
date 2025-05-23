@@ -1,11 +1,16 @@
 package io.github.g00fy2.quickie
 
+import android.Manifest
 import android.Manifest.permission.CAMERA
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Size
 import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
@@ -26,7 +31,10 @@ import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
 import io.github.g00fy2.quickie.config.ParcelableScannerConfig
 import io.github.g00fy2.quickie.databinding.QuickieScannerActivityBinding
 import io.github.g00fy2.quickie.extensions.toParcelableContentType
@@ -43,6 +51,10 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var showTorchToggle = false
   private var showCloseButton = false
   private var useFrontCamera = false
+  private var showGalleryButton = false
+  private val galleryLauncher=registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+    uri?.let { analyzeImageFromGallery(it) }
+  }
   internal var errorDialog: Dialog? = null
     set(value) {
       field = value
@@ -65,9 +77,11 @@ internal class QRScannerActivity : AppCompatActivity() {
     }
     binding = QuickieScannerActivityBinding.inflate(appThemeLayoutInflater)
     setContentView(binding.root)
-
+    showGalleryButton = intent.getBooleanExtra(EXTRA_SHOW_GALLERY_BUTTON, false)
     setupEdgeToEdgeUI()
     applyScannerConfig()
+    binding.selectFromGalleryButton.visibility = if (showGalleryButton) View.VISIBLE else View.GONE
+    setupGalleryButton()
 
     analysisExecutor = Executors.newSingleThreadExecutor()
 
@@ -78,6 +92,49 @@ internal class QRScannerActivity : AppCompatActivity() {
         setResult(RESULT_MISSING_PERMISSION, null)
         finish()
       }
+    }
+  }
+
+  private fun setupGalleryButton() {
+    binding.selectFromGalleryButton.setOnClickListener {
+      launchGalleryPicker()
+    }
+  }
+  private fun launchGalleryPicker() {
+    galleryLauncher.launch(IMAGE_MIME_TYPE)
+  }
+
+  @SuppressLint("Range")
+  private fun analyzeImageFromGallery(imageUri: Uri) {
+    try {
+      val cursor = contentResolver.query(imageUri, null, null, null, null)
+      cursor?.use {
+        if (it.moveToFirst()) {
+          val inputImage = InputImage.fromFilePath(this, imageUri)
+
+          val scanner = BarcodeScanning.getClient(
+            BarcodeScannerOptions.Builder()
+              .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+              .build()
+          )
+
+          scanner.process(inputImage)
+            .addOnSuccessListener { barcodes ->
+              if (barcodes.isNotEmpty()) {
+                onSuccess(barcodes[0])
+              } else {
+                onFailure(Exception("No barcode found"))
+              }
+            }
+            .addOnFailureListener { e ->
+              onFailure(e)
+            }
+        } else {
+          onFailure(Exception("No metadata found"))
+        }
+      } ?: onFailure(Exception("Unable to query image metadata"))
+    } catch (e: Exception) {
+      onFailure(e)
     }
   }
 
@@ -214,8 +271,10 @@ internal class QRScannerActivity : AppCompatActivity() {
     const val EXTRA_RESULT_BYTES = "quickie-bytes"
     const val EXTRA_RESULT_VALUE = "quickie-value"
     const val EXTRA_RESULT_TYPE = "quickie-type"
+    const val EXTRA_SHOW_GALLERY_BUTTON = "show-gallery-button"
     const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"
     const val EXTRA_RESULT_EXCEPTION = "quickie-exception"
+    const val IMAGE_MIME_TYPE="image/*"
     const val RESULT_MISSING_PERMISSION = RESULT_FIRST_USER + 1
     const val RESULT_ERROR = RESULT_FIRST_USER + 2
   }
