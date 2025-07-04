@@ -44,6 +44,7 @@ android {
         "GradleDependency",
         "AndroidGradlePluginVersion",
         "OldTargetApi",
+        "NewerVersionAvailable",
       )
     )
   }
