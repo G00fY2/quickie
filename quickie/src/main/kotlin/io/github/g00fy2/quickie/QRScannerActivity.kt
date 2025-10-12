@@ -6,7 +6,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Size
 import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.View
@@ -15,12 +14,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.Preview
 import androidx.camera.core.TorchState
-import androidx.camera.core.resolutionselector.ResolutionSelector
-import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
@@ -43,6 +40,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var showTorchToggle = false
   private var showCloseButton = false
   private var useFrontCamera = false
+  private var usePinchToZoom = false
   internal var errorDialog: Dialog? = null
     set(value) {
       field = value
@@ -102,47 +100,45 @@ internal class QRScannerActivity : AppCompatActivity() {
         return@addListener
       }
 
-      val preview = Preview.Builder().build().also { it.surfaceProvider = binding.previewView.surfaceProvider }
-      val imageAnalysis = ImageAnalysis.Builder()
-        .setResolutionSelector(
-          ResolutionSelector.Builder().setResolutionStrategy(
-            ResolutionStrategy(
-              Size(1280, 720),
-              ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER
-            )
-          ).build()
-        )
-        .build()
-        .also {
-          it.setAnalyzer(
+      cameraProvider.unbindAll()
+
+      try {
+        val controller = LifecycleCameraController(this).apply {
+          cameraSelector =
+            if (useFrontCamera) CameraSelector.DEFAULT_FRONT_CAMERA else CameraSelector.DEFAULT_BACK_CAMERA
+          setEnabledUseCases(LifecycleCameraController.IMAGE_ANALYSIS)
+          setImageAnalysisAnalyzer(
             analysisExecutor,
             QRCodeAnalyzer(
               barcodeFormats = barcodeFormats,
               onSuccess = { barcode ->
-                it.clearAnalyzer()
+                clearImageAnalysisAnalyzer()
                 onSuccess(barcode)
               },
               onFailure = { exception -> onFailure(exception) },
               onPassCompleted = { failureOccurred -> onPassCompleted(failureOccurred) }
             )
           )
+          isPinchToZoomEnabled = usePinchToZoom
+          isTapToFocusEnabled = true
         }
 
-      cameraProvider.unbindAll()
+        binding.previewView.scaleType = PreviewView.ScaleType.FILL_CENTER
+        binding.previewView.controller = controller
+        controller.bindToLifecycle(this)
 
-      val cameraSelector =
-        if (useFrontCamera) CameraSelector.DEFAULT_FRONT_CAMERA else CameraSelector.DEFAULT_BACK_CAMERA
-
-      try {
-        val camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
         binding.overlayView.visibility = View.VISIBLE
         binding.overlayView.setCloseVisibilityAndOnClick(showCloseButton) { finish() }
-        if (showTorchToggle && camera.cameraInfo.hasFlashUnit()) {
-          binding.overlayView.setTorchVisibilityAndOnClick(true) { camera.cameraControl.enableTorch(it) }
-          camera.cameraInfo.torchState.observe(this) { binding.overlayView.setTorchState(it == TorchState.ON) }
-        } else {
-          binding.overlayView.setTorchVisibilityAndOnClick(false)
-        }
+
+        controller.initializationFuture.addListener({
+          val info = controller.cameraInfo ?: return@addListener
+          if (showTorchToggle && info.hasFlashUnit()) {
+            binding.overlayView.setTorchVisibilityAndOnClick(true) { controller.enableTorch(it) }
+            info.torchState.observe(this) { binding.overlayView.setTorchState(it == TorchState.ON) }
+          } else {
+            binding.overlayView.setTorchVisibilityAndOnClick(false)
+          }
+        }, ContextCompat.getMainExecutor(this))
       } catch (e: Exception) {
         binding.overlayView.visibility = View.INVISIBLE
         onFailure(e)
@@ -196,6 +192,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       showTorchToggle = it.showTorchToggle
       useFrontCamera = it.useFrontCamera
       showCloseButton = it.showCloseButton
+      usePinchToZoom = it.usePinchToZoom
 
       if (it.keepScreenOn) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }

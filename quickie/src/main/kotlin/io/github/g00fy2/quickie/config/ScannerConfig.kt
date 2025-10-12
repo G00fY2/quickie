@@ -17,6 +17,7 @@ public class ScannerConfig(
   internal val useFrontCamera: Boolean,
   internal val showCloseButton: Boolean,
   internal val keepScreenOn: Boolean,
+  internal val usePinchToZoom: Boolean
 ) {
 
   public class Builder {
@@ -29,6 +30,7 @@ public class ScannerConfig(
     private var useFrontCamera: Boolean = false
     private var showCloseButton: Boolean = false
     private var keepScreenOn: Boolean = false
+    private var usePinchToZoom: Boolean = false
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -64,6 +66,11 @@ public class ScannerConfig(
     public fun setShowTorchToggle(enable: Boolean): Builder = apply { showTorchToggle = enable }
 
     /**
+     * Use pinch to zoom gesture to control the camera zoom level.
+     */
+    public fun setUsePinchToZoom(enable: Boolean): Builder = apply { usePinchToZoom = enable }
+
+    /**
      * Use the front camera.
      */
     public fun setUseFrontCamera(enable: Boolean): Builder = apply { useFrontCamera = enable }
@@ -92,6 +99,7 @@ public class ScannerConfig(
         useFrontCamera = useFrontCamera,
         showCloseButton = showCloseButton,
         keepScreenOn = keepScreenOn,
+        usePinchToZoom = usePinchToZoom,
       )
   }
 
