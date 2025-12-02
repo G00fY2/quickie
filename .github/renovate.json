@@ -2,7 +2,7 @@
   "extends": [
     "config:best-practices"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "develop"
   ]
 }
