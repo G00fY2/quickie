@@ -12,7 +12,7 @@ on:
 
 env:
   JAVA_DISTRO: 'zulu'
-  JAVA_VERSION: '21'
+  JAVA_VERSION: '25'
 
 jobs:
   detekt:
