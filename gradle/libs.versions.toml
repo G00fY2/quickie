@@ -19,7 +19,7 @@ barcodeScanningGms = "18.3.1"
 
 materialDesign = "1.13.0"
 
-detekt = "1.23.8"
+detekt = "2.0.0-alpha.1"
 dokka = "2.1.0"
 
 junit = "5.14.0"
@@ -39,7 +39,7 @@ google-materialDesign = { module = "com.google.android.material:material", versi
 test-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 test-junit-platformLauncher = { module = "org.junit.platform:junit-platform-launcher" }
 
-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-ktlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradle" }
@@ -49,4 +49,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }

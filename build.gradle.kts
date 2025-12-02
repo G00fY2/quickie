@@ -1,7 +1,7 @@
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.BasePlugin
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.extensions.DetektExtension
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -45,12 +45,13 @@ subprojects {
   apply(plugin = rootProject.libs.plugins.detekt.get().pluginId)
   extensions.configure<DetektExtension> {
     toolVersion = rootProject.libs.versions.detekt.get()
-    config.setFrom(files("$rootDir/detekt.yml"))
+    @Suppress("UnstableApiUsage")
+    config.setFrom(isolated.rootProject.projectDirectory.file("$rootDir/detekt.yml"))
     buildUponDefaultConfig = true
     ignoredBuildTypes = listOf("release")
   }
   dependencies {
-    add("detektPlugins", rootProject.libs.detektFormatting)
+    add("detektPlugins", rootProject.libs.detekt.ktlintWrapper)
   }
   tasks.withType<Detekt>().configureEach {
     jvmTarget = JvmTarget.JVM_17.target
