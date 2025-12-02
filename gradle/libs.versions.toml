@@ -1,7 +1,7 @@
 [versions]
 quickie = "1.11.0"
 
-androidconfig-minSdk = "21"
+androidconfig-minSdk = "23"
 androidconfig-compileSdk = "36"
 androidconfig-targetSdk = "36"
 androidconfig-buildTools = "36.1.0"
