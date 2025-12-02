@@ -1,6 +1,7 @@
 package io.github.g00fy2.quickie
 
 import android.Manifest.permission.CAMERA
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -48,6 +49,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       field = value
       value?.show()
       value?.setOnKeyListener { dialog, keyCode, _ ->
+        @SuppressLint("GestureBackNavigation")
         if (keyCode == KeyEvent.KEYCODE_BACK) {
           finish()
           dialog.dismiss()
