@@ -12,7 +12,7 @@ kotlin = "2.2.21"
 appcompat = "1.7.1"
 core = "1.17.0"
 
-cameraX = "1.5.1"
+cameraX = "1.5.2"
 
 barcodeScanning = "17.3.0"
 barcodeScanningGms = "18.3.1"
