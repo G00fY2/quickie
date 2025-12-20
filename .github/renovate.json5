@@ -1,0 +1,8 @@
+{
+  extends: [
+    "config:best-practices",
+  ],
+  baseBranchPatterns: [
+    "develop",
+  ],
+}
