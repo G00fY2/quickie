@@ -17,7 +17,9 @@ import io.github.g00fy2.quickie.extensions.toQuickieContentType
 public class ScanQRCode : ActivityResultContract<Nothing?, QRResult>() {
 
   override fun createIntent(context: Context, input: Nothing?): Intent =
-    Intent(context, QRScannerActivity::class.java)
+     Intent(context, QRScannerActivity::class.java).apply {
+      putExtra(QRScannerActivity.EXTRA_SHOW_GALLERY_BUTTON, true)
+  }
 
   override fun parseResult(resultCode: Int, intent: Intent?): QRResult {
     return when (resultCode) {
