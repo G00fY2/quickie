@@ -22,7 +22,7 @@ materialDesign = "1.13.0"
 detekt = "2.0.0-alpha.1"
 dokka = "2.1.0"
 
-junit = "6.0.1"
+junit = "6.0.2"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
