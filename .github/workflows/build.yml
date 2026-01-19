@@ -10,72 +10,38 @@ on:
       - develop
       - main
 
-env:
-  JAVA_DISTRO: 'zulu'
-  JAVA_VERSION: '25'
-
 jobs:
-  detekt:
-    name: Run detekt
+  build:
+    name: "Run ${{ matrix.task }}${{ matrix.flavor }}"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        task:
+          - "detekt"
+          - ":sample:lint"
+          - ":sample:assemble"
+        flavor:
+          - "BundledDebug"
+          - "UnbundledDebug"
+        include:
+          - task: "test"
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-      - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5
-        with:
-          distribution: ${{ env.JAVA_DISTRO }}
-          java-version: ${{ env.JAVA_VERSION }}
-      - name: Run detekt with ktlint
-        run: ./gradlew detektBundledDebug detektUnbundledDebug
+      - name: "Checkout repository"
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - name: "Setup Java & Gradle environment"
+        uses: ./.github/actions/setup
+      - name: "Execute Gradle task"
+        run: ./gradlew ${{ matrix.task }}${{ matrix.flavor }}
 
-  unit_tests:
-    name: Run unit tests
-    runs-on: ubuntu-latest
-
+  all-checks-passed:
+    name: "Final Status Check"
+    runs-on: ubuntu-slim
+    if: always()
+    needs: build
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-      - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5
-        with:
-          distribution: ${{ env.JAVA_DISTRO }}
-          java-version: ${{ env.JAVA_VERSION }}
-      - name: Run bundled and unbundled unit tests
-        run: ./gradlew test
-
-  android_lint:
-    name: Android lint
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-      - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5
-        with:
-          distribution: ${{ env.JAVA_DISTRO }}
-          java-version: ${{ env.JAVA_VERSION }}
-      - name: Run Android lint
-        run: ./gradlew :sample:lintBundledDebug :sample:lintUnbundledDebug
-
-  build_bundled:
-    name: Build bundled debug
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-      - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5
-        with:
-          distribution: ${{ env.JAVA_DISTRO }}
-          java-version: ${{ env.JAVA_VERSION }}
-      - name: Build debug bundled sample app
-        run: ./gradlew :sample:assembleBundledDebug
-
-  build_unbundled:
-    name: Build unbundled debug
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-      - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5
-        with:
-          distribution: ${{ env.JAVA_DISTRO }}
-          java-version: ${{ env.JAVA_VERSION }}
-      - name: Build debug unbundled sample app
-        run: ./gradlew :sample:assembleUnbundledDebug
+      - name: "Validate Matrix results"
+        run: |
+          if [ "${{ needs.build.result }}" != "success" ]; then
+            exit 1
+          fi
