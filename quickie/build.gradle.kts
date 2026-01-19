@@ -19,8 +19,8 @@ android {
     create("unbundled").dimension = "mlkit"
   }
   sourceSets {
-    getByName("bundled").java.srcDirs("src/bundled/kotlin")
-    getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
+    getByName("bundled").java.directories.add("src/bundled/kotlin")
+    getByName("unbundled").java.directories.add("src/unbundled/kotlin")
   }
   publishing {
     singleVariant("bundledRelease")
