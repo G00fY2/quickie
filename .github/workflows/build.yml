@@ -12,10 +12,9 @@ on:
 
 jobs:
   build:
-    name: Run ${{ matrix.task }}${{ matrix.flavor }}
+    name: "Run ${{ matrix.task }}${{ matrix.flavor }}"
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
       matrix:
         task:
           - "detekt"
@@ -28,9 +27,21 @@ jobs:
           - task: "test"
 
     steps:
-      - name: Checkout repository
+      - name: "Checkout repository"
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-      - name: Setup Java & Gradle
+      - name: "Setup Java & Gradle environment"
         uses: ./.github/actions/setup
-      - name: Run gradle task
+      - name: "Execute Gradle task"
         run: ./gradlew ${{ matrix.task }}${{ matrix.flavor }}
+
+  all-checks-passed:
+    name: "Final Status Check"
+    runs-on: ubuntu-slim
+    if: always()
+    needs: build
+    steps:
+      - name: "Validate Matrix results"
+        run: |
+          if [ "${{ needs.build.result }}" != "success" ]; then
+            exit 1
+          fi
