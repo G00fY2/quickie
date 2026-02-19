@@ -43,3 +43,5 @@ ktlint:
     active: false
   ClassSignature:
     active: false
+  BlankLineBetweenWhenConditions:
+    active: false
