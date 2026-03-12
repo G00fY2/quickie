@@ -10,7 +10,7 @@ androidGradle = "9.1.0"
 kotlin = "2.3.10"
 
 appcompat = "1.7.1"
-core = "1.17.0"
+core = "1.18.0"
 
 cameraX = "1.5.3"
 
