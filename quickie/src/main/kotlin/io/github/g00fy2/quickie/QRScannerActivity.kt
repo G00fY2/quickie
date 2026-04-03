@@ -2,7 +2,6 @@ package io.github.g00fy2.quickie
 
 import android.Manifest.permission.CAMERA
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -44,6 +43,8 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var showTorchToggle = false
   private var showCloseButton = false
   private var useFrontCamera = false
+
+  @Suppress("unused")
   internal var errorDialog: Dialog? = null
     set(value) {
       field = value
@@ -160,7 +161,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       binding.overlayView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, flags)
     }
     setResult(
-      Activity.RESULT_OK,
+      RESULT_OK,
       Intent().apply {
         putExtra(EXTRA_RESULT_BYTES, result.rawBytes)
         putExtra(EXTRA_RESULT_VALUE, result.rawValue)
