@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-  implementation(libs.androidx.appcompat)
+  implementation(libs.androidx.activity)
   implementation(libs.androidx.core)
 
   implementation(libs.androidx.camera)

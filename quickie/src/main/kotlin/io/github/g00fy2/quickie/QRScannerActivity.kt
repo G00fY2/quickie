@@ -11,9 +11,8 @@ import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
@@ -34,7 +33,7 @@ import io.github.g00fy2.quickie.utils.MlKitErrorHandler
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-internal class QRScannerActivity : AppCompatActivity() {
+internal class QRScannerActivity : ComponentActivity() {
 
   private lateinit var binding: QuickieScannerActivityBinding
   private lateinit var analysisExecutor: ExecutorService
@@ -60,10 +59,7 @@ internal class QRScannerActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val appThemeLayoutInflater = applicationInfo.theme.let { appThemeRes ->
-      if (appThemeRes != 0) layoutInflater.cloneInContext(ContextThemeWrapper(this, appThemeRes)) else layoutInflater
-    }
-    binding = QuickieScannerActivityBinding.inflate(appThemeLayoutInflater)
+    binding = QuickieScannerActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
     setupEdgeToEdgeUI()

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.core.net.toUri
 import com.google.android.material.snackbar.Snackbar
 import io.github.g00fy2.quickie.QRResult
@@ -20,7 +20,7 @@ import io.github.g00fy2.quickie.config.ScannerConfig
 import io.github.g00fy2.quickie.content.QRContent
 import io.github.g00fy2.quickiesample.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
   private lateinit var binding: ActivityMainBinding
   private var selectedBarcodeFormat = BarcodeFormat.FORMAT_ALL_FORMATS

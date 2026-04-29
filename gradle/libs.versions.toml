@@ -2,14 +2,14 @@
 quickie = "1.11.0"
 
 androidconfig-minSdk = "21"
-androidconfig-compileSdk = "35"
+androidconfig-compileSdk = "36"
 androidconfig-targetSdk = "35"
 androidconfig-buildTools = "36.0.0"
 
 androidGradle = "8.10.0"
 kotlin = "2.1.21"
 
-appcompat = "1.7.0"
+activity = "1.11.0"
 core = "1.16.0"
 
 cameraX = "1.4.2"
@@ -25,7 +25,7 @@ dokka = "2.0.0"
 junit = "5.12.2"
 
 [libraries]
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
 androidx-camera = { module = "androidx.camera:camera-camera2", version.ref = "cameraX" }
 androidx-cameraLifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraX" }
 androidx-cameraPreview = { module = "androidx.camera:camera-view", version.ref = "cameraX" }
