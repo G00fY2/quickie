@@ -17,7 +17,7 @@ cameraX = "1.6.0"
 barcodeScanning = "17.3.0"
 barcodeScanningGms = "18.3.1"
 
-materialDesign = "1.13.0"
+materialDesign = "1.14.0"
 
 detekt = "2.0.0-alpha.2"
 dokka = "2.2.0"
