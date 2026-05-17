@@ -1,6 +1,5 @@
 plugins {
   alias(libs.plugins.android.library)
-  alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.parcelize)
   alias(libs.plugins.kotlin.dokka)
   `maven-publish`
@@ -54,12 +53,16 @@ tasks.register<Jar>("androidJavadocJar") {
 
 tasks.register<Jar>("androidBundledSourcesJar") {
   archiveClassifier = "sources"
-  from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("bundled").java.srcDirs)
+  from(provider {
+    listOf(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("bundled").java.srcDirs)
+  })
 }
 
 tasks.register<Jar>("androidUnbundledSourcesJar") {
   archiveClassifier = "sources"
-  from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("unbundled").java.srcDirs)
+  from(provider {
+    listOf(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("unbundled").java.srcDirs)
+  })
 }
 
 afterEvaluate {
