@@ -6,7 +6,7 @@ androidconfig-compileSdk = "36"
 androidconfig-targetSdk = "36"
 androidconfig-buildTools = "36.1.0"
 
-androidGradle = "9.1.0"
+androidGradle = "9.2.1"
 kotlin = "2.3.21"
 
 appcompat = "1.7.1"
@@ -19,7 +19,7 @@ barcodeScanningGms = "18.3.1"
 
 materialDesign = "1.14.0"
 
-detekt = "2.0.0-alpha.2"
+detekt = "2.0.0-alpha.3"
 dokka = "2.2.0"
 
 junit = "6.0.3"
@@ -41,11 +41,12 @@ test-junit-platformLauncher = { module = "org.junit.platform:junit-platform-laun
 
 detekt-ktlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
 
+kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradle" }
 android-library = { id = "com.android.library", version.ref = "androidGradle" }
 
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
