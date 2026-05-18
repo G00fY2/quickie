@@ -9,6 +9,9 @@ plugins {
 android {
   namespace = "io.github.g00fy2.quickie"
   resourcePrefix = "quickie"
+  defaultConfig {
+    consumerProguardFiles("consumer-proguard-rules.pro")
+  }
   buildFeatures {
     viewBinding = true
   }
