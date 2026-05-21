@@ -44,6 +44,7 @@ android {
         "AndroidGradlePluginVersion",
         "OldTargetApi",
         "NewerVersionAvailable",
+        "Instantiatable",
       )
     )
   }
