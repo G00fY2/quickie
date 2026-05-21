@@ -1,28 +1,28 @@
 [versions]
-quickie = "1.11.0"
+quickie = "1.12.0"
 
-androidconfig-minSdk = "21"
-androidconfig-compileSdk = "35"
-androidconfig-targetSdk = "35"
-androidconfig-buildTools = "36.0.0"
+androidconfig-minSdk = "23"
+androidconfig-compileSdk = "36"
+androidconfig-targetSdk = "36"
+androidconfig-buildTools = "36.1.0"
 
-androidGradle = "8.10.0"
-kotlin = "2.1.21"
+androidGradle = "9.2.1"
+kotlin = "2.3.21"
 
-appcompat = "1.7.0"
-core = "1.16.0"
+appcompat = "1.7.1"
+core = "1.18.0"
 
-cameraX = "1.4.2"
+cameraX = "1.6.1"
 
 barcodeScanning = "17.3.0"
 barcodeScanningGms = "18.3.1"
 
-materialDesign = "1.12.0"
+materialDesign = "1.14.0"
 
-detekt = "1.23.8"
-dokka = "2.0.0"
+detekt = "2.0.0-alpha.3"
+dokka = "2.2.0"
 
-junit = "5.12.2"
+junit = "6.1.0"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -39,14 +39,15 @@ google-materialDesign = { module = "com.google.android.material:material", versi
 test-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 test-junit-platformLauncher = { module = "org.junit.platform:junit-platform-launcher" }
 
-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-ktlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
+
+kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradle" }
 android-library = { id = "com.android.library", version.ref = "androidGradle" }
 
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+kotlin-dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
 
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }

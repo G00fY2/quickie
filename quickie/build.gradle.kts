@@ -1,8 +1,7 @@
 plugins {
   alias(libs.plugins.android.library)
-  alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.parcelize)
-  alias(libs.plugins.kotlin.dokka)
+  alias(libs.plugins.kotlin.dokka.javadoc)
   `maven-publish`
   signing
 }
@@ -10,6 +9,9 @@ plugins {
 android {
   namespace = "io.github.g00fy2.quickie"
   resourcePrefix = "quickie"
+  defaultConfig {
+    consumerProguardFiles("consumer-proguard-rules.pro")
+  }
   buildFeatures {
     viewBinding = true
   }
@@ -19,12 +21,16 @@ android {
     create("unbundled").dimension = "mlkit"
   }
   sourceSets {
-    getByName("bundled").java.srcDirs("src/bundled/kotlin")
-    getByName("unbundled").java.srcDirs("src/unbundled/kotlin")
+    getByName("bundled").java.directories.add("src/bundled/kotlin")
+    getByName("unbundled").java.directories.add("src/unbundled/kotlin")
   }
   publishing {
-    singleVariant("bundledRelease")
-    singleVariant("unbundledRelease")
+    singleVariant("bundledRelease") {
+      withSourcesJar()
+    }
+    singleVariant("unbundledRelease") {
+      withSourcesJar()
+    }
   }
 }
 
@@ -46,20 +52,15 @@ dependencies {
 group = "io.github.g00fy2.quickie"
 version = libs.versions.quickie.get()
 
+dokka {
+  dokkaSourceSets.configureEach {
+    suppress.set(name != "bundledRelease")
+  }
+}
+
 tasks.register<Jar>("androidJavadocJar") {
   archiveClassifier = "javadoc"
-  from(layout.buildDirectory.dir("dokka/javadoc"))
-  dependsOn("dokkaJavadoc")
-}
-
-tasks.register<Jar>("androidBundledSourcesJar") {
-  archiveClassifier = "sources"
-  from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("bundled").java.srcDirs)
-}
-
-tasks.register<Jar>("androidUnbundledSourcesJar") {
-  archiveClassifier = "sources"
-  from(android.sourceSets.getByName("main").java.srcDirs, android.sourceSets.getByName("unbundled").java.srcDirs)
+  from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
 }
 
 afterEvaluate {
@@ -77,7 +78,7 @@ afterEvaluate {
     repositories {
       maven {
         name = "sonatype"
-        url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+        url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
         credentials {
           username = findStringProperty("sonatypeUsername")
           password = findStringProperty("sonatypePassword")
@@ -98,7 +99,6 @@ fun MavenPublication.commonConfig(flavor: String) {
   from(components["${flavor}Release"])
   artifactId = "quickie-$flavor"
   artifact(tasks.named("androidJavadocJar"))
-  artifact(tasks.named("android${flavor.replaceFirstChar { it.titlecase() }}SourcesJar"))
   pom {
     name = "quickie-$flavor"
     description = "Android QR code scanning library"

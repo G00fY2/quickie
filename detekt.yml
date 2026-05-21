@@ -3,25 +3,47 @@ complexity:
     ignoreSingleWhenExpression: true
   LongParameterList:
     ignoreAnnotated: ['Parcelize']
-    constructorThreshold: 8
+    allowedConstructorParameters: 8
 
 exceptions:
   TooGenericExceptionCaught:
     active: false
-
-formatting:
-  android: true
-  Indentation:
-    active: false
-  FinalNewline:
-    insertFinalNewLine: false
 
 performance:
   SpreadOperator:
     active: false
 
 style:
+  AbstractClassCanBeInterface:
+    active: false
   MagicNumber:
     active: false
   NewLineAtEndOfFile:
+    active: false
+
+ktlint:
+  Indentation:
+    active: false
+  FinalNewline:
+    insertFinalNewLine: false
+  # revisit new ktlint rules
+  NoEmptyFirstLineInClassBody:
+    active: false
+  ChainMethodContinuation:
+    active: false
+  TrailingCommaOnCallSite:
+    active: false
+  FunctionExpressionBody:
+    active: false
+  FunctionSignature:
+    active: false
+  TrailingCommaOnDeclarationSite:
+    active: false
+  EnumWrapping:
+    active: false
+  TryCatchFinallySpacing:
+    active: false
+  ClassSignature:
+    active: false
+  BlankLineBetweenWhenConditions:
     active: false
