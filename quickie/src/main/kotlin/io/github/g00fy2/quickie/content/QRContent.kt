@@ -3,7 +3,7 @@ package io.github.g00fy2.quickie.content
 @Suppress("ArrayInDataClass")
 public sealed class QRContent(
   public open val rawBytes: ByteArray?,
-  public open val rawValue: String?,
+  public open val rawValue: String?
 ) {
 
   /**
@@ -11,7 +11,8 @@ public sealed class QRContent(
    */
   public data class Plain(
     override val rawBytes: ByteArray?,
-    override val rawValue: String?
+    override val rawValue: String?,
+    val displayValue: String?
   ) : QRContent(rawBytes, rawValue)
 
   /**
