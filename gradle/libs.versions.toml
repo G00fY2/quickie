@@ -2,15 +2,15 @@
 quickie = "1.11.0"
 
 androidconfig-minSdk = "23"
-androidconfig-compileSdk = "36"
+androidconfig-compileSdk = "37"
 androidconfig-targetSdk = "36"
 androidconfig-buildTools = "36.1.0"
 
 androidGradle = "9.2.1"
-kotlin = "2.3.21"
+kotlin = "2.4.0"
 
 appcompat = "1.7.1"
-core = "1.18.0"
+core = "1.19.0"
 
 cameraX = "1.6.1"
 
