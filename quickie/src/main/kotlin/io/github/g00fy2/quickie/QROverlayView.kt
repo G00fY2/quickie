@@ -61,7 +61,7 @@ internal class QROverlayView @JvmOverloads constructor(
     set(value) {
       if (field != value) {
         field = value
-        binding.progressView.visibility = if (value) View.VISIBLE else View.GONE
+        binding.progressView.visibility = if (value) VISIBLE else GONE
       }
     }
 
@@ -121,13 +121,13 @@ internal class QROverlayView @JvmOverloads constructor(
   }
 
   fun setCloseVisibilityAndOnClick(visible: Boolean, action: () -> Unit = {}) {
-    binding.closeImageView.visibility = if (visible) View.VISIBLE else View.GONE
+    binding.closeImageView.visibility = if (visible) VISIBLE else GONE
     binding.closeImageView.setOnClickListener { action() }
     if (visible) binding.closeImageView.setTintAndStateAwareBackground()
   }
 
   fun setTorchVisibilityAndOnClick(visible: Boolean, action: (Boolean) -> Unit = {}) {
-    binding.torchImageView.visibility = if (visible) View.VISIBLE else View.GONE
+    binding.torchImageView.visibility = if (visible) VISIBLE else GONE
     binding.torchImageView.setOnClickListener { action(!it.isSelected) }
     if (visible) binding.torchImageView.setTintAndStateAwareBackground()
   }
@@ -165,7 +165,7 @@ internal class QROverlayView @JvmOverloads constructor(
     binding.titleTextView.updateTopMargin(titleCenter)
     // hide title text if not enough vertical space
     binding.titleTextView.visibility =
-      if (topInsetsToOuterFrame < binding.titleTextView.height) View.INVISIBLE else View.VISIBLE
+      if (topInsetsToOuterFrame < binding.titleTextView.height) INVISIBLE else VISIBLE
   }
 
   private fun getAccentColor(): Int {

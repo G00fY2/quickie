@@ -3,15 +3,28 @@ include(":quickie", ":sample")
 dependencyResolutionManagement {
   @Suppress("UnstableApiUsage")
   repositories {
-    google()
+    google {
+      mavenContent {
+        includeGroupAndSubgroups("androidx")
+        includeGroupAndSubgroups("com.android")
+        includeGroupAndSubgroups("com.google")
+      }
+    }
     mavenCentral()
   }
 }
 
 pluginManagement {
   repositories {
-    google()
-    mavenCentral()
+    google {
+      @Suppress("UnstableApiUsage")
+      mavenContent {
+        includeGroupAndSubgroups("androidx")
+        includeGroupAndSubgroups("com.android")
+        includeGroupAndSubgroups("com.google")
+      }
+    }
     gradlePluginPortal()
+    mavenCentral()
   }
 }

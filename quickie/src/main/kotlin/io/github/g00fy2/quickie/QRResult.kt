@@ -12,7 +12,7 @@ public sealed class QRResult {
   public data class QRSuccess(val content: QRContent) : QRResult()
 
   /**
-   * Activity got cancelled by the user.
+   * Activity got canceled by the user.
    */
   public data object QRUserCanceled : QRResult()
 
