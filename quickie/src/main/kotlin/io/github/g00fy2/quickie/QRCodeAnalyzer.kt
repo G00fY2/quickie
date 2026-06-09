@@ -5,6 +5,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.ZoomSuggestionOptions
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 
@@ -12,7 +13,9 @@ internal class QRCodeAnalyzer(
   private val barcodeFormats: IntArray,
   private val onSuccess: ((Barcode) -> Unit),
   private val onFailure: ((Exception) -> Unit),
-  private val onPassCompleted: ((Boolean) -> Unit)
+  private val onPassCompleted: ((Boolean) -> Unit),
+  private val autoZoomCallback: ((Float) -> Boolean)? = null,
+  private val maxZoomRatio: Float = 1f
 ) : ImageAnalysis.Analyzer {
 
   private val barcodeScanner by lazy {
@@ -20,6 +23,13 @@ internal class QRCodeAnalyzer(
       BarcodeScannerOptions.Builder().setBarcodeFormats(barcodeFormats.first(), *barcodeFormats.drop(1).toIntArray())
     } else {
       BarcodeScannerOptions.Builder().setBarcodeFormats(barcodeFormats.firstOrNull() ?: Barcode.FORMAT_UNKNOWN)
+    }
+    if (autoZoomCallback != null && maxZoomRatio > 1f) {
+      optionsBuilder.setZoomSuggestionOptions(
+        ZoomSuggestionOptions.Builder { ratio -> autoZoomCallback.invoke(ratio) }
+          .setMaxSupportedZoomRatio(maxZoomRatio)
+          .build()
+      )
     }
     try {
       BarcodeScanning.getClient(optionsBuilder.build())
