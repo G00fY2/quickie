@@ -14,5 +14,6 @@ internal fun ScannerConfig.toParcelableConfig() =
     useFrontCamera = useFrontCamera,
     showCloseButton = showCloseButton,
     keepScreenOn = keepScreenOn,
-    usePinchToZoom = usePinchToZoom
+    usePinchToZoom = usePinchToZoom,
+    useAutoZoom = useAutoZoom
   )

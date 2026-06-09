@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity() {
           setHorizontalFrameRatio(2.2f) // set the horizontal overlay ratio (default is 1 / square frame)
           setUseFrontCamera(false) // use the front camera
           setKeepScreenOn(true) // keep the device's screen turned on
-          setUsePinchToZoom(true)
+          setUsePinchToZoom(true) // enable pinch-to-zoom gesture
+          setUseAutoZoom(true) // enable ML Kit auto-zoom for small/distant codes
         }
       )
     }

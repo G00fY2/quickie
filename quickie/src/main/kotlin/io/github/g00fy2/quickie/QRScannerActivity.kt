@@ -41,6 +41,7 @@ internal class QRScannerActivity : AppCompatActivity() {
   private var showCloseButton = false
   private var useFrontCamera = false
   private var usePinchToZoom = false
+  private var useAutoZoom = false
 
   @Suppress("unused")
   internal var errorDialog: Dialog? = null
@@ -110,18 +111,6 @@ internal class QRScannerActivity : AppCompatActivity() {
           cameraSelector =
             if (useFrontCamera) CameraSelector.DEFAULT_FRONT_CAMERA else CameraSelector.DEFAULT_BACK_CAMERA
           setEnabledUseCases(LifecycleCameraController.IMAGE_ANALYSIS)
-          setImageAnalysisAnalyzer(
-            analysisExecutor,
-            QRCodeAnalyzer(
-              barcodeFormats = barcodeFormats,
-              onSuccess = { barcode ->
-                clearImageAnalysisAnalyzer()
-                onSuccess(barcode)
-              },
-              onFailure = { exception -> onFailure(exception) },
-              onPassCompleted = { failureOccurred -> onPassCompleted(failureOccurred) }
-            )
-          )
           isPinchToZoomEnabled = usePinchToZoom
           isTapToFocusEnabled = true
         }
@@ -135,6 +124,25 @@ internal class QRScannerActivity : AppCompatActivity() {
 
         controller.initializationFuture.addListener({
           val info = controller.cameraInfo ?: return@addListener
+          val maxZoomRatio = info.zoomState.value?.maxZoomRatio ?: 1f
+
+          controller.setImageAnalysisAnalyzer(
+            analysisExecutor,
+            QRCodeAnalyzer(
+              barcodeFormats = barcodeFormats,
+              onSuccess = { barcode ->
+                controller.clearImageAnalysisAnalyzer()
+                onSuccess(barcode)
+              },
+              onFailure = { exception -> onFailure(exception) },
+              onPassCompleted = { failureOccurred -> onPassCompleted(failureOccurred) },
+              autoZoomCallback = if (useAutoZoom) {
+                { ratio -> controller.setZoomRatio(ratio); true }
+              } else null,
+              maxZoomRatio = maxZoomRatio
+            )
+          )
+
           if (showTorchToggle && info.hasFlashUnit()) {
             binding.overlayView.setTorchVisibilityAndOnClick(true) { controller.enableTorch(it) }
             info.torchState.observe(this) { binding.overlayView.setTorchState(it == TorchState.ON) }
@@ -196,6 +204,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       useFrontCamera = it.useFrontCamera
       showCloseButton = it.showCloseButton
       usePinchToZoom = it.usePinchToZoom
+      useAutoZoom = it.useAutoZoom
 
       if (it.keepScreenOn) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }

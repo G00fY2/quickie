@@ -17,7 +17,8 @@ public class ScannerConfig(
   internal val useFrontCamera: Boolean,
   internal val showCloseButton: Boolean,
   internal val keepScreenOn: Boolean,
-  internal val usePinchToZoom: Boolean
+  internal val usePinchToZoom: Boolean,
+  internal val useAutoZoom: Boolean
 ) {
 
   public class Builder {
@@ -31,6 +32,7 @@ public class ScannerConfig(
     private var showCloseButton: Boolean = false
     private var keepScreenOn: Boolean = false
     private var usePinchToZoom: Boolean = false
+    private var useAutoZoom: Boolean = false
 
     /**
      * Set a list of interested barcode formats. List must not be empty.
@@ -71,6 +73,12 @@ public class ScannerConfig(
     public fun setUsePinchToZoom(enable: Boolean): Builder = apply { usePinchToZoom = enable }
 
     /**
+     * Enable ML Kit auto-zoom: the scanner will automatically zoom in when a small or distant
+     * barcode is detected. Default is disabled.
+     */
+    public fun setUseAutoZoom(enable: Boolean): Builder = apply { useAutoZoom = enable }
+
+    /**
      * Use the front camera.
      */
     public fun setUseFrontCamera(enable: Boolean): Builder = apply { useFrontCamera = enable }
@@ -100,6 +108,7 @@ public class ScannerConfig(
         showCloseButton = showCloseButton,
         keepScreenOn = keepScreenOn,
         usePinchToZoom = usePinchToZoom,
+        useAutoZoom = useAutoZoom,
       )
   }
 
