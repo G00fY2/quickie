@@ -39,7 +39,8 @@ import io.github.g00fy2.quickie.content.WifiParcelable
 internal fun Intent?.toQuickieContentType(): QRContent {
   val rawBytes = this?.getByteArrayExtra(EXTRA_RESULT_BYTES)
   val rawValue = this?.getStringExtra(EXTRA_RESULT_VALUE)
-  return this?.toQuickieContentType(rawBytes, rawValue) ?: Plain(rawBytes, rawValue)
+  val displayValue = this?.getStringExtra(QRScannerActivity.EXTRA_RESULT_DISPLAY_VALUE)
+  return this?.toQuickieContentType(rawBytes, rawValue) ?: Plain(rawBytes, rawValue, displayValue)
 }
 
 @Suppress("LongMethod")

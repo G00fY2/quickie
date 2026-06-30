@@ -165,6 +165,7 @@ internal class QRScannerActivity : AppCompatActivity() {
       Intent().apply {
         putExtra(EXTRA_RESULT_BYTES, result.rawBytes)
         putExtra(EXTRA_RESULT_VALUE, result.rawValue)
+        putExtra(EXTRA_RESULT_DISPLAY_VALUE, result.displayValue)
         putExtra(EXTRA_RESULT_TYPE, result.valueType)
         putExtra(EXTRA_RESULT_PARCELABLE, result.toParcelableContentType())
       }
@@ -216,6 +217,7 @@ internal class QRScannerActivity : AppCompatActivity() {
     const val EXTRA_CONFIG = "quickie-config"
     const val EXTRA_RESULT_BYTES = "quickie-bytes"
     const val EXTRA_RESULT_VALUE = "quickie-value"
+    const val EXTRA_RESULT_DISPLAY_VALUE = "quickie-display-value"
     const val EXTRA_RESULT_TYPE = "quickie-type"
     const val EXTRA_RESULT_PARCELABLE = "quickie-parcelable"
     const val EXTRA_RESULT_EXCEPTION = "quickie-exception"

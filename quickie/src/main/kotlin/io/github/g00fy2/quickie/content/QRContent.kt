@@ -11,7 +11,8 @@ public sealed class QRContent(
    */
   public data class Plain(
     override val rawBytes: ByteArray?,
-    override val rawValue: String?
+    override val rawValue: String?,
+    val displayValue: String?,
   ) : QRContent(rawBytes, rawValue)
 
   /**
